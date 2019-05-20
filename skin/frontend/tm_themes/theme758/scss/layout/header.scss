@@ -1,0 +1,596 @@
+//
+// Magento
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Academic Free License (AFL 3.0)
+// that is bundled with this package in the file LICENSE_AFL.txt.
+// It is also available through the world-wide-web at this URL:
+// http://opensource.org/licenses/afl-3.0.php
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     rwd_default
+// @copyright   Copyright (c) 2006-2014 X.commerce, Inc. (http://www.magento.com)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Header
+ * ============================================ */
+
+@import "../includes"; 
+
+
+@include bp(min-width, $bp-large + 1) {
+
+    .page-header-container {
+        position: relative;
+        padding: 0 100px 0;
+
+
+        &::after{
+            @include clearfix;
+        }
+    }
+}
+.page-header-container,
+.header-row {
+    @include flexbox();
+    @include justify-content(space-between);
+    @include flex-wrap(wrap);
+    @include bp(min-width, $bp-xlarge + 1) {
+        @include flex-wrap(nowrap);
+    }
+    > div {
+        @include flex(1, 1, 100%);
+        @include justify-content(center);
+        @include align-items(center);
+        padding: 10px 0;
+        @include bp(min-width, $bp-xlarge + 1) {
+            padding: 0;
+        }
+    }
+    .left-header-block {
+        @include flexbox();
+        @include bp(min-width, $bp-xlarge + 1) {
+            @include justify-content(flex-start);
+            padding: 0;
+        }
+    }
+    .center-header-block {
+        @include flexbox();
+        @include flex-wrap(wrap);
+    }
+    .right-header-block {
+        @include flexbox();
+        @include bp(min-width, $bp-xlarge + 1) {
+            @include justify-content(flex-end);
+            padding: 0;
+        }
+        @include flex-wrap(wrap);
+    }
+}
+
+.page-header {
+    //max-width: $max-container-width;
+    padding: 0;
+}
+.center-header-block {
+    text-align: center;
+}
+/* ============================================ *
+ * Language switcher + welcome message
+ * ============================================ */
+
+.header-row-background {
+    padding: 10px 25px 12px;
+    @include bp(min-width, $bp-xlarge + 1) {
+        padding: 10px 100px 7px;
+    }
+    margin-bottom: 38px;
+    color: $c-dark;
+    border-bottom: 5px transparent;
+    border-image: url(../../images/border-b.png) 5 repeat;
+    margin-top: -8px;
+
+    a{
+        color: $header-row-color;
+        text-transform: uppercase;
+        position: relative;
+        &:hover{
+            color: $accent-color-2;
+        }
+    }
+
+
+    &:after {
+        @include clearfix;
+    }
+
+    .form-language,
+    .currency-switcher {
+        float: left;
+        margin-right: $gap;
+    }
+
+    .welcome-msg {
+        float: right;
+        margin:2px 0 0;
+        color: $accent-color-3;
+        font-style: italic;
+        
+    }
+}
+
+
+@include bp(max-width, $bp-medium) {
+
+    .header-row-background {
+        display: block;
+
+        .welcome-msg{
+            float: none;
+            text-align: center;
+            margin: 0;
+        }
+    }
+
+}
+
+
+/* ============================================ *
+ * Header switchers
+ * ============================================ */
+
+.header-switchers {
+    .header-button {
+        float: right;
+        position:relative;
+        width:55px;
+        margin-left: 4px;
+
+        > a {
+            display:block;
+            height:30px;
+
+            &:after {
+                @include custom-icon($font-family-icon, '\e071');
+                font-size: 28px;
+                line-height: 18px;
+                padding-left: 5px;
+                vertical-align: middle;
+            }
+
+        }
+
+        &.currency-list > a,
+        &.lang-list > a {
+            font-size:14px;
+            line-height:21px;
+            text-transform:capitalize;
+            text-align:center;
+            padding: 4px 0 0;
+            width:100%;
+        }
+
+        ul {
+            display:none;
+            text-align:left;
+            position:absolute;
+            right:0px;
+            top:40px;
+            padding:0;
+            z-index:999;
+            background: $c-module-background;
+            width: 195px;
+            border: 5px solid transparent;
+            border-image: url(../../images/border-b-r.png) 5 repeat;
+
+            li {  
+                float: none; 
+                display:block; 
+                padding-left:0px; 
+                border-bottom: 1px solid $c-module-border-light;
+
+                &:last-child {border: 0;}
+
+                a {
+                    display:block;
+                    font-size:14px;
+                    line-height:17px;
+                    color:$c-action;
+                    padding: 14px 18px;
+                    min-height: 18px;
+
+                    &:hover { 
+                        background-color:$c-module-background-hover; 
+                        text-decoration: none;
+                        color: $accent-color-2;
+                    }
+
+                    .mobile-part{
+                        display: none;
+                    }
+                    &.selected {
+                        color: $accent-color-2;
+                    }
+                }
+            }
+        }
+
+        > a:hover,
+        &.active > a { 
+            text-decoration: none; 
+        }
+
+
+
+        &.full_mode{
+            width: auto;
+            cursor: pointer;
+            /****************/
+            margin: 0 0 0 30px;
+            padding-top: 2px;
+            padding-bottom: 0;
+            padding-right: 17px;
+
+            .header-button-title{
+
+                .label{
+                    padding-right: 5px;
+                    color: $accent-color-1;
+                }
+                .current{
+                    font-weight: normal;
+                        color: $header-row-color;
+
+                    &::after{
+                        @include custom-icon($font-family-icon-2, '\f107');
+                        font-size: 14px;
+                        line-height: 14px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        padding-left: 7px;
+                        position: absolute;
+                        right: 0;
+                        top: 6px;
+                    }
+                }
+
+                &:hover{
+                    .current{
+                        color: $accent-color-2;
+                    }
+                }
+
+            }
+            &.lang-list{
+                .label { display: none; }
+            }
+
+            @include bp(max-width, $bp-medium) {
+                float: none;
+                &.lang-list{
+                    padding-right: 0px;
+                    border-right: none;
+                }
+            }
+        }
+    }    
+}
+
+
+/* ============================================ *
+ * Logo
+ * ============================================ */
+
+.logo {
+    display: block;
+    float: left;
+    min-width: 100px;
+    min-height: 44px;
+    text-align: center;
+    margin: 0 0 20px 0; 
+
+    img {
+        max-width: 100%;
+    }
+
+    .small {
+        display: block;
+    }
+    .large {
+        display: none;
+    }
+}
+
+
+// ---------------------------------------------
+
+@include bp(max-width, $bp-large) {
+
+    .logo {      
+        margin: 20px 0;
+    }
+
+}
+
+@include bp(min-width, $bp-medium + 1) {
+
+    .logo {      
+
+        .small {
+            display: none;
+        }
+        .large {
+            display: block;
+        }
+    }
+
+}
+
+@include bp(max-width, $bp-medium) {
+    .logo{
+        max-width: 100%;
+    }
+}
+
+/* ============================================ *
+ * Skip Links
+ * ============================================ */
+
+ .skip-container{
+    &.mobile{
+
+        background-color: $menu-background;
+        border: solid 1px $accent-color-1;
+        border-left: none;
+        border-right: none;
+
+        .skip-links{
+            position: relative;
+        }
+    }
+    
+}
+
+.skip-links {
+    clear: both; 
+    position: relative;
+
+    &:after{
+        @include clearfix;
+    }
+}
+
+
+
+// ---------------------------------------------
+
+@include bp(min-width, $bp-large + 1) {
+
+    .skip-links {
+        border: 0;
+        float: right;
+    }
+
+    .skip-container{
+
+        &.mobile{
+            display: none;
+        }
+        position: relative;
+        float: right;
+    }
+
+}
+
+
+/* -------------------------------------------- *
+ * Skip Link - Icon
+ */
+
+.skip-link .icon {
+    display: inline-block;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+.skip-link.skip-nav .icon,
+.skip-link.skip-cart:not(.no-count) .icon {
+    margin-right: 3px;
+}
+
+@include bp(min-width, 500px) {
+
+    .skip-link .icon {
+        margin-right: 3px;
+    }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Link - Label
+ */
+
+.skip-link .label {
+    display: none;
+}
+
+// ---------------------------------------------
+
+@include bp(min-width, 500px) {
+
+    .skip-link .label {
+        display: inline;
+    }
+
+}
+
+/* ============================================ *
+ * Skip Content
+ * ============================================ */
+
+$skiplLinkHeight: 50px;
+
+.skip-content {
+    display: none;
+
+    &.skip-active{
+        display: block;
+        position: absolute;
+        background: #fff;
+        top: 40px;
+        z-index: 1000;
+        padding: 15px;
+
+        @include boxshadow(0px, 0px, 5px, rgba(0, 0, 0, 0.35));
+
+        @include animation('skipLinks 0.25s linear');
+        @include keyframes('skipLinks') {
+            0% { opacity: 0;}
+            100% { opacity: 1;}
+        }
+
+    }
+}
+
+.main-menu{
+    .skip-content.skip-active{
+        position: relative;
+    } 
+}   
+
+
+/* ============================================ *
+ * Global Header Navigation
+ * ============================================ */
+
+@include bp(max-width, $bp-large) {
+
+    .header-search,
+    .header-minicart.desktop{
+        display: none;
+    }
+
+    .skip-link {
+        border-right: solid 1px $accent-color-1;
+        position: relative;
+        float: left;
+        width: 20%;
+        height: $skiplLinkHeight;
+        color: $menu-item-color;
+        line-height: $skiplLinkHeight - 2px;
+        text-align: center;
+
+        &.skip-nav{
+            border-left: solid 1px $accent-color-1;
+        }
+
+        .label{
+            color: $menu-item-color;
+        }
+    }
+    
+    .skip-link:hover,
+    .skip-link.skip-active {
+        background: $accent-color-1;
+        color: #fff;
+    }
+
+    .skip-link.skip-active span,
+    .skip-link:hover .label,
+    .skip-link:hover .icon, {
+        color: #fff;
+    }
+
+    .skip-content.skip-active {
+        //display: block;
+        background: #fff;
+        position: absolute;
+        top: $skiplLinkHeight;
+        width: 100%;
+        z-index: 999;
+        padding:0 10px;
+        @include boxshadow(0px, 5px, 5px, rgba(0, 0, 0, 0.35));
+    }
+
+
+    // ---------------------------------------------
+    // Link
+
+    #header-account li a,
+    .header-button .header-button-title {
+        padding: 3px 15px 4px 25px;
+        border-bottom: 1px solid $c-module-border;
+        text-align: left;
+        color: $accent-color-1;
+        line-height: 30px;
+        .label,
+        .current {
+            color: $accent-color-1;
+        }
+    }
+
+    #header-account li:last-child a{
+        border-bottom: 0;
+    }
+
+    .no-touch #header-account a:hover,
+    .header-button .header-button-title:hover{
+        background-color: $c-module-background;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /*********/
+
+    .header-switchers{
+        display: none;
+    }
+
+    .header-button{
+        ul li a span{
+            display: none;
+
+            &.mobile-part{
+                display: inline-block;
+            }
+        }
+    }
+
+}
+
+a.skip-link {
+    text-decoration: none;
+}
+
+@include bp(min-width, 500px) {
+
+    .skip-link {
+        width: 25%;
+    }
+
+}
+
+
+.account-cart-wrapper {
+    position: absolute;
+    top:0px;
+    right:0px;
+
+    @include bp(max-width, $bp-large) {
+        position: static;
+    }
+}

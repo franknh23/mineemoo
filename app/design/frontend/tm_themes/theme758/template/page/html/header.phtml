@@ -1,0 +1,129 @@
+<?php
+/**
+ * Magento
+ *
+**/
+?>
+
+<?php
+    ini_set('error_reporting', E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+?>
+
+<?php 
+    $toplinks_dropdown = false;
+    $search_dropdown   = false;
+
+
+
+?>
+
+
+
+<!-- Ajax Login -->
+<div class="skip-links2"> <span class="skip-link2 skip-account2"></span></div>
+<div id="header-account2" class="skip-content2"></div>
+<!-- End Ajax Login -->
+
+<header id="header" class="page-header">
+
+    <div class="header-row-background">
+        <div class="header-row">
+            <div class="left-header-block">
+                <!-- Top Links -->
+                <div class="top-links">
+                    <?php 
+                        $toplinksClass  = "top-links-inline";
+                        $toplinksID     = "";
+                        if($toplinks_dropdown): 
+                            $toplinksClass  = "skip-content";
+                            $toplinksID     = "header-account-dropdown";
+                    ?>
+                        <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" data-target-element="#<?php echo $toplinksID; ?>" class="skip-link account-dropdown">
+                            <span class="label"><?php echo $this->__('Account'); ?></span>
+                        </a>
+                    <?php endif ?>
+
+                        <div id="<?php echo $toplinksID; ?>" class="<?php echo $toplinksClass; ?>">
+                    
+                        <?php echo $this->getChildHtml('topLinks') ?>
+
+                    </div>
+                </div> 
+                <!-- end Top Links -->
+            </div>
+            <div class="center-header-block">
+                <?php require_once('link_custom.phtml'); ?>
+                <div class="header-minicart desktop">
+                    <?php echo $this->getChildHtml('minicart_head'); ?>
+                </div>
+            </div>
+            <div class="right-header-block">
+                <p class="welcome-msg"><?php echo $this->getChildHtml('welcome') ?> <?php echo $this->getAdditionalHtml() ?></p>
+                <div class="header-switchers">
+                    <?php echo $this->getChildHtml('currency_switcher') ?>
+                    <?php echo $this->getChildHtml('store_language') ?>
+                </div>
+                <!--login -->
+                <?php if (Mage::getSingleton('customer/session')->isLoggedIn()==0): ?>
+                    <a title="<?php echo $this->__('Log In') ?>" href="<?php echo $this->getUrl('customer/account/login') ?>" class="log-in-link">
+                        <?php echo $this->__('Log In') ?>
+                    </a>
+                <?php else: ?>
+                    <a  title="<?php echo $this->__('Log Out') ?>" href="<?php echo $this->getUrl('customer/account/logout') ?>" class="log-out-link">
+                        <?php echo $this->__('Log Out') ?>
+                    </a>
+                <?php endif ?>
+                <!-- end login -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header-container">
+        <div class="left-header-block">
+            <?php echo $this->getChildHtml('header-phone') ?>
+        </div>
+        <div class="center-header-block">
+            <a class="logo" href="<?php echo $this->getUrl('') ?>">
+                <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" />
+            </a>
+        </div>
+        <div class="right-header-block">
+            <!-- Search -->
+            <div class="header-search desktop">
+                <?php  
+                    $searchClass  = "";
+                    $searchID     = "";
+                    if($search_dropdown): 
+                        $searchClass  = "skip-content";
+                        $searchID     = "search-dropdown";
+                ?>
+                    <a href="<?php echo $this->helper('customer')->getAccountUrl(); ?>" data-target-element="#<?php echo $searchID; ?>" class="skip-link account-dropdown">
+                        <span class="label"><?php echo $this->__('Search'); ?></span>
+                    </a>
+                    <div id="<?php echo $searchID; ?>" class="<?php echo $searchClass; ?>">
+                <?php endif ?>
+
+                <?php echo $this->getChildHtml('topSearch') ?>
+
+                <?php if($search_dropdown): ?>
+                    </div>
+                <?php endif ?>
+            </div>
+            <!-- end Search -->
+        </div>
+    </div>
+
+    <div class="main-menu">
+        <div class="container">
+            <div id="header-nav" class="skip-content nav-content">
+                <?php echo $this->getChildHtml('topMenu') ?>
+            </div>
+        </div>
+    </div>
+
+
+    <?php require_once("mobile-panel.phtml"); ?>
+</header>
+<?php echo $this->getChildHtml('topContainer'); ?>

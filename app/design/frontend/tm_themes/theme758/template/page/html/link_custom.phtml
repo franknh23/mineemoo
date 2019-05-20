@@ -1,0 +1,7 @@
+<!-- Wishlist -->
+<a href="<?php echo $this->getUrl('wishlist') ?>" class="top-wishlist-module"><?php echo $this->__('Wishlist');?>: <?php echo Mage::helper('wishlist')->getItemCount()?></a>
+<!-- end Wishlist -->
+
+<!--  compare -->
+<a href="#" onclick="popWin('<?php echo Mage::helper('catalog/product_compare')->getListUrl() ?>','compare','top:0,left:0,width=820,height=600,resizable=yes,scrollbars=yes')"  class="top-compare-module"><?php echo $this->__('Compare');?>: <?php echo Mage::helper('catalog/product_compare')->getItemCount()?></a>
+<!-- end compare -->

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <tabs>
+        <tm translate="label">
+            <label>TemplateMonster</label>
+            <sort_order>100</sort_order>
+        </tm>
+    </tabs>
+    <sections>
+        <ajaxcart translate="label" module="tm_ajaxcart">
+            <class>separator-top</class>
+            <label>Ajax Cart</label>
+            <tab>tm</tab>
+            <sort_order>130</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general>
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enable/Disable</label>
+                            <comment><![CDATA[Enable/Disable module.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <stock_validation translate="label">
+                            <label>Stock validation</label>
+                            <comment><![CDATA[Enable/Disable AJAX stock validation.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </stock_validation>
+                    </fields>
+                </general>
+                <minicart>
+                    <label>Minicart</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <img_width translate="label">
+                            <label>Image Width</label>
+                            <comment><![CDATA[Product image width.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </img_width>
+                        <img_height translate="label">
+                            <label>Image Height</label>
+                            <comment><![CDATA[Product image height.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </img_height>
+                        <visible_products>
+                            <label>Visible Products</label>
+                            <comment><![CDATA[Number of products in cart visible in minicart block.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </visible_products>
+                    </fields>
+                </minicart>
+            </groups>
+        </ajaxcart>
+    </sections>
+</config>

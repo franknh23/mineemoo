@@ -1,0 +1,237 @@
+/**
+ * Title: Soft icons Flaticon Pack
+ * Author: Robin Kylander
+ * Source: http://www.flaticon.com/packs/soft-icons
+ * License:  CC BY 3.0 (http://creativecommons.org/licenses/by/3.0/)
+ */
+
+@font-face {
+	font-family: "fl-soft-icons";
+	src: url("../fonts/soft-icons/fl-soft-icons.eot");
+	src: url("../fonts/soft-icons/fl-soft-icons.eot#iefix") format("embedded-opentype"),
+		 url("../fonts/soft-icons/fl-soft-icons.woff") format("woff"),
+		 url("../fonts/soft-icons/fl-soft-icons.ttf") format("truetype"),
+		 url("../fonts/soft-icons/fl-soft-icons.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+.fl-soft-icons-ico,  
+[class^="fl-soft-icons-"]:before, [class*=" fl-soft-icons-"]:before,
+[class^="fl-soft-icons-"]:after, [class*=" fl-soft-icons-"]:after {   
+	font-family: 'fl-soft-icons';
+    font-size: inherit;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.fl-soft-icons-add122:before {
+	content: "\e000";
+}
+.fl-soft-icons-add123:before {
+	content: "\e001";
+}
+.fl-soft-icons-add127:before {
+	content: "\e002";
+}
+.fl-soft-icons-advance6:before {
+	content: "\e003";
+}
+.fl-soft-icons-ascending14:before {
+	content: "\e004";
+}
+.fl-soft-icons-black364:before {
+	content: "\e005";
+}
+.fl-soft-icons-blocked6:before {
+	content: "\e006";
+}
+.fl-soft-icons-bookmark22:before {
+	content: "\e007";
+}
+.fl-soft-icons-bookmark24:before {
+	content: "\e008";
+}
+.fl-soft-icons-checkmark8:before {
+	content: "\e009";
+}
+.fl-soft-icons-circle87:before {
+	content: "\e00a";
+}
+.fl-soft-icons-circle88:before {
+	content: "\e00b";
+}
+.fl-soft-icons-cloud238:before {
+	content: "\e00c";
+}
+.fl-soft-icons-console6:before {
+	content: "\e00d";
+}
+.fl-soft-icons-contrast15:before {
+	content: "\e00e";
+}
+.fl-soft-icons-credit78:before {
+	content: "\e00f";
+}
+.fl-soft-icons-cross68:before {
+	content: "\e010";
+}
+.fl-soft-icons-dark52:before {
+	content: "\e011";
+}
+.fl-soft-icons-download114:before {
+	content: "\e012";
+}
+.fl-soft-icons-earth196:before {
+	content: "\e013";
+}
+.fl-soft-icons-edit39:before {
+	content: "\e014";
+}
+.fl-soft-icons-envelope39:before {
+	content: "\e015";
+}
+.fl-soft-icons-favorite14:before {
+	content: "\e016";
+}
+.fl-soft-icons-file54:before {
+	content: "\e017";
+}
+.fl-soft-icons-flag45:before {
+	content: "\e018";
+}
+.fl-soft-icons-flag46:before {
+	content: "\e019";
+}
+.fl-soft-icons-four78:before {
+	content: "\e01a";
+}
+.fl-soft-icons-heart266:before {
+	content: "\e01b";
+}
+.fl-soft-icons-home128:before {
+	content: "\e01c";
+}
+.fl-soft-icons-home129:before {
+	content: "\e01d";
+}
+.fl-soft-icons-horizontal32:before {
+	content: "\e01e";
+}
+.fl-soft-icons-indent7:before {
+	content: "\e01f";
+}
+.fl-soft-icons-left138:before {
+	content: "\e020";
+}
+.fl-soft-icons-less10:before {
+	content: "\e021";
+}
+.fl-soft-icons-letter49:before {
+	content: "\e022";
+}
+.fl-soft-icons-male221:before {
+	content: "\e023";
+}
+.fl-soft-icons-menu31:before {
+	content: "\e024";
+}
+.fl-soft-icons-minus72:before {
+	content: "\e025";
+}
+.fl-soft-icons-monitor63:before {
+	content: "\e026";
+}
+.fl-soft-icons-mute27:before {
+	content: "\e027";
+}
+.fl-soft-icons-mute28:before {
+	content: "\e028";
+}
+.fl-soft-icons-open194:before {
+	content: "\e029";
+}
+.fl-soft-icons-pause26:before {
+	content: "\e02a";
+}
+.fl-soft-icons-pen53:before {
+	content: "\e02b";
+}
+.fl-soft-icons-photo158:before {
+	content: "\e02c";
+}
+.fl-soft-icons-picture26:before {
+	content: "\e02d";
+}
+.fl-soft-icons-placeholder15:before {
+	content: "\e02e";
+}
+.fl-soft-icons-rec:before {
+	content: "\e02f";
+}
+.fl-soft-icons-rectangular74:before {
+	content: "\e030";
+}
+.fl-soft-icons-rhombus3:before {
+	content: "\e031";
+}
+.fl-soft-icons-right128:before {
+	content: "\e032";
+}
+.fl-soft-icons-rotating23:before {
+	content: "\e033";
+}
+.fl-soft-icons-search63:before {
+	content: "\e034";
+}
+.fl-soft-icons-speaker68:before {
+	content: "\e035";
+}
+.fl-soft-icons-star148:before {
+	content: "\e036";
+}
+.fl-soft-icons-stop31:before {
+	content: "\e037";
+}
+.fl-soft-icons-suitcase37:before {
+	content: "\e038";
+}
+.fl-soft-icons-suitcase38:before {
+	content: "\e039";
+}
+.fl-soft-icons-tablet75:before {
+	content: "\e03a";
+}
+.fl-soft-icons-tag41:before {
+	content: "\e03b";
+}
+.fl-soft-icons-trash51:before {
+	content: "\e03c";
+}
+.fl-soft-icons-triangle31:before {
+	content: "\e03d";
+}
+.fl-soft-icons-two277:before {
+	content: "\e03e";
+}
+.fl-soft-icons-unlock24:before {
+	content: "\e03f";
+}
+.fl-soft-icons-up94:before {
+	content: "\e040";
+}
+.fl-soft-icons-upload72:before {
+	content: "\e041";
+}
+.fl-soft-icons-upload77:before {
+	content: "\e042";
+}
+.fl-soft-icons-visualization2:before {
+	content: "\e043";
+}
+.fl-soft-icons-wifi72:before {
+	content: "\e044";
+}
+.fl-soft-icons-zig3:before {
+	content: "\e045";
+}
