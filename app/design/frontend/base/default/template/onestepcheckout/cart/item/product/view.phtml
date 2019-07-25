@@ -1,0 +1,160 @@
+<?php
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Onestepcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+/**
+ * onestepcheckout template
+ * 
+ * @see Advanced_Onestepcheckout_Block_Onestepcheckout
+ */
+?>
+<?php
+$childBlock = array('select' => 'bundle/catalog_product_view_type_bundle_option_select',
+    'multi' => 'bundle/catalog_product_view_type_bundle_option_multi',
+    'radio' => 'bundle/catalog_product_view_type_bundle_option_radio',
+    'checkbox' => 'bundle/catalog_product_view_type_bundle_option_checkbox');
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+
+<form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="oscproduct_addtocart_form" <?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+    <div id="product-options-wrapper" class="product-options">
+
+        <dl class="last">
+            <dd class="clearfix swatch-attr">
+                <div class="advanced-row">
+                    <div class="advanced-col-xs-6">
+                        <img class="advanced-img-responsive" src="<?php echo Mage::helper('catalog/image')->init($this->getProduct(), 'image')->resize(200); ?>" />
+                    </div>
+                    <div class="advanced-col-xs-6">
+                        <h3><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h3>
+                    </div>
+                </div>
+            </dd>
+            <dd class="clearfix swatch-attr">
+                <div class="input-box">
+                    <?php echo $this->getChildHtml('options_configurable'); ?> 
+                </div>
+            </dd>
+
+            <dd class="clearfix swatch-attr">
+                <div class="input-box">
+                    <?php echo $this->getChildHtml('type_downloadable_options'); ?> 
+                </div>
+            </dd>
+
+            <dd class="clearfix swatch-attr last">
+                <div class="input-box">
+                    <?php echo $this->getChildHtml('options_js'); ?>  
+                    <?php echo $this->getChildHtml('product_options'); ?>  
+
+                    <?php if ($_product->isSaleable() && $this->hasOptions() && $_product->getTypeId() == 'bundle'): ?>                   
+                        <?php $_options = Mage::helper('core')->decorateArray(Mage::getBlockSingleton('bundle/catalog_product_view_type_bundle')->getOptions()); ?>
+                        <?php if ($_product->isSaleable()): ?>
+                            <?php if (count($_options)): ?>
+                                <dl>
+                                    <?php foreach ($_options as $_option): ?>
+
+                                        <?php if (!$_option->getSelections()): ?>
+                                            <?php continue; ?>
+                                        <?php endif; ?>
+                                        <?php
+                                        echo $this->getLayout()->createBlock($childBlock[$_option->getType()])
+                                                ->setOption($_option)->toHtml();
+                                        ?>
+                                    <?php endforeach; ?>
+                                </dl>
+                            <?php else: ?>
+                                <p><?php echo $this->__('No options of this product are available.') ?></p>
+                            <?php endif; ?>
+                        <?php endif; ?>   
+                    <?php endif; ?>
+                </div>
+            </dd>
+        </dl>
+    </div> 
+
+    <div class="product-options-bottom">
+        <div class="advanced-row">
+            <div class="add-to-cart">
+                <div class="advanced-col-xs-6 qty-wrapper">
+                    <label for="qty"><?php echo $this->__('Qty:'); ?></label>
+                    <input type="text" class="input-text qty" title="<?php echo $this->__('Qty:'); ?>" value="<?php echo $this->getProductDefaultQty() * 1 ?>" maxlength="12" id="qty" name="qty">
+                    <i id="load-shipping-cart" class="fa fa-spinner fa-2x fa-pulse" style="display: none;" ></i>
+                </div>
+                <div class="advanced-col-xs-6 add-to-cart-buttons">
+                    <button id="update-cart-button" onclick="productAddToCartFormOSC.submit(this)" class="advanced-button btn waves-effect waves-light" id="product-addtocart-button" title="<?php echo $this->__('Update Cart') ?>" type="button"><span><span><?php echo $this->__('Update Cart') ?></span></span></button>
+                </div>
+            </div>
+            <input type="hidden" value="<?php echo $this->getItem() ?>" name="item_id" />
+        </div>
+    </div>
+</form>
+
+
+<script type="text/javascript">
+<?php if ($_product->getTypeId() == 'bundle'): ?>
+        var bundle = new Product.Bundle(<?php echo Mage::getBlockSingleton('bundle/catalog_product_view_type_bundle')->getJsonConfig() ?>);
+<?php endif; ?>
+    //<![CDATA[
+    var validator = new Validation('oscproduct_addtocart_form');
+    var productAddToCartFormOSC = new VarienForm('oscproduct_addtocart_form');
+    productAddToCartFormOSC.submit = function (button, url) {
+        $('load-shipping-cart').show();
+        $('update-cart-button').disable();
+        $('update-cart-button').addClassName('button-disable');
+        var url = '<?php echo $this->getUrl('onestepcheckout/index/editItem', array('_secure' => Mage::app()->getStore()->isCurrentlySecure())); ?>';
+        if (validator.validate()) {
+            var params = $('oscproduct_addtocart_form').serialize();
+
+            var request = new Ajax.Request(url, {
+                parameters: params,
+                onSuccess: function (transport) {
+                    if (transport.status == 200) {
+                        var response = JSON.parse(transport.responseText);
+                        if (response.url) {
+                            setLocation(response.url);
+                            return;
+                        } else {
+                            if (response.error) {
+                                alert(response.error);
+                                $('load-shipping-cart').hide();
+                                $('update-cart-button').enable();
+                                $('update-cart-button').removeClassName('button-disable');
+                                return;
+                            } else {
+                                $_adj.advancedfancybox.close();
+                                $('load-shipping-cart').hide();
+                                $('update-cart-button').enable();
+                                $('update-cart-button').removeClassName('button-disable');
+                                oscheckout.saveAddress(1,0,1);
+                            }
+                        }
+                    }
+
+                },
+                onFailure: ''
+            });
+        }
+    }
+</script>

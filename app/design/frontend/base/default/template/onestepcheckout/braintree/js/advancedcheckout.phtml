@@ -1,0 +1,155 @@
+<?php
+/**
+ * Add in support for Advancedcheckout.com
+ * http://www.advancedcheckout.com
+ * @author Lamb ST <support@advancedcheckout.com>
+ */
+?>
+<!-- ADVANCEDCHECKOUT BRAINTREE SUPPORT -->
+
+<script type="text/javascript">
+
+    vZeroIntegration.addMethods({
+
+        /**
+         * Validate the entire checkout
+         */
+        validateAll: function() {
+            // var validator = new Validation('onestepcheckout');
+            return true;
+        },
+
+        /**
+         * Return the payment method from the checkouts methods
+         */
+        getPaymentMethod: function() {
+            return $RF($('onestepcheckout'), 'payment[method]');
+        },
+
+        /**
+         * Activate the loading state of this checkout
+         */
+        setLoading: function() {
+            $('place-order-button').disable();
+            $('place-order-button').addClassName('button-disable');
+            already_placing_order = true;
+        },
+
+        /**
+         * Reset the loading state of the checkout
+         */
+        resetLoading: function() {
+            $('place-order-button').enable();
+            $('place-order-button').removeClassName('button-disable');
+            already_placing_order = false;
+        },
+
+        /**
+         * Show the placing order div before the submit
+         */
+        beforeSubmit: function(callback) {
+			$('review-please-wait').show();
+            return this._beforeSubmit(callback);
+        },
+        afterSubmit: function() {
+			oscheckout._placeOrder();
+        },
+		
+		/**
+         * Capture the original submit function
+         */
+        captureOriginalSubmitFn: function () {
+             // this._originalSubmitFn = oscPlaceOrder;
+            return true;
+        },
+
+        /**
+         * Attach an observer to the submit action of the checkout to tokenize the card details
+         */
+        prepareSubmitObserver: function() {
+
+            // Store a pointer to the vZero integration
+            var vzeroIntegration = this;
+
+			// Store a pointer to the payment class
+                   
+            oscheckout.placeOrder = function braintreeOverride() {
+
+                if (vzeroIntegration.shouldInterceptSubmit('creditcard')) {
+
+
+                    // If everything was a success on the checkout end, let's submit the vZero integration
+                    vzeroIntegration.submit('creditcard', function () {
+						
+                        return oscheckout._placeOrder();
+                    });
+
+                } else {
+	
+                    return oscheckout._placeOrder();
+                }
+
+            };
+			
+			
+			
+        },
+
+        /**
+         * Prepare an event to insert the PayPal button in place of the complete checkout button
+         */
+        preparePaymentMethodSwitchObserver: function() {
+            // Store a pointer to the vZero integration
+            var vzeroIntegration = this;
+
+            // Intercept people swapping methods
+            var _originalSaveShippingMethod = switchMethod;
+            switchMethod = function switchMethod(payment_method) {
+
+                // Run our method switch function
+                vzeroIntegration.paymentMethodSwitch();
+
+                // Run the original function
+                return _originalSaveShippingMethod.apply(this, arguments);
+            };
+        },
+
+        /**
+         * The action to run after the PayPal action has been completed
+         */
+        submitCheckout: function() {
+           $_adj('#place-order-button').click();
+        }
+
+    });
+
+    /**
+     * Start a new instance of our integration
+     *
+     * @type {vZeroIntegration}
+     */
+    new vZeroIntegration(
+        (window.vzero || false),
+        (window.vzeroPaypal || false),
+        '<div id="paypal-complete"><div id="paypal-container"></div></div>',
+        '#place-order-button',
+        true
+    );
+function $RF(el, radioGroup) {
+	if($(el).type && $(el).type.toLowerCase() == 'radio') {
+		var radioGroup = $(el).name;
+		var el = $(el).form;
+	} else if ($(el).tagName.toLowerCase() != 'form') {
+		return false;
+	}
+
+	var checked = $(el).getInputs('radio', radioGroup).find(
+		function(re) {return re.checked;}
+	);
+	return (checked) ? $F(checked) : null;
+}
+
+
+
+
+</script>

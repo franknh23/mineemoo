@@ -1,0 +1,119 @@
+<?php
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Onestepcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+/**
+ * onestepcheckout template
+ * 
+ * @see Advanced_Onestepcheckout_Block_Onestepcheckout
+ */
+?>
+<?php $column = Mage::getStoreConfig('onestepcheckout/style/column', Mage::app()->getStore()->getStoreId());
+?>
+<div id="form-loadding-review" class="form-loadding"></div>
+<?php echo $this->getChildHtml('items_before'); ?>
+<div id="checkout-review-table-wrapper">
+    <table id="shopping-cart-table" class="advanced-cart-table advanced-data-table <?php echo ($column == '3bs')?'column-basic-review':'';?>">
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <col width="1" />
+        <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+            <col width="1" />
+            <col width="1" />
+        <?php endif; ?>
+
+        <?php $mergedCells = (($this->helper('tax')->displayCartBothPrices() && ($column != '3bs')) ? 2 : 1); ?>
+        <thead>
+            <tr>
+                <th rowspan="<?php echo $mergedCells; ?>"><span class="nobr"><?php echo $this->__('Product') ?></span></th>
+
+                <th class="table-product-name" rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+
+                <th class="a-center cart-price-head" colspan="<?php echo $mergedCells; ?>">
+                    <span class="nobr"><?php echo $this->__('Price') ?></span>
+                </th>
+
+                <th rowspan="<?php echo $mergedCells; ?>" class="a-center">
+                    <?php echo $this->__('Qty') ?>
+                </th>
+
+                <th class="a-center cart-total-head" colspan="<?php echo $mergedCells; ?>">
+                    <?php echo $this->__('Subtotal') ?>
+                </th>
+
+                <th class="a-center" rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+
+            </tr>
+            <?php if ($this->helper('tax')->displayCartBothPrices() && ($column != '3bs')): ?>
+                <tr>
+                    <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                    <th class="a-center cart-price-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                    <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                    <th class="a-center cart-total-head"><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                </tr>
+            <?php endif; ?>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="50" class="a-right cart-footer-actions">
+                    <button onclick="javascript:location.href = '<?php echo $this->getUrl('checkout/cart/updatePost/',array('form_key'=>Mage::getSingleton('core/session')->getFormKey(),'update_cart_action'=>'empty_cart')); ?>'" type="button" name="empty_cart" value="empty_cart" title="<?php echo $this->__('Empty Cart'); ?>" class="advanced-pull-left advanced-button2"><span><span><?php echo $this->__('Empty Cart'); ?></span></span></button>
+                    <button onclick="oscheckout.updateItemsQty()" type="button" name="update_cart_action" value="update_qty" title="<?php echo $this->__('Update Shopping Cart'); ?>" class="advanced-pull-right advanced-button2"><span><span><?php echo $this->__('Update Shopping Cart'); ?></span></span></button>
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <?php foreach ($this->getItems() as $_item): ?>
+                <?php echo $this->getItemHtml($_item) ?>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
+
+<div style="padding: 10px;float: right;width: 100%">
+    <?php echo $this->getBlockHtml('onestepcheckout.review.info.totals'); ?>
+</div>
+<!-- Gift wrap -->
+<script>
+    function checkPaymentMethod() {
+        var options = document.getElementsByName('payment[method]');
+        var pay = true;
+        for (var i = 0; i < options.length; i++) {
+            if ($(options[i].id).checked) {
+                pay = false;
+                break;
+            }
+        }
+        return pay;
+    }
+
+    
+
+</script>
+
+<?php echo $this->getChildHtml('items_after'); ?>
+<script type="text/javascript">
+//<![CDATA[
+    decorateTable('checkout-review-table');
+    truncateOptions();
+//]]>
+
+</script>

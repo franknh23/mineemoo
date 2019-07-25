@@ -1,0 +1,182 @@
+<div class="advanced-row">
+    <div class="advanced-col-md-3">
+        <h2>Options</h2>
+
+    </div>
+    <div class="advanced-col-md-9">
+        <div class="content-header">
+            <table cellspacing="0">
+                <tbody>
+                    <tr>
+                        <td style="width:50%;"><h3>Field Management</h3></td>
+                        <td class="a-right">
+                            <button style="" onclick="setLocation('http://127.0.0.1/ost/index.php/admin/catalog_product/new/key/29a5ecf6d747e11262e0bab6f58feb24/')" class="scalable add" type="button" title="Add Product" id="id_aec749adaaf2d5713bf776d7dae69701"><span><span><span>Add Product</span></span></span></button>        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="advanced-row">
+            <div class="advanced-col-md-6">
+                <h2>Available Fields</h2>
+                <div id="available-container">
+                    <div id="available-fields" class="advanced-row draggable-sortable">
+                        <div class="advanced-col-md-12 draggable">
+                            <div class="ui-state-default">
+                                <span>Street Address</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-12 draggable">
+                            <div class="ui-state-default">
+                                <span>Street Address</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-12 draggable">
+                            <div class="ui-state-default">
+                                <span>Street Address</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-12 draggable">
+                            <div class="ui-state-default">
+                                <span>Street Address</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="advanced-col-md-6 advanced-pull-right">
+                <h2>Billing Address</h2>
+                <div id="billing-container">
+                    <div id="billing-fields" class="advanced-row draggable-sortable">
+                        <div class="advanced-col-md-6 draggable">
+                            <div class="ui-state-default">
+                                <span>First Name</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-6 draggable">
+                            <div class="ui-state-default">
+                                <span>Last Name</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-6 draggable">
+                            <div class="ui-state-default">
+                                <span>Company</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-6 draggable">
+                            <div class="ui-state-default">
+                                <span>Email</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-6 draggable">
+                            <div class="ui-state-default">
+                                <span>Street Address</span>
+                            </div>
+                        </div>
+                        <div class="advanced-col-md-6 draggable">
+                            <div class="ui-state-default">
+                                <span>Country</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="content-header-floating" style="display: none;"><div class="content-header">
+        <table cellspacing="0">
+            <tbody><tr>
+                    <td>
+                        <h3>General</h3>
+                    </td>
+                    <td class="form-buttons"><button style="" onclick="configForm.submit()" class="scalable save" type="button" title="Save Config" id="id_3bb1be3302c5d22e6da23823031c1fee"><span><span><span>Save Config</span></span></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    var $_adj = jQuery.noConflict();
+    $_adj(function () {
+        $_adj(".draggable").draggable({
+            connectToSortable: '.draggable-sortable',
+            placeholder: "sortable-placeholder",
+            cursor: "move",
+            cursorAt: { top: 0, left: 15 },
+            stop: function (event, ui) {
+                console.log(ui);
+                ui.helper.removeAttr('style');
+                
+                $_adj(this).children('.ui-state-default').resizable({
+                    maxHeight: 40,
+                    minHeight: 40,
+                    helper: "ui-resizable-helper",
+                    stop: function (event, ui) {
+                        var percent = (ui.size.width / $_adj('#billing-fields').outerWidth()) * 100;
+                        if (percent >= 60) {
+                            $_adj(this).parent().removeClass('advanced-col-md-6');
+                            $_adj(this).parent().addClass('advanced-col-md-12');
+                            $_adj(this).parent().removeAttr('style');
+                            $_adj(this).removeAttr('style');
+                        } else {
+                            $_adj(this).parent().removeClass('advanced-col-md-12');
+                            $_adj(this).parent().addClass('advanced-col-md-6');
+                            $_adj(this).parent().removeAttr('style');
+                            $_adj(this).removeAttr('style');
+                        }
+                    }
+                });
+            },
+            revertDuration: 0
+        });
+
+        $_adj(".draggable-sortable").sortable({
+            connectWith: '.draggable-sortable',
+            placeholder: "sortable-placeholder",
+            start: function (event, ui) {                
+                $_adj('.sortable-placeholder').width(ui.helper.outerWidth() - 38);
+            },
+            stop: function (event, ui) {
+                ui.item.removeAttr('style');
+            },
+            update: function (event, ui) {
+                i = 0;
+                $_adj("#billing-fields").find(".draggable").each(function () {
+                    $_adj(this).attr('ui-state-index', i);
+                    i++;
+                });
+                $_adj("#billing-fields .ui-state-default" ).resizable( "enable" );
+            }
+
+        });
+
+        $_adj(".ui-state-default").resizable({
+            maxHeight: 40,
+            minHeight: 40,
+            cursor: "crosshair",
+            helper: "ui-resizable-helper",
+            stop: function (event, ui) {
+                var percent = (ui.size.width / $_adj('#billing-fields').outerWidth()) * 100;
+                if (percent >= 60) {
+                    $_adj(this).parent().removeClass('advanced-col-md-6');
+                    $_adj(this).parent().addClass('advanced-col-md-12');
+                    $_adj(this).parent().removeAttr('style');
+                    $_adj(this).removeAttr('style');
+                } else {
+                    $_adj(this).parent().removeClass('advanced-col-md-12');
+                    $_adj(this).parent().addClass('advanced-col-md-6');
+                    $_adj(this).parent().removeAttr('style');
+                    $_adj(this).removeAttr('style');
+                }
+            }
+        });
+
+    });
+
+
+
+</script>

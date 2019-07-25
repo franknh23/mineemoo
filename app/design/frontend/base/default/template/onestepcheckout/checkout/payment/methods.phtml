@@ -1,0 +1,84 @@
+<div id="form-loadding-payment" class="form-loadding"></div>
+<dl class="advanced-col-md-12" id="checkout-payment-method-load">
+    <?php
+    $methods = $this->getMethods();
+    $oneMethod = count($methods) <= 1;
+    $payment_method = Mage::helper('onestepcheckout/data')->getDefaultPaymentMethod();
+    ?>
+    <?php
+    $i = 0;
+    foreach ($methods as $_method):
+        $_code = $_method->getCode();
+        $i++;
+        ?>
+        <dt>
+        <?php if (!$oneMethod): ?>
+
+            <?php if ($i != count($methods)): ?>
+                <style type="text/css">
+                    #advice-validate-one-required-by-name-p_method_<?php echo $_code ?>{
+                        display: none !important;
+                    }
+                </style>
+            <?php endif; ?>
+            <?php if ($_code == $payment_method): ?>
+                <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="switchMethod('<?php echo $_code ?>')" checked="checked" class="radio validate-one-required-by-name" />
+            <?php else: ?>
+                <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="switchMethod('<?php echo $_code ?>')" class="radio validate-one-required-by-name" />
+            <?php endif; ?>
+        <?php else: ?>
+            <span><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio validate-one-required-by-name" /></span>
+            <?php $oneMethod = $_code; ?>
+        <?php endif; ?>
+        <label style="line-height: 21px;" for="p_method_<?php echo $_code ?>"><?php echo $this->escapeHtml($this->getMethodTitle($_method)) ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+        </dt>
+        <?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
+            <dd class="payment-form">
+                <?php echo $html ?>
+
+            </dd>                    
+        <?php endif; ?>
+    <?php endforeach; ?>
+</dl>
+<?php echo $this->getChildChildHtml('additional'); ?>
+<div class="advanced-clearfix"></div>
+<div class="advanced-empty-space"></div>
+
+<script type="text/javascript">
+    //<![CDATA[
+<?php echo $this->getChildChildHtml('scripts'); ?>
+    $$('#checkout-payment-method-load dt input').invoke('observe', 'click', function (e) {
+        var element = e.element();
+        var name = 'payment_form_' + element.value;
+
+        $$('dd.payment-form ul').invoke('hide');
+
+        if (element.checked) {
+            var form = $(name);
+            var container = $('payment_form_' + element.value);
+            $_adj('#payment_form_' + element.value + ' .form-list').show();
+            if (element !== null && container !== null) {
+                oscheckout.disablePaymentForm();
+                oscheckout.changeVisible(element.value, false);
+                container.show();
+                $(name).show();
+
+            }
+        }
+    });
+
+    function toggleToolTip(event) {
+        if ($('payment-tool-tip')) {
+            $('payment-tool-tip').setStyle({
+                top: (Event.pointerY(event) - 560) + 'px'//,
+                        //left: (Event.pointerX(event)+100)+'px'
+            })
+            $('payment-tool-tip').toggle();
+        }
+        Event.stop(event);
+    }
+    if ($('payment-tool-tip-close')) {
+        Event.observe($('payment-tool-tip-close'), 'click', toggleToolTip);
+    }
+//]]>
+</script>

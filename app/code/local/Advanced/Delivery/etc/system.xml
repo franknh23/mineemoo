@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Advanced
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the AdvancedCheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.AdvancedCheckout.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Advanced
+ * @package     Advanced_Delivery
+ * @copyright   Copyright (c) 2012 Advanced (http://www.AdvancedCheckout.com/)
+ * @license     http://www.AdvancedCheckout.com/license-agreement.html
+ */
+-->
+<config>
+    <tabs>
+        <advanced-checkout translate="label">
+            <label>AdvancedCheckout.com</label>
+            <sort_order>268</sort_order>
+        </advanced-checkout>
+    </tabs>
+    <sections>
+        <delivery translate="label" module="delivery">
+            <class>separator-top</class>
+            <label>Delivery Date</label>
+            <tab>advanced-checkout</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>299</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>General Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>        
+                        <enabled translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Select Yes to enable this feature.</comment>
+                        </enabled>
+                        <delivery_format>
+                            <label>Date Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Advanced_Delivery_Model_Config_Dateformat</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Choose date format in which date will be displayed in frontend and admin panel.</comment>
+                        </delivery_format>
+                        <delivery_dayoff>
+                            <label>Day Off</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>Advanced_Delivery_Model_Config_Dayoff</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Choose days on which shipping will not be available.</comment>
+                        </delivery_dayoff> 
+                        <sender_email translate="label">
+                            <label>Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>40</sort_order>                           
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment></comment>
+                        </sender_email>	  
+                        <email translate="label">
+                            <label>Email Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email>                                                 
+                    </fields>
+                </general>
+            </groups>
+        </delivery>
+
+    </sections>
+</config>

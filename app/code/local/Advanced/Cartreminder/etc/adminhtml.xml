@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config>
+    
+    <menu>
+        <advanced translate="title">            
+            <children>            
+                        <cartreminder module="cartreminder">
+                            <title>Cart Abandoned Reminder</title>
+                            <sort_order>10</sort_order>  
+                            <children>
+                                <settings module="cartreminder">
+                                    <title>Settings</title>
+                                    <sort_order>20</sort_order>  
+                                    <action>adminhtml/system_config/edit/section/cartreminder</action> 
+                                </settings>
+                            </children>
+                        </cartreminder>         
+            </children>
+        </advanced>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <cartreminder module="cartreminder" translate="title">
+                                        <title>Cart Abandoned Reminder</title>
+                                        <sort_order>71</sort_order>									
+                                    </cartreminder>								
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <advanced>
+                        <children>
+                            <cartreminder module="cartreminder" translate="title">
+                                <title>Cart Abandoned Reminder</title>
+                                <sort_order>71</sort_order>               
+                                <children>
+                                    <settings module="cartreminder" translate="title">
+                                        <title>Settings</title>
+                                        <sort_order>1000</sort_order>
+                                        <action>adminhtml/system_config/edit/section/cartreminder</action>
+                                    </settings>
+                                </children>
+                            </cartreminder>
+                        </children>
+                    </advanced>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

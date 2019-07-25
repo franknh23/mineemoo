@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Stabeaddon
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Stabeaddon.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.stabeaddon.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Stabeaddon
+ * @package     Stabeaddon_Bannerrules
+ * @copyright   Copyright (c) 2012 Stabeaddon (http://www.stabeaddon.com/)
+ * @license     http://www.stabeaddon.com/license-agreement.html
+ */
+-->
+<config>
+    <menu>
+        <advanced translate="title">            
+            <children>   
+                <bannerrules module="bannerrules" translate="title">
+                    <title>Promotion Banners</title>
+                    <sort_order>71</sort_order>
+                    <children>
+                        <bannerrules module="bannerrules" translate="title">
+                            <title>Manage Banners</title>
+                            <sort_order>0</sort_order>
+                            <action>adminhtml/adminhtml_bannerrules</action>
+                        </bannerrules>
+                        <settings module="bannerrules" translate="title">
+                            <title>Settings</title>
+                            <sort_order>1000</sort_order>
+                            <action>adminhtml/system_config/edit/section/bannerrules</action>
+                        </settings>
+                    </children>
+                </bannerrules>
+            </children>
+        </advanced>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <bannerrules module="bannerrules" translate="title">
+                                        <title>Bannerrules</title>
+                                        <sort_order>71</sort_order>
+                                    </bannerrules>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <advanced>
+                        <children>
+                            <bannerrules module="bannerrules" translate="title">
+                                <title>Bannerrules</title>
+                                <sort_order>71</sort_order>
+                                <children>
+                                    <bannerrules module="bannerrules" translate="title">
+                                        <title>Manage Items</title>
+                                        <sort_order>0</sort_order>
+                                    </bannerrules>
+                                    <settings module="bannerrules" translate="title">
+                                        <title>Settings</title>
+                                        <sort_order>1000</sort_order>
+                                    </settings>
+                                </children>
+                            </bannerrules>
+                        </children>
+                    </advanced>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

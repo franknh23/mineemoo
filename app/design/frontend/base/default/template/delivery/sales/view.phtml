@@ -1,0 +1,44 @@
+<?php $id = $this->getRequest()->getParam('order_id'); ?>
+<?php $delivery = Mage::getModel('delivery/deliverydate')->load($id, 'order_id'); ?>
+<?php if($delivery->getId()):?>
+<div class="col-set order-info-box">
+    <div class="col-2">
+        <div class="box">
+            <div class="">
+                <h2><?php echo $this->__('Expected Delivery Date') ?></h2>  
+            </div>
+            <div class="col-1">
+                <div class="">
+                    <div>
+                        <?php
+                        $date_format = Mage::getStoreConfig('delivery/general/delivery_format');
+
+                        if ($date_format == '')
+                            $date_format = 'd/M/Y';
+                        else
+                            $date_format.=" ";
+                        if ($delivery->getData('delivery_date') != '') {
+                            echo $this->__("Delivery Date :") . $currentDate = date($date_format, strtotime($delivery->getData('delivery_date')));
+                        }
+                        ?>
+                    </div>
+
+                    <div>
+                        <?php
+                        if ($delivery->getData('hourstart') != '')
+                            echo $this->__("Delivery Time :" . $delivery->getData('hourstart'));
+                        ?>
+                    </div>
+                    <div>
+                        <?php
+                        if ($delivery->getData('description') != '') {
+                            echo $this->__("Delivery Comment :" . $delivery->getData('description'));
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif;?>

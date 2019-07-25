@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<config>
+    
+    <menu>
+        <advanced translate="title">            
+            <children>            
+                        <sociallogin module="sociallogin">
+                            <title>Social Login</title>
+                            <sort_order>10</sort_order>  
+                            <children>
+                                <settings module="sociallogin">
+                                    <title>Settings</title>
+                                    <sort_order>20</sort_order>  
+                                    <action>adminhtml/system_config/edit/section/sociallogin</action> 
+                                </settings>
+                            </children>
+                        </sociallogin>         
+            </children>
+        </advanced>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sociallogin module="sociallogin" translate="title">
+                                        <title>Sociallogin</title>
+                                        <sort_order>71</sort_order>									
+                                    </sociallogin>								
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <advanced>
+                        <children>
+                            <sociallogin module="sociallogin" translate="title">
+                                <title>Sociallogin</title>
+                                <sort_order>71</sort_order>               
+                                <children>
+                                    <settings module="sociallogin" translate="title">
+                                        <title>Settings</title>
+                                        <sort_order>1000</sort_order>
+                                        <action>adminhtml/system_config/edit/section/sociallogin</action>
+                                    </settings>
+                                </children>
+                            </sociallogin>
+                        </children>
+                    </advanced>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

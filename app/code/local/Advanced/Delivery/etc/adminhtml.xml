@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Advanced
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the AdvancedCheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.AdvancedCheckout.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Advanced
+ * @package     Advanced_Delivery
+ * @copyright   Copyright (c) 2012 Advanced (http://www.AdvancedCheckout.com/)
+ * @license     http://www.AdvancedCheckout.com/license-agreement.html
+ */
+-->
+<config>
+      <menu>
+        <advanced>              
+                <children>
+                    <delivery module="delivery" translate="title">
+                        <title>Delivery Date</title>
+                        <sort_order>71</sort_order>
+                        <children>
+                            <delivery module="delivery" translate="title">
+                                <title>Manage Holidays</title>
+                                <sort_order>1</sort_order>
+                                <action>adminhtml/adminhtml_delivery</action>
+                            </delivery>
+                            <intervals module="delivery" translate="title">
+                                <title>Manage Time Intervals</title>
+                                <sort_order>2</sort_order>
+                                <action>adminhtml/adminhtml_intervals</action>
+                            </intervals>
+                            <deliverydate module="delivery" translate="title">
+                                <title>Manage Delivery Dates</title>
+                                <sort_order>0</sort_order>
+                                <action>adminhtml/adminhtml_deliverydate</action>
+                            </deliverydate>
+                            <settings module="delivery" translate="title">
+                                <title>Settings</title>
+                                <sort_order>1000</sort_order>
+                                <action>adminhtml/system_config/edit/section/delivery</action>
+                            </settings>
+                        </children>
+                    </delivery>
+                </children>
+        </advanced>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <delivery module="delivery" translate="title">
+                                        <title>Delivery</title>
+                                        <sort_order>71</sort_order>
+                                    </delivery>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <advanced>
+                        <title>Advance Checkout</title>
+                        <sort_order>71</sort_order>    
+                        <children>
+                            <delivery module="delivery" translate="title">
+                                <title>Delivery</title>
+                                <sort_order>71</sort_order>
+                                <children>
+                                    <delivery module="delivery" translate="title">
+                                        <title>Manage Holidays</title>
+                                        <sort_order>1</sort_order>
+                                        <action>adminhtml/adminhtml_delivery</action>
+                                    </delivery>
+                                    <intervals module="delivery" translate="title">
+                                        <title>Manage Time Intervals</title>
+                                        <sort_order>2</sort_order>
+                                        <action>adminhtml/adminhtml_intervals</action>
+                                    </intervals>
+                                    <deliverydate module="delivery" translate="title">
+                                        <title>Manage Delivery Dates</title>
+                                        <sort_order>0</sort_order>
+                                        <action>adminhtml/adminhtml_deliverydate</action>
+                                    </deliverydate>
+                                    <settings module="delivery" translate="title">
+                                        <title>Settings</title>
+                                        <sort_order>1000</sort_order>
+                                        <action>adminhtml/system_config/edit/section/delivery</action>
+                                    </settings>
+                                </children>
+                            </delivery>
+                        </children>
+                    </advanced>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

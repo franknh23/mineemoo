@@ -1,0 +1,86 @@
+<div id="form-loadding-shipping" class="form-loadding"></div>
+
+<?php $_shippingRateGroups = $this->getShippingRates(); ?>
+<?php if (!$_shippingRateGroups): ?>
+    <div class="advanced-col-md-12">
+        <p class="advanced-text-left"><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
+    </div>
+    <div class="advanced-clearfix"></div>
+    <div class="advanced-empty-space"></div>
+<?php else: ?>
+    <dl class="advanced-col-md-12 sp-methods">
+        <?php $shippingCodePrice = array(); ?>
+        <?php
+        $_adj = 0;
+        $_sole = count($_shippingRateGroups) == 1;
+        foreach ($_shippingRateGroups as $code => $_rates):
+            $_adj++;
+            ?>
+            <dt><?php echo $this->escapeHtml($this->getCarrierName($code)) ?></dt>
+            <dd>
+                <ul>
+                    <?php
+                    $_sole = $_sole && count($_rates) == 1;
+                    $i = 0;
+
+                    foreach ($_rates as $_rate):
+                        ?>                                
+                        <?php $i++; ?>
+                        <?php if ($_adj != count($_shippingRateGroups) || $i != count($_rates)): ?>
+                            <style type="text/css">
+                                #advice-validate-one-required-by-name-s_method_<?php echo$_rate->getCode() ?>{
+                                    display: none !important;
+                                }
+                            </style>
+                        <?php endif; ?>
+                        <?php $shippingCodePrice[] = "'" . $_rate->getCode() . "':" . (float) $_rate->getPrice(); ?>
+                        <li>
+                            <?php if ($_rate->getErrorMessage()): ?>
+                                <ul class="messages"><li class="error-msg"><ul><li><?php echo $this->escapeHtml($_rate->getErrorMessage()) ?></li></ul></li></ul>
+                            <?php else: ?>
+                                <?php if ($_sole) : ?>
+                                    <span><input onclick="saveShippingMethod('<?php echo $_rate->getCode() ?>')" name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
+                                    <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                        <?php echo $_excl; ?>
+                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                        <?php endif; ?>
+                                    </label>
+                                <?php else: ?>
+
+                                    <?php $shipping_method = Mage::helper('onestepcheckout/data')->getDefaultShippingMethod(); ?>
+
+                                    <?php if (!empty($shipping_method) && ($_rate->getCode() == $shipping_method)): ?> 
+                                        <input onclick="saveShippingMethod('<?php echo $_rate->getCode() ?>')" name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" class="radio validate-one-required-by-name"/>
+                                    <?php else: ?> 
+                                        <input onclick="saveShippingMethod('<?php echo $_rate->getCode() ?>')" name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if ($_rate->getCode() === $this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio validate-one-required-by-name"/>
+                                    <?php endif; ?>
+                                    <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $this->escapeHtml($_rate->getMethodTitle()) ?>
+                                        <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
+                                        <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
+                                        <?php echo $_excl; ?>
+                                        <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                                            (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                                        <?php endif; ?>
+                                    </label>
+                                    <?php if ($_rate->getCode() === $this->getAddressShippingMethod()): ?>
+                                        <script type="text/javascript">
+                                            //<![CDATA[
+                                            lastPrice = <?php echo (float) $_rate->getPrice(); ?>;
+                                            //]]>
+                                        </script>
+                                    <?php endif; ?>
+
+                                <?php endif; ?>
+
+                            <?php endif ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </dd>
+        <?php endforeach; ?>
+    </dl>
+<?php endif; ?>
+

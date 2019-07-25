@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <onestepcheckout_index_index>
+        <reference name="head">
+            <action method="addJs">
+                <script>advanced/app.js</script>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>css/advanced/sociallogin/style.css</name>
+            </action>
+            
+            
+        </reference>
+        <reference name="onestepcheckout">
+            <block type="sociallogin/sociallogin" name="sociallogin" template="sociallogin/sociallogin.phtml">
+                    <block type="sociallogin/facebooklogin" name="sociallogin_facebooklogin" template="sociallogin/facebooklogin.phtml" />
+                    <block type="sociallogin/googlelogin" name="sociallogin_googlepluslogin" template="sociallogin/googlelogin.phtml" />
+                    <block type="sociallogin/yahoologin" name="sociallogin_yahoologin" template="sociallogin/yahoologin.phtml" />
+                    <block type="sociallogin/twitterlogin" name="sociallogin_twitterlogin" template="sociallogin/twitterlogin.phtml" />
+                    <block type="sociallogin/linkedinlogin" name="sociallogin_linkedinlogin" template="sociallogin/linkedinlogin.phtml" />
+                </block>
+                
+                <block type="sociallogin/sociallogin" name="socialloginpopup" template="sociallogin/socialloginpopup.phtml">
+                    <block type="sociallogin/facebooklogin" name="sociallogin_popup_facebooklogin" template="sociallogin/popup/facebooklogin.phtml" />
+                    <block type="sociallogin/googlelogin" name="sociallogin_popup_googlepluslogin" template="sociallogin/popup/googlelogin.phtml" />
+                    <block type="sociallogin/yahoologin" name="sociallogin_popup_yahoologin" template="sociallogin/popup/yahoologin.phtml" />
+                    <block type="sociallogin/twitterlogin" name="sociallogin_popup_twitterlogin" template="sociallogin/popup/twitterlogin.phtml" />
+                    <block type="sociallogin/linkedinlogin" name="sociallogin_popup_linkedinlogin" template="sociallogin/popup/linkedinlogin.phtml" />
+                </block>            
+        </reference>
+    </onestepcheckout_index_index>
+    <default>        
+        <reference name="onestepcheckout">
+            <block type="sociallogin/sociallogin" name="sociallogin" template="sociallogin/sociallogin.phtml">
+                    <block type="sociallogin/facebooklogin" name="sociallogin_facebooklogin" template="sociallogin/facebooklogin.phtml" />
+                    <block type="sociallogin/googlelogin" name="sociallogin_googlepluslogin" template="sociallogin/googlelogin.phtml" />
+                    <block type="sociallogin/yahoologin" name="sociallogin_yahoologin" template="sociallogin/yahoologin.phtml" />
+                    <block type="sociallogin/twitterlogin" name="sociallogin_twitterlogin" template="sociallogin/twitterlogin.phtml" />
+                    <block type="sociallogin/linkedinlogin" name="sociallogin_linkedinlogin" template="sociallogin/linkedinlogin.phtml" />
+                </block>
+                
+                <block type="sociallogin/sociallogin" name="socialloginpopup" template="sociallogin/socialloginpopup.phtml">
+                    <block type="sociallogin/facebooklogin" name="sociallogin_popup_facebooklogin" template="sociallogin/popup/facebooklogin.phtml" />
+                    <block type="sociallogin/googlelogin" name="sociallogin_popup_googlepluslogin" template="sociallogin/popup/googlelogin.phtml" />
+                    <block type="sociallogin/yahoologin" name="sociallogin_popup_yahoologin" template="sociallogin/popup/yahoologin.phtml" />
+                    <block type="sociallogin/twitterlogin" name="sociallogin_popup_twitterlogin" template="sociallogin/popup/twitterlogin.phtml" />
+                    <block type="sociallogin/linkedinlogin" name="sociallogin_popup_linkedinlogin" template="sociallogin/popup/linkedinlogin.phtml" />
+                </block>            
+        </reference>
+    </default>
+</layout>
