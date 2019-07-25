@@ -1,0 +1,353 @@
+
+<?php
+$strDateFrom = array();
+$strDateTo = array();
+$holiday_date = array();
+$disabledDays = array();
+$disabledDay = '';
+$storeId = Mage::app()->getStore()->getStoreId();
+$intervals = Mage::getModel('delivery/intervals')->getCollection()
+        ->addFieldToFilter('store_id', array('finset' => $storeId));
+//$date_format = Mage::getStoreConfig('delivery/general/delivery_format');
+//
+//  $data = str_replace('/'||'.', '-', );
+?>
+<p class="label_checkbox_pair">
+    <input type="checkbox" class="checkbox" onclick="showDeliveryBox()" class="validation-passed" title="<?php echo $this->__('Enable Delivery Time') ?>" value="1" id="enabled_delivery_time" name="enabled_delivery_time">            
+    <label for="enabled_delivery_time"><?php echo $this->__('Delivery Time') ?></label>
+</p>
+
+    <div class="uc-form" style="display:none;" id="delivery-box">
+
+    <div style="border-top: 1px solid #D1D1D1; margin-top: 12px; padding-top: 10px;">
+        <div style="width: 100%;float: left;"> 
+            <label for="page_date-end"><?php echo $this->__('Delivery Date')?>:<em style="color: red">*</em></label><br/>
+            <i class="fa fa-calendar fa-2x" id="delivery_date_trig" style="margin-right: 5px; float: left;"></i>            
+            <input readonly id="delivery-date"  name="delivery_date"  value="" title="date" class="required-entry input-text" style="min-width: 100px; float: left;width:85%" type="text"/>
+            
+        </div>
+        <div  id= "time_delivery" style="width: 100%; float: left;"> 
+            <p><label for="delivery_time" style="float: left;margin-top: 10px; width: 100%;">Delivery Time:</label></p>
+            <select name="delivery_time" style="min-width: 100px;float: left;width: 100%;">
+                <?php foreach ($intervals as $interval): ?>
+                    <?php $delivery_time = $interval->getHourstart(); ?>
+                <?php if($interval->getStatus() == '1'):?>
+                {
+                <option ><?php echo $interval->getHourstart() . ' - ' . $interval->getHourto(); ?></option>
+                }
+                     <?php endif ?>
+                <?php endforeach; ?>
+            </select>      
+        </div>
+        <?php
+        if (empty($delivery_time)) {
+            ?>
+            <style>
+                #time_delivery{
+
+                    display:  none;
+                }
+            </style>
+            <?php
+        } else {
+            ?>
+            <style>
+                #time_delivery{
+
+                    display:  block;
+                }
+            </style>
+            <?php
+        }
+        ?>
+            <ul>
+                <li>
+                     <label for="delivery_comment" style="float: left;margin-top: 10px ;width: 100%;">Delivery Comments:</label><br/>
+                      <textarea name="delivery_comment" id="shipping_arrival_comments"></textarea>
+                    
+                </li>
+            </ul>
+    </div>
+
+</div>
+    
+<?php $dayoff = Mage::getStoreConfig('delivery/general/delivery_dayoff'); ?>
+<?php
+$storeId = Mage::app()->getStore()->getStoreId();
+$holidays = Mage::getModel('delivery/holiday')->getCollection()
+        ->addFieldToFilter('store_id', array('finset' => $storeId));
+foreach ($holidays as $holiday) {
+    
+    if($holiday->getStatus()=='1')
+    {
+    $strDateFrom[] = $holiday->getDatefrom();
+    $strDateTo[] = $holiday->getDateto();
+    }
+}
+
+if (count($strDateFrom) == 0) {  
+} else {
+    for ($i = 0; $i < count($strDateFrom); $i++) {
+
+        $holiday_date[$i] = Mage::helper('delivery')->createDateRangeArray($strDateFrom[$i], $strDateTo[$i]);
+        $disabledDays[$i] = implode('","', $holiday_date[$i]);
+    }
+    $disabledDay = implode(' ","', $disabledDays);
+}
+
+?>
+
+
+<script type="text/javascript">
+    enUS = {"m": {"wide": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"], "abbr": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]}}; // en_US locale reference
+    Calendar._DN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]; // full day names
+    Calendar._SDN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // short day names
+    Calendar._FD = 0; // First day of the week. "0" means display Sunday first, "1" means display Monday first, etc.
+    Calendar._MN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; // full month names
+    Calendar._SMN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // short month names
+    Calendar._am = "AM"; // am/pm
+    Calendar._pm = "PM";
+    // tooltips
+    Calendar._TT = {};
+    Calendar._TT["INFO"] = "About the calendar";
+    Calendar._TT["ABOUT"] =
+            "DHTML Date/Time Selector\n" +
+            "(c) dynarch.com 2002-2005 / Author: Mihai Bazon\n" +
+            "For latest version visit: http://www.dynarch.com/projects/calendar/\n" +
+            "Distributed under GNU LGPL. See http://gnu.org/licenses/lgpl.html for details." +
+            "\n\n" +
+            "Date selection:\n" +
+            "- Use the \xab, \xbb buttons to select year\n" +
+            "- Use the " + String.fromCharCode(0x2039) + ", " + String.fromCharCode(0x203a) + " buttons to select month\n" +
+            "- Hold mouse button on any of the above buttons for faster selection.";
+    Calendar._TT["PREV_YEAR"] = "Prev. year (hold for menu)";
+    Calendar._TT["PREV_MONTH"] = "Prev. month (hold for menu)";
+    Calendar._TT["GO_TODAY"] = "Go Today";
+    Calendar._TT["NEXT_MONTH"] = "Next month (hold for menu)";
+    Calendar._TT["NEXT_YEAR"] = "Next year (hold for menu)";
+    Calendar._TT["SEL_DATE"] = "Select date";
+    Calendar._TT["DRAG_TO_MOVE"] = "Drag to move";
+    Calendar._TT["PART_TODAY"] = ' (' + "Today" + ')';
+    // the following is to inform that "%s" is to be the first day of week
+    Calendar._TT["DAY_FIRST"] = "Display %s first";
+    // This may be locale-dependent. It specifies the week-end days, as an array
+    // of comma-separated numbers. The numbers are from 0 to 6: 0 means Sunday, 1
+    // means Monday, etc.
+    Calendar._TT["WEEKEND"] = "0,6";
+    Calendar._TT["CLOSE"] = "Close";
+    Calendar._TT["TODAY"] = "Today";
+    Calendar._TT["TIME_PART"] = "(Shift-)Click or drag to change value";
+    // date formats
+    Calendar._TT["DEF_DATE_FORMAT"] = "%b %e, %Y";
+    Calendar._TT["TT_DATE_FORMAT"] = "%B %e, %Y";
+    Calendar._TT["WK"] = "Week";
+    Calendar._TT["TIME"] = "Time:";
+    CalendarDateObject._LOCAL_TIMZEONE_OFFSET_SECONDS = -28800;
+ 
+       Calendar.prototype._init = function (firstDayOfWeek, date) {
+        var today = new CalendarDateObject(),
+        TY = today.getFullYear(),
+        TM = today.getMonth(),
+        TD = today.getDate();
+        this.table.style.visibility = "hidden";
+        var year = date.getFullYear();
+        if (year < this.minYear) {
+            year = this.minYear;
+            date.setFullYear(year);
+        } else if (year > this.maxYear) {
+            year = this.maxYear;
+            date.setFullYear(year);
+        }
+        this.firstDayOfWeek = firstDayOfWeek;
+        this.date = new CalendarDateObject(date);
+        var month = date.getMonth();
+        var mday = date.getDate();
+        var no_days = date.getMonthDays();
+        /* Added By B.C. on date 18/02/2013 */
+        var check_flag = false;
+        /* END */
+
+        // calendar voodoo for computing the first day that would actually be
+        // displayed in the calendar, even if it's from the previous month.
+        // WARNING: this is magic. ;-)
+        date.setDate(1);
+        var day1 = (date.getDay() - this.firstDayOfWeek) % 7;
+        if (day1 < 0)
+            day1 += 7;
+        date.setDate(-day1);
+        date.setDate(date.getDate() + 1);
+
+        var row = this.tbody.firstChild;
+        var MN = Calendar._SMN[month];
+        var ar_days = this.ar_days = new Array();
+        var weekend = Calendar._TT["WEEKEND"];
+        var dates = this.multiple ? (this.datesCells = {}) : null;
+        for (var i = 0; i < 6; ++i, row = row.nextSibling) {
+            var cell = row.firstChild;
+            if (this.weekNumbers) {
+                cell.className = "day wn";
+                cell.innerHTML = date.getWeekNumber();
+                cell = cell.nextSibling;
+            }
+            row.className = "daysrow";
+            var hasdays = false, iday, dpos = ar_days[i] = [];
+            for (var j = 0; j < 7; ++j, cell = cell.nextSibling, date.setDate(iday + 1)) {
+                iday = date.getDate();
+                var wday = date.getDay();
+                cell.className = "day";
+                cell.pos = i << 4 | j;
+                dpos[j] = cell;
+                var current_month = (date.getMonth() == month);
+                if (!current_month) {
+                    if (this.showsOtherMonths) {
+                        cell.className += " othermonth";
+                        cell.otherMonth = true;
+                    } else {
+                        cell.className = "emptycell";
+                        cell.innerHTML = "&nbsp;";
+                        cell.disabled = true;
+                        continue;
+                    }
+                } else {
+                    cell.otherMonth = false;
+                    hasdays = true;
+                }
+                cell.disabled = false;
+                cell.innerHTML = this.getDateText ? this.getDateText(date, iday) : iday;
+                if (dates)
+                    dates[date.print("%Y%m%d")] = cell;
+                if (this.getDateStatus) {
+                    var status = this.getDateStatus(date, year, month, iday);
+                    if (this.getDateToolTip) {
+                        var toolTip = this.getDateToolTip(date, year, month, iday);
+                        if (toolTip)
+                            cell.title = toolTip;
+                    }
+                    if (status === true) {
+                        cell.className += " disabled";
+                        cell.disabled = true;
+                    } else {
+                        if (/disabled/i.test(status))
+                            cell.disabled = true;
+                        cell.className += " " + status;
+                    }
+                }
+                if (!cell.disabled) {
+                    cell.caldate = new CalendarDateObject(date);
+                    cell.ttip = "_";
+                    if (!this.multiple && current_month
+                        && iday == mday && this.hiliteToday) {
+                        cell.className += " selected";
+                        this.currentDateEl = cell;
+                    }
+                    if (date.getFullYear() == TY &&
+                        date.getMonth() == TM &&
+                        iday == TD) {
+                        cell.className += " today";
+                        cell.ttip += Calendar._TT["PART_TODAY"];
+                    }
+                    if (weekend.indexOf(wday.toString()) != -1)
+                        cell.className += cell.otherMonth ? " oweekend" : " weekend";
+                    if (check_flag){
+                        cell.className += " selected";
+                        this.currentDateEl = cell; 
+                        check_flag=false;
+                    }
+                }else{
+                    /* Added By B.C. on date 18/02/2013 */
+                    if (!this.multiple && current_month
+                        && iday == mday && this.hiliteToday) {
+                        check_flag=true;
+                    }
+
+                    /* END */
+                }
+            }
+            if (!(hasdays || this.showsOtherMonths))
+                row.className = "emptyrow";
+        }
+        this.title.innerHTML = Calendar._MN[month] + ", " + year;
+        this.onSetTime();
+        this.table.style.visibility = "visible";
+        this._initMultipleDates();
+        // PROFILE
+        // this.tooltips.innerHTML = "Generated in " + ((new CalendarDateObject()) - today) + " ms";
+    };
+       
+       
+       
+    Calendar.setup({
+        inputField: "delivery-date",
+        ifFormat: '<?php echo $this->getDateFormat(); ?>',
+        showsTime: false,
+        button: "delivery_date_trig",
+        electric: false,
+        singleClick: true,
+        disableFunc: function (date) {
+            // day
+            var today = new Date();
+            if (date.getDate() < today.getDate() && date.getMonth() <= today.getMonth() && date.getFullYear() <= today.getFullYear()) {
+                return true;
+            }
+            
+            //date
+           var dayoff = '<?php echo $dayoff; ?>';
+            if (dayoff.indexOf(date.getDay()) !== -1) {
+                return true;
+            }
+            // holiday
+            var holidaydate = '<?php echo $disabledDay; ?>';
+                      var m2 = date.getMonth(), d2 = date.getDate(), y2 = date.getFullYear();
+            for (i = 0; i < holidaydate.length; i++) {
+                   var dd = y2 + '-' + (m2 + 1) + '-' + d2;
+                if (holidaydate.indexOf(dd) != -1) {
+                    return true;
+                }
+            }
+    }
+    });
+    
+    
+    Calendar.setup({
+        inputField: "delivery-date",
+        ifFormat: '<?php echo $this->getDateFormat(); ?>',
+        showsTime: false,
+        button: "delivery-date",
+        electric: false,
+        singleClick: true,
+        disableFunc: function (date) {
+            // day
+            var today = new Date();
+            if (date.getDate() < today.getDate() && date.getMonth() <= today.getMonth() && date.getFullYear() <= today.getFullYear()) {
+                return true;
+            }
+            
+            //date
+           var dayoff = '<?php echo $dayoff; ?>';
+            if (dayoff.indexOf(date.getDay()) !== -1) {
+                return true;
+            }
+            // holiday
+            var holidaydate = '<?php echo $disabledDay; ?>';
+                      var m2 = date.getMonth(), d2 = date.getDate(), y2 = date.getFullYear();
+            for (i = 0; i < holidaydate.length; i++) {
+                   var dd = y2 + '-' + (m2 + 1) + '-' + d2;
+                if (holidaydate.indexOf(dd) != -1) {
+                    return true;
+                }
+            }
+    }
+    });
+if ($('enabled_delivery_time').checked) {
+        $('delivery-box').show();
+    } else {
+        $('delivery-box').hide();
+    }
+    function showDeliveryBox() {
+        if ($('enabled_delivery_time').checked) {
+            $('delivery-box').show();
+        } else {
+            $('delivery-box').hide();
+        }
+    }
+</script>

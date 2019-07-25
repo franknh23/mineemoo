@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the www.advancedcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+-->
+<config>
+    <menu>
+        <advanced translate="title">
+            <title>One Step Checkout</title>
+            <sort_order>71</sort_order>               
+            <children>
+                <fieldmanagement translate="title">
+                    <title>Field Management</title>
+                    <sort_order>0</sort_order>
+                    <action>adminhtml/adminhtml_fieldmanagement</action> 
+                </fieldmanagement>    
+                <survey translate="title">
+                    <title>Survey Reports</title>
+                    <sort_order>300</sort_order>
+                    <action>adminhtml/adminhtml_surveyreport</action> 
+                </survey>    
+                <settings>
+                    <title>Settings</title>
+                    <sort_order>1000</sort_order>  
+                    <action>adminhtml/system_config/edit/section/onestepcheckout</action> 
+                </settings>                   
+            </children>
+        </advanced>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>                           
+                            <config>
+                                <children>
+                                    <onestepcheckout module="onestepcheckout" translate="title">
+                                        <title>One Step Checkout</title>
+                                        <sort_order>81</sort_order>
+                                    </onestepcheckout>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <advanced>  
+                        <title>One Step Checkout</title>
+                        <sort_order>71</sort_order>       
+                        <children>
+                            <fieldmanagement translate="title">
+                                <title>Field Management</title>
+                                <sort_order>0</sort_order>
+                                <action>adminhtml/adminhtml_fieldmanagement</action> 
+                            </fieldmanagement>    
+                            <survey translate="title">
+                                <title>Survey Reports</title>
+                                <sort_order>300</sort_order>
+                                <action>adminhtml/adminhtml_surveyreport</action> 
+                            </survey>    
+                            <settings>
+                                <title>Settings</title>
+                                <sort_order>1000</sort_order>  
+                                <action>adminhtml/system_config/edit/section/onestepcheckout</action> 
+                            </settings>                   
+                        </children>
+                    </advanced>                   
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,1068 @@
+<?php
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Onestepcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+/**
+ * onestepcheckout template
+ * 
+ * @see Advanced_Onestepcheckout_Block_Onestepcheckout
+ */
+?>
+<?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?>
+    <?php $language = substr(Mage::getStoreConfig('general/locale/code', Mage::app()->getStore()->getId()), 0, 2); ?>
+    <?php $key = Mage::getStoreConfig('onestepcheckout/features/maps_apikey', Mage::app()->getStore()->getStoreId());?>
+    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&language=<?php echo $language ?>&key=<?php echo $key;?>"></script>
+<?php endif; ?>
+<?php $storeId = Mage::app()->getStore()->getStoreId(); ?>
+<?php $clbs = false; ?>
+<?php $style = Mage::getStoreConfig('onestepcheckout/style/list_style', $storeId); ?>
+<?php $titleBackgroundColor = Mage::getStoreConfig('onestepcheckout/style/title', $storeId); ?>
+<?php
+$title_color_font = Mage::getStoreConfig('onestepcheckout/style/color_font', $storeId);
+$bg_color_style = Mage::getStoreConfig('onestepcheckout/style/style_background_color_icon', $storeId);
+$osc_font = Mage::getStoreConfig('onestepcheckout/style/font', $storeId);
+$osc_design = Mage::getStoreConfig('onestepcheckout/style/design', $storeId);
+$osc_color_button = new Advanced_Onestepcheckout_Helper_Color(Mage::getStoreConfig('onestepcheckout/style/button', $storeId));
+$automatic_color = new Advanced_Onestepcheckout_Helper_Color($titleBackgroundColor);
+$automatic_color = ($bg_color_style) ? $automatic_color->darken() : $automatic_color->lighten();
+?>
+
+<?php
+$styleBackgroundIcon = Mage::getStoreConfig('onestepcheckout/style/style_background_icon', $storeId);
+$column = Mage::getStoreConfig('onestepcheckout/style/column', $storeId);
+?>
+
+<style type="text/css">
+    .advanced-container-style * {
+        font-family: <?php echo $osc_font; ?> !important;
+    }
+
+    .advanced-container-style i,
+    .advanced-container-style fa,
+    .advanced-container-style a.fa{
+        font-family: FontAwesome !important;
+    }
+
+    <?php if ($osc_design == 'material') : ?>
+        .advanced-container-style h1,
+        .advanced-container-style .advanced-panel-header,
+        .advanced-container-style .advanced-panel-header h3,
+        .advanced-container-style .advanced-panel-header .advanced-panel-header-icons i,
+        .advanced-container-style .advanced-panel-header i.fa-pulse,
+        .advanced-container-style .advanced-panel-header i.fa-times {
+            color: #<?php echo $titleBackgroundColor; ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header span.advanced-panel-slant-right,
+        .advanced-container-style .advanced-panel-header span.advanced-panel-slant-left{
+            border-color: #fff;
+        }
+        
+        .advanced-container-style .advanced-panel-header .advanced-panel-header-icon-number{
+            background-color: #<?php echo $titleBackgroundColor; ?>;
+            color: #fff;
+        }
+
+        .advanced-container-style .advanced-panel-header i.fa-circle{
+            color: #<?php echo $automatic_color; ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header i.fa-inverse span{
+            color: #fff;
+        }
+
+        .advanced-container-style [type="radio"]:checked + label:after {
+            background-color: #<?php echo $titleBackgroundColor; ?>;
+        }
+
+        .advanced-container-style .input-field label.active,
+        .advanced-container-style .input-field label.select-active {
+            color: #<?php echo $titleBackgroundColor; ?>;
+        }
+
+        .advanced-container-style [type="checkbox"]:checked + label:before {
+            border-right: 2px solid #<?php echo $titleBackgroundColor; ?>;
+            border-bottom: 2px solid #<?php echo $titleBackgroundColor; ?>;
+        }
+
+        .advanced-container-style input[type=text]:focus:not([readonly]),
+        .advanced-container-style input[type=password]:focus:not([readonly]),
+        .advanced-container-style input[type=email]:focus:not([readonly]),
+        .advanced-container-style input[type=url]:focus:not([readonly]),
+        .advanced-container-style input[type=time]:focus:not([readonly]),
+        .advanced-container-style input[type=date]:focus:not([readonly]),
+        .advanced-container-style input[type=datetime-local]:focus:not([readonly]),
+        .advanced-container-style input[type=tel]:focus:not([readonly]),
+        .advanced-container-style input[type=number]:focus:not([readonly]),
+        .advanced-container-style input[type=search]:focus:not([readonly]),
+        .advanced-container-style textarea.materialize-textarea:focus:not([readonly]) {
+            border-bottom: 1px solid #<?php echo $titleBackgroundColor; ?> !important;
+            box-shadow: 0 1px 0 0 #<?php echo $titleBackgroundColor; ?> !important;
+        }
+    <?php else: ?>
+        .advanced-container-style .advanced-panel-header,
+        .advanced-container-style .advanced-panel-header h3,
+        .advanced-container-style .advanced-panel-header span {
+            color: #<?php echo $title_color_font; ?>;
+        }
+        
+        .advanced-container-style .advanced-panel-header .advanced-panel-header-icon-number{
+            background-color: #<?php echo $title_color_font; ?>;
+            color: #<?php echo $automatic_color; ?>;
+        }
+        
+        .advanced-container-style .advanced-panel-header i.fa-inverse span {
+            color: #<?php echo $automatic_color; ?>;
+        }
+
+        .advanced-container-style input {
+            border: 1px solid #<?php echo $titleBackgroundColor ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header {
+            background-color: #<?php echo $titleBackgroundColor ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header .advanced-panel-header-icons {
+            background-color: #<?php echo $automatic_color; ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header .advanced-panel-arrow-left {
+            border-top: 50px solid #<?php echo $automatic_color; ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header .advanced-panel-arrow-right {
+            border-left: 12px solid #<?php echo $automatic_color; ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header .advanced-panel-slant-right {
+            border-color: transparent transparent transparent #<?php echo $automatic_color; ?>;
+        }
+
+        .advanced-container-style .advanced-panel-header .advanced-panel-slant-left {
+            border-color: #<?php echo $automatic_color; ?> transparent #<?php echo $automatic_color; ?> transparent;
+        }
+
+
+    <?php endif; ?>
+    .advanced-container-style h1,
+    .advanced-base-color,
+    .advanced-container-style a,
+    .advanced-button2 span,
+    .advanced-button2 span span{
+        color: #<?php echo $titleBackgroundColor ?>;
+    }
+
+    .advanced-container-style a:focus,
+    .advanced-container-style a:hover,
+    .advanced-button2 span:hover,
+    .advanced-button2 span span:hover
+    {
+        color: #<?php echo $automatic_color; ?>;
+        outline-color: #<?php echo $automatic_color; ?>;
+    }
+
+    .advanced-row .advanced-button, .advanced-row .advanced-button{
+        background: #<?php echo Mage::getStoreConfig('onestepcheckout/style/button', $storeId) ?>;
+    }
+
+    .advanced-row .advanced-button:hover,
+    .advanced-row .advanced-button:hover,
+    .advanced-row .advanced-cart-table .product-cart-actions .advanced-button:hover,
+    .advanced-row #co-shipping-method-form .advanced-buttons-set .advanced-button:hover,
+    .advanced-row .footer .advanced-button:hover {
+        background: #<?php echo $osc_color_button->lighten(); ?> !important;
+    }
+
+    .advanced-row .advanced-button:active,
+    .advanced-row .advanced-button:active,
+    .advanced-row .advanced-cart-table .product-cart-actions .advanced-button:active,
+    .advanced-row #co-shipping-method-form .advanced-buttons-set .advanced-button:active,
+    .advanced-row .footer .advanced-button:active {
+        background: #<?php echo Mage::getStoreConfig('onestepcheckout/style/button', $storeId) ?> !important;
+    }
+    .advanced-row .advanced-button:focus,
+    .advanced-row .advanced-button:focus,
+    .advanced-row .advanced-cart-table .product-cart-actions .advanced-button:focus,
+    .advanced-row #co-shipping-method-form .advanced-buttons-set .advanced-button:focus,
+    .advanced-row .footer .advanced-button:focus {
+        background: #<?php echo Mage::getStoreConfig('onestepcheckout/style/button', $storeId) ?> !important;
+    }
+</style>
+<div class="advanced-container-style" id="oscpage">
+    <div class="advanced-row">
+        <div class="advanced-col-md-12"> 
+            <!-- header -->
+            <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+            <div class="advanced-head"> 
+
+                <h1><?php echo Mage::getStoreConfig('onestepcheckout/general/title', Mage::app()->getStore()->getStoreId()); ?></h1>
+                <div class="advanced-head-message">
+                    <h4><?php echo $this->__('Please enter your details below to complete your purchase!'); ?></h4>
+                </div>
+
+                <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                    <div class="advanced-head-login">
+                        <p><a id="login-link1" class="modalbox" href="#social-login-popup"><?php echo $this->__('Already registered? Click here to login'); ?></a></p>
+                    </div>
+                <?php endif; ?>
+                <?php if (Mage::getStoreConfig('onestepcheckout/style/button_top', $storeId)): ?>
+                    <div class="advanced-row">
+                        <div class="button-top advanced-col-md-4 advanced-container-style">
+                            <button id="place-order-button-top" class="advanced-button btn waves-effect waves-light advanced-col-xs-12" type="button" title="<?php echo $this->__('Place Order') ?>" class="advanced-btn-checkout" onclick="oscheckout.placeOrder();">
+                                <span style="width:100%">
+                                    <span><?php echo $this->__('Place Order') ?></span>                                    
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="advanced-col-md-12"> 
+            <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+                <?php echo $this->getChildHtml('sociallogin') ?>
+            <?php endif; ?>
+        </div>
+        <div class="advanced-clearfix"></div>
+    </div>
+
+    <div class="advanced-row">
+        <div class="advanced-col-md-12"><div class="hr"></div></div>
+        <form id="onestepcheckout" method="post">
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <!-- column 1 -->
+            <?php
+            $classAddress = 'advanced-col-md-4';
+            if ($this->getQuote()->isVirtual() || $column == 2) {
+                $classAddress = 'advanced-col-md-6';
+            }
+            if ($column == 1) {
+                $classAddress = 'advanced-col-md-12';
+            }
+            ?>
+
+            <div class="<?php echo $classAddress; ?>">
+                <!-- billing address -->
+                <div class="advanced-billing card-panel">
+                    <div class="advanced-panel-header">
+                        <span class="advanced-pull-left fa-stack fa-lg advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'block' : 'none'; ?>">
+                            <span id="advanced-billing-title" class="advanced-panel-header-icon-number">1</span>
+                        </span>
+                        <span class="advanced-pull-left advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'none' : 'block'; ?>"><i class="fa fa-home fa-2x"></i></span>
+                        <span class="advanced-pull-left advanced-panel-<?php echo $styleBackgroundIcon; ?>"></span>
+                        <span class="advanced-pull-left"><h3 class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Billing Address') ?></h3></span>
+                    </div>
+                    <div class="advanced-clearfix"></div>
+
+                    <?php echo $this->getBlockHtml('onestepcheckout_checkout_billing'); ?>
+                    <div class="advanced-empty-space"></div>
+                </div>
+                <!-- shipping address-->
+
+                <!-- column 3 -->    
+                <?php
+                if ($style == 'number') {
+                    $titleClass = 'title-3';
+                }
+                if ($this->getQuote()->isVirtual()) {
+                    if ($style == 'number') {
+                        $titleClass = 'title-2';
+                    }
+                }
+                ?>
+
+                <?php if (!$this->getQuote()->isVirtual() && Mage::getStoreConfig('onestepcheckout/general/shipping_address', $storeId)): ?>
+                    <div class="advanced-shipping card-panel" style="display:none" id="shippingaddress-form"> 
+                        <div class="advanced-panel-header">
+                            <span class="advanced-pull-left fa-stack fa-lg advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'block' : 'none'; ?>">
+                                <span id="advanced-shipping-title" class="advanced-panel-header-icon-number">2</span>
+                            </span>
+                            <span class="advanced-pull-left advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'none' : 'block'; ?>"><i class="fa fa-home fa-2x"></i></span>
+                            <span class="advanced-pull-left advanced-panel-<?php echo $styleBackgroundIcon; ?>"></span>
+                            <span class="advanced-pull-left"><h3 class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Shipping Address') ?></h3></span>
+                        </div>
+                        <div class="advanced-clearfix"></div>
+
+                        <div class="advanced-row">
+                            <?php echo $this->getBlockHtml('onestepcheckout_checkout_shipping'); ?>
+                        </div>
+                        <div class="advanced-empty-space"></div>
+                    </div>
+                <?php endif; ?>
+                <div class="advanced-clearfix"></div>
+            </div>
+
+
+            <?php
+            $classMethod = 'advanced-col-md-8';
+            if ($this->getQuote()->isVirtual() || $column == 2) {
+                $classMethod = 'advanced-col-md-6';
+            }
+            if ($column == 1) {
+                $classMethod = 'advanced-col-md-12';
+            }
+            ?>
+
+            <div class="<?php echo $classMethod; ?>">
+                <div class="advanced-row">
+
+                    <?php
+                    $classPayment = 'advanced-col-md-6';
+                    if ($style == 'number') {
+                        $titleClass = 'title-3';
+                    }
+                    if ($this->getQuote()->isVirtual() || $column == 2) {
+                        $classPayment = 'advanced-col-md-12';
+                        if ($style == 'number') {
+                            $titleClass = 'title-2';
+                        }
+                    }
+                    if ($column == 1) {
+                        $classPayment = 'advanced-col-md-12';
+                    }
+                    if ($column == '3bs') {
+                        $clbs = true;
+                        $classPayment = 'advanced-col-md-12';
+                    }
+                    ?>
+                    <?php if ($clbs && !$this->getQuote()->isVirtual()): ?>
+                        <div class="advanced-col-md-6">
+
+                        <?php else: ?>       
+                            <div class="<?php echo $classPayment; ?>">
+                            <?php endif ?>
+                            <!-- column 2 -->
+
+                            <?php if (!$this->getQuote()->isVirtual()): ?>
+                                <!-- shipping method-->
+                                <div class="advanced-shippingmethod card-panel">
+
+                                    <div class="advanced-panel-header">
+                                        <span class="advanced-pull-left fa-stack fa-lg advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'block' : 'none'; ?>">
+                                            <span id="advanced-shippingmethod-title" class="advanced-panel-header-icon-number">2</span>
+                                        </span>
+                                        <span class="advanced-pull-left advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'none' : 'block'; ?>"><i class="fa fa-truck fa-2x"></i></span>
+                                        <span class="advanced-pull-left advanced-panel-<?php echo $styleBackgroundIcon; ?>"></span>
+                                        <span class="advanced-pull-left"><h3 class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Shipping Method') ?></h3></span>
+                                        <span class="advanced-pull-right"><i id="load-shipping" class="fa fa-spinner fa-2x fa-pulse" style="display: none;"></i></span>
+                                    </div>
+                                    <div class="advanced-clearfix"></div>
+
+
+                                    <div id="shipping-method-form">
+                                        <?php echo $this->getBlockHtml('onestepcheckout_checkout_shippingmethod'); ?>
+                                    </div>
+                                    <?php if (Mage::helper('core')->isModuleEnabled('Advanced_Delivery') && Mage::getStoreConfig('delivery/general/enabled', Mage::app()->getStore()->getStoreId())): ?>
+                                        <div class="advanced-form-style">
+                                            <?php echo $this->getLayout()->createBlock('delivery/delivery')->setTemplate('delivery/deliverydate.phtml')->toHtml(); ?>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>  
+                            <?php endif; ?>
+                            <div class="advanced-clearfix"></div>
+                            <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+                            <div class="<?php echo $classPayment; ?>">
+                            <?php endif; ?>
+                            <!-- payment method-->
+                            <div class="advanced-paymentmethod card-panel">
+                                <div class="advanced-panel-header">
+                                    <span class="advanced-pull-left fa-stack fa-lg advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'block' : 'none'; ?>">
+                                        <span id="advanced-paymentmethod-title" class="advanced-panel-header-icon-number">3</span>
+                                    </span>
+                                    <span class="advanced-pull-left advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'none' : 'block'; ?>"><i class="fa fa-credit-card fa-2x"></i></span>
+                                    <span class="advanced-pull-left advanced-panel-<?php echo $styleBackgroundIcon; ?>"></span>
+                                    <span class="advanced-pull-left"><h3 class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Payment Method') ?></h3></span>
+                                    <span class="advanced-pull-right"><i id="load-payment" class="fa fa-spinner fa-2x fa-pulse" style="display: none;"></i></span>
+                                </div>
+                                <div class="advanced-clearfix"></div>
+
+                                <div id="payment-method-form"><?php echo $this->getBlockHtml('onestepcheckout_checkout_paymentmethod'); ?></div>
+                            </div>
+                            <div class="advanced-clearfix"></div>
+                            <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($clbs && !$this->getQuote()->isVirtual()): ?>
+                        </div>
+                        <div class="advanced-col-md-6">
+                        <?php else: ?>
+                            <div class="advanced-clearfix"></div>
+                        <?php endif ?>
+
+
+                        <!-- column review -->
+                        <?php
+                        $classReview = 'advanced-col-md-12';
+                        if ($style == 'number') {
+                            $titleReviewClass = 'advanced-title-4';
+                        }
+                        if ($this->getQuote()->isVirtual() || $column == 2) {
+                            $classReview = 'advanced-col-md-12';
+                            if ($style == 'number') {
+                                $titleReviewClass = 'title-3';
+                            }
+                        }
+                        if ($column == 1) {
+                            $classReview = 'advanced-col-md-12';
+                        }
+                        ?>
+
+                        <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+                            <div class="<?php echo $classReview; ?>">
+
+                            <?php endif; ?>
+
+                            <div class="advanced-review card-panel">
+                                <div class="advanced-panel-header">
+                                    <span class="advanced-pull-left fa-stack fa-lg advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'block' : 'none'; ?>">
+                                        <span id="advanced-review-title" class="advanced-panel-header-icon-number">4</span>
+                                    </span>
+                                    <span class="advanced-pull-left advanced-panel-header-icons" style="display: <?php echo ($style == 'number') ? 'none' : 'block'; ?>"><i class="fa fa-list-alt fa-2x"></i></span>
+                                    <span class="advanced-pull-left advanced-panel-<?php echo $styleBackgroundIcon; ?>"></span>
+                                    <span class="advanced-pull-left"><h3 class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Order Review') ?></h3></span>
+                                    <span class="advanced-pull-right"><i id="load-review" class="fa fa-spinner fa-2x fa-pulse" style="display: none;"></i></span>
+                                </div>
+                                <div class="advanced-clearfix"></div>
+
+                                <div class="advanced-form" id="order-review-form"><?php echo $this->getBlockHtml('onestepcheckout_checkout_review'); ?></div>
+                            </div>
+                            <div class="advanced-clearfix"></div>
+                            <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+                            <div class="<?php echo $classReview; ?>">
+
+                            <?php endif; ?>
+                            <?php if (Mage::getStoreConfig('sales/gift_options/allow_order', Mage::app()->getStore()->getStoreId()) || Mage::getStoreConfig('sales/gift_options/allow_items', Mage::app()->getStore()->getStoreId())): ?>
+                                <div class="advanced-box-style card-panel"  style="min-height:0;">
+                                    <div class="advanced-form-style">
+                                        <?php echo $this->getBlockHtml('onestepcheckout.review.giftmessage'); ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+
+                            </div>
+                        <?php endif; ?>
+                        <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+                            <div class="<?php echo $classReview; ?>">
+
+                            <?php endif; ?>
+
+                            <?php
+                            $oneOfThem = false;
+                            $enableComment = Mage::getStoreConfig('onestepcheckout/features/order_comment', Mage::app()->getStore()->getStoreId());
+                            $enableCoupon = Mage::getStoreConfig('onestepcheckout/features/coupon', Mage::app()->getStore()->getStoreId());
+                            if (!$enableComment || !$enableCoupon) {
+                                $oneOfThem = true;
+                            }
+                            ?>    
+
+                            <div class="advanced-row">
+                                <!-- Comment  -->
+                                <?php if (Mage::getStoreConfig('onestepcheckout/features/order_comment', Mage::app()->getStore()->getStoreId())): ?>
+
+                                    <div class="<?php echo ($clbs && !$this->getQuote()->isVirtual()) ? 'advanced-col-md-12' : 'advanced-col-md-6'; ?>">                                        
+                                        <div class="padding-top-5 advanced-box-style card-panel">
+                                            <?php echo $this->getBlockHtml('onestepcheckout.review.order_comment'); ?>
+                                        </div>                                  
+                                    </div>
+                                <?php endif; ?>
+                                <!-- /Comment  -->
+
+                                <!-- Coupon  -->
+                                <?php if (Mage::getStoreConfig('onestepcheckout/features/coupon', Mage::app()->getStore()->getStoreId())): ?>
+                                    <div class="<?php echo ($clbs && !$this->getQuote()->isVirtual()) ? 'advanced-col-md-12' : 'advanced-col-md-6'; ?>">
+                                        <div class="padding-top-5 advanced-box-style card-panel">
+                                            <?php echo $this->getBlockHtml('onestepcheckout.review.coupon') ?>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                                <!-- Coupon  -->
+
+                                <?php if (!$oneOfThem): ?>
+                                    <div class="advanced-clearfix"></div>
+                                <?php endif; ?>
+
+                                <?php
+                                $classPlace = 'advanced-col-md-6';
+                                if ($clbs && !$this->getQuote()->isVirtual()) {
+                                    $classPlace = 'advanced-col-md-12';
+                                }
+                                ?>
+                                <?php
+                                $showNewsletter = Mage::helper('onestepcheckout')->showNewsletter();
+                                $survey_question = Mage::getStoreConfig('onestepcheckout/features/survey_question', Mage::app()->getStore()->getStoreId());
+                                $enable_survey = Mage::getStoreConfig('onestepcheckout/features/other_answer', Mage::app()->getStore()->getStoreId());
+
+                                if (Mage::getStoreConfig('onestepcheckout/features/enable_survey', Mage::app()->getStore()->getStoreId())) :
+                                    ?>
+
+                                    <?php
+                                    $minHeight = false;
+
+                                    if (Mage::getStoreConfig('onestepcheckout/features/coupon', Mage::app()->getStore()->getStoreId()) && Mage::getStoreConfig('onestepcheckout/features/order_comment', Mage::app()->getStore()->getStoreId())) {
+                                        $minHeight = true;
+                                    }
+                                    if ($column == '3bs') {
+                                        $minHeight = true;
+                                    }
+                                    ?>
+                                    <div class="<?php echo $classPlace ?>">
+
+                                        <!-- Survey -->
+                                        <?php if (Mage::getStoreConfig('onestepcheckout/features/enable_survey', Mage::app()->getStore()->getStoreId()) && Mage::getStoreConfig('onestepcheckout/features/survey_question', Mage::app()->getStore()->getStoreId())): ?>
+                                            <div class="advanced-box-style advanced-form-style card-panel" <?php if ($minHeight) echo'style="min-height:0;"'; ?>>
+
+                                                <div class="onestepcheckout-terms-conditions">
+                                                    <?php
+                                                    $selectedSurveyFields = $this->getRequest()->getPost('survey', false);
+                                                    $surveyValues = unserialize(Mage::getStoreConfig('onestepcheckout/features/answer_values', Mage::app()->getStore()->getStoreId()));
+                                                    ?>
+
+                                                    <div class="onestepcheckout-survey label_select_pair" id="">
+
+                                                        <label for="id_survey"><?php echo Mage::getStoreConfig('onestepcheckout/features/survey_question', Mage::app()->getStore()->getStoreId()); ?></label>
+                                                        <select style="width: 200px;" name="survey" id="id_survey">
+                                                            <option value=""><?php echo $this->__('Please choose'); ?></option>
+                                                            <?php
+                                                            foreach ($surveyValues as $value => $label):
+
+                                                                $selected = (!empty($selectedSurveyFields) && $selectedSurveyFields == $value) ? ' selected' : '';
+                                                                ?>
+                                                                <option value="<?php echo $value ?>" <?php echo $selected; ?>><?php echo $label['value'] ?></option>
+                                                            <?php endforeach; ?>
+                                                            <?php
+                                                            if (Mage::getStoreConfig('onestepcheckout/features/other_answer', Mage::app()->getStore()->getStoreId())):
+                                                                $selected = (empty($surveyValues[$selectedSurveyFields]) && $selectedSurveyFields != '') ? ' selected' : '';
+                                                                ?>
+                                                                <option value="freetext" <?php echo $selected; ?>><?php echo $this->__('Other'); ?></option>
+                                                            <?php endif; ?>
+                                                        </select>
+                                                    </div>
+                                                    <?php if (Mage::getStoreConfig('onestepcheckout/features/other_answer', Mage::app()->getStore()->getStoreId())): ?>
+                                                        <script type="text/javascript">
+                                                            $('id_survey').observe('change', function (event) {
+                                                                if (this.getValue() == 'freetext') {
+                                                                    $('id_survey_freetext_div').show();
+                                                                } else {
+                                                                    $('id_survey_freetext_div').hide();
+                                                                }
+                                                            });</script>
+                                                        <div id='id_survey_freetext_div' class="onestepcheckout-survey-freetext"<?php echo ((!empty($selectedSurveyFields) && $selectedSurveyFields == 'freetext') ? '' : ' style="display: none;"'); ?>>
+                                                            <input placeholder="<?php echo $this->__('Please specify') ?>" style="width: 200px;" type="text" id="id_survey_freetext" name="survey-freetext"><?php echo $this->getRequest()->getPost('survey-freetext', false); ?></textarea>
+                                                        </div>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                            <div class="advanced-clearfix"></div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="advanced-col-md-6"></div>
+                                <?php endif; ?>
+
+                                <div class="<?php echo $classPlace ?>">
+                                    <div id="review-buttons-container">
+                                        <!-- Newsletter -->
+                                        <?php if (Mage::helper('onestepcheckout')->showNewsletter()): ?>
+                                            <div class="input-field">
+                                                <input type="checkbox" class="checkbox" name="is_subscribed" title="<?php echo $this->__('Sign Up for Newsletter') ?>" value="1" id="is_subscribed" />
+                                                <label for="is_subscribed"><?php echo $this->__('Sign Up for Newsletter') ?></label>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="advanced-clearfix"></div>
+                                        <!-- Terms and conditions -->
+                                        <?php if (Mage::getStoreConfig('onestepcheckout/features/term_condition', Mage::app()->getStore()->getStoreId()) && Mage::getStoreConfig('onestepcheckout/features/type_condition', Mage::app()->getStore()->getStoreId()) == 'system'): ?>
+                                            <?php echo $this->getBlockHtml('onestepcheckout.agreements') ?>
+                                        <?php elseif (Mage::getStoreConfig('onestepcheckout/features/term_condition', Mage::app()->getStore()->getStoreId()) && Mage::getStoreConfig('onestepcheckout/features/type_condition', Mage::app()->getStore()->getStoreId()) == 'custom'): ?>
+                                            <div class="input-field">
+                                                <input type="checkbox" name="terms_conditions_checkbox" id="terms_conditions_checkbox_id" value="1" class="checkbox required-entry"/>
+                                                <label for="terms_conditions_checkbox_id"><?php echo $this->__('I read and agree to '); ?> <a id="term_condition-link1" class="termsbox" target="_blank" href="#tern-and-condition-popup" ><?php echo $this->__('the Terms and Conditions.'); ?></a></label>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="advanced-clearfix"></div>
+                                    </div>
+                                    <div class="advanced-empty-space"></div>
+                                    <div class="advanced-row">
+                                        <div class="advanced-col-md-12">
+                                            <!-- Place-order -->
+                                            <div id="directpost"></div>
+                                            <button id="place-order-button" class="advanced-button btn waves-effect waves-light advanced-col-xs-12" type="button" title="<?php echo $this->__('Place Order') ?>" class="advanced-btn-checkout" onclick="oscheckout.placeOrder();">
+                                                <?php echo $this->__('Place Order') ?>
+                                            </button>
+                                            <span class="please-wait" id="review-please-wait" style="display:none;float: left;">
+
+                                                <img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
+                                            </span>
+                                            <!-- /Place-order -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php if (!$clbs || $this->getQuote()->isVirtual()): ?>
+
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($clbs && !$this->getQuote()->isVirtual()): ?>
+                        </div>
+                    <?php endif ?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+ <?php echo $this->getChildHtml('onestepcheckout_after') ?>
+<?php $isSecure = Mage::app()->getStore()->isCurrentlySecure(); ?>
+<?php $_autoLoadFields = Mage::getStoreConfig('onestepcheckout/ajax_update/field_updates', $storeId); ?>
+
+<?php $autoLoadFields = explode(',', $_autoLoadFields); ?>
+<script type="text/javascript">
+<?php $ajaxAddress = explode(',', Mage::getStoreConfig('onestepcheckout/ajax_update/update_ajax_address', $storeId)); ?>
+<?php $ajaxShipping = explode(',', Mage::getStoreConfig('onestepcheckout/ajax_update/update_ajax_shipping', $storeId)); ?>
+<?php $ajaxPayment = explode(',', Mage::getStoreConfig('onestepcheckout/ajax_update/update_ajax_payment', $storeId)); ?>
+
+    var saveOrderUrl = '<?php echo $this->getUrl('onestepcheckout/index/saveOrder', array('_secure' => $isSecure)); ?>';
+    var updateItemQtyUrl = '<?php echo $this->getUrl('onestepcheckout/index/updateItems', array('_secure' => $isSecure)); ?>';
+    var deleteItemQtyUrl = '<?php echo $this->getUrl('onestepcheckout/index/deleteItem', array('_secure' => $isSecure)); ?>';
+    var saveAddressUrl = '<?php echo $this->getUrl('onestepcheckout/index/saveAddress', array('_secure' => $isSecure)); ?>';
+    var loadshipping = <?php echo (in_array('shipping_method', $ajaxAddress)) ? 1 : 0; ?>;
+    var loadpayment = <?php echo (in_array('payment_method', $ajaxAddress)) ? 1 : 0; ?>;
+    var loadorderreview = <?php echo (in_array('order_review', $ajaxAddress)) ? 1 : 0; ?>;
+
+    var saveShippingMethodUrl = '<?php echo $this->getUrl('onestepcheckout/index/saveShippingMethod', array('_secure' => $isSecure)); ?>';
+    var loadpaymentShipping = <?php echo (in_array('payment_method', $ajaxShipping)) ? 1 : 0; ?>;
+    var loadorderreviewShipping = <?php echo (in_array('order_review', $ajaxShipping)) ? 1 : 0; ?>;
+
+    var savePaymentMethodUrl = '<?php echo $this->getUrl('onestepcheckout/index/savePaymentMethod', array('_secure' => $isSecure)); ?>';
+    var loadorderreviewPayment = <?php echo (in_array('order_review', $ajaxPayment)) ? 1 : 0; ?>;
+
+    var oscheckout = new OSCheckout(loadshipping,
+            loadpayment,
+            loadorderreview,
+            loadpaymentShipping,
+            loadorderreviewShipping,
+            loadorderreviewPayment,
+            saveAddressUrl,
+            saveShippingMethodUrl,
+            savePaymentMethodUrl,
+            updateItemQtyUrl,
+            deleteItemQtyUrl,
+            saveOrderUrl);
+
+    function checkBillingFieldsUpdate() {
+        var check = true;
+<?php $actionPrecess = Mage::getStoreConfig('onestepcheckout/ajax_update/action_process', $storeId); ?>
+        var listcheck = [];
+<?php foreach ($autoLoadFields as $id => $value): ?>
+    <?php if ($value == 'country'): ?>
+                if ($('billing:country_id'))
+                    listcheck.push('billing:country_id');
+    <?php endif; ?>
+    <?php if ($value == 'state'): ?>
+            
+                if ($('billing:region') && $('billing:region').style.display == 'none') {
+                    if ($('billing:region_id'))
+                        listcheck.push('billing:region_id');
+                }
+                if ($('billing:region_id') && $('billing:region_id').style.display == 'none') {
+                    if ($('billing:region'))
+                        listcheck.push('billing:region');
+                }
+    <?php endif; ?>
+    <?php if ($value == 'postcode'): ?>
+                if ($('billing:postcode'))
+                    listcheck.push('billing:postcode');
+    <?php endif; ?>
+
+<?php endforeach; ?>
+<?php if (!$actionPrecess): ?>
+            for (var i = 0; i < listcheck.length; i++) {
+                if (!$(listcheck[i]).value)
+                    check = false;
+            }
+<?php endif; ?>
+        return check;
+    }
+
+    function checkShippingFieldsUpdate() {
+        var check = true;
+<?php $actionPrecess = Mage::getStoreConfig('onestepcheckout/ajax_update/action_process', $storeId); ?>
+        var listcheck = [];
+<?php foreach ($autoLoadFields as $id => $value): ?>
+    <?php if ($value == 'country'): ?>
+                if ($('shipping:country_id'))
+                    listcheck.push('shipping:country_id');
+    <?php endif; ?>
+    <?php if ($value == 'state'): ?>
+                if ($('shipping:region') && $('shipping:region').style.display == 'none') {
+                    if ($('shipping:region_id'))
+                        listcheck.push('shipping:region_id');
+                }
+                if ($('shipping:region_id') && $('shipping:region_id').style.display == 'none') {
+                    if ($('shipping:region'))
+                        listcheck.push('shipping:region');
+                }
+    <?php endif; ?>
+    <?php if ($value == 'postcode'): ?>
+                if ($('shipping:postcode'))
+                    listcheck.push('shipping:postcode');
+    <?php endif; ?>
+
+<?php endforeach; ?>
+<?php if (!$actionPrecess): ?>
+            for (var i = 0; i < listcheck.length; i++) {
+                if (!$(listcheck[i]).value)
+                    check = false;
+            }
+<?php endif; ?>
+        return check;
+    }
+
+
+    if ($('billing-address-select'))
+        Event.observe('billing-address-select', 'change', function () {
+            if(typeof Materialize != 'undefined')
+                Materialize.updateTextFields();
+            oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview);            
+        });
+<?php if (!$this->getQuote()->isVirtual()): ?>
+        if ($('shipping-address-select'))
+            Event.observe('shipping-address-select', 'change', function () {
+                if(typeof Materialize != 'undefined')
+                    Materialize.updateTextFields();
+                oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview);     
+            });
+<?php endif; ?>
+<?php foreach ($autoLoadFields as $id => $value): ?>
+    <?php if ($value == 'country'): ?>
+            if ($('billing:country_id'))
+                Event.observe('billing:country_id', 'change', function () {
+                    if (checkBillingFieldsUpdate()) {
+                        oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                    }
+                    if($('billing:country_id').value=='BR'){
+                        if($('brazil_tax_form'))
+                            $('brazil_tax_form').style.display = 'block';
+                    }else{
+                        if($('brazil_tax_form'))
+                            $('brazil_tax_form').style.display = 'none';
+                    }
+                });
+        <?php if (!$this->getQuote()->isVirtual()): ?>
+                if ($('shipping:country_id'))
+                    Event.observe('shipping:country_id', 'change', function () {
+                        if (checkShippingFieldsUpdate()) {
+                            oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                        }
+                    });
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if ($value == 'state'): ?>
+            if ($('billing:region_id'))
+                Event.observe('billing:region_id', 'change', function () {
+                    if (checkBillingFieldsUpdate()) {
+                        oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                    }
+                });
+        <?php if (!$this->getQuote()->isVirtual()): ?>
+                if ($('shipping:region_id'))
+                    Event.observe('shipping:region_id', 'change', function () {
+                        if (checkShippingFieldsUpdate()) {
+                            oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                        }
+                    });
+        <?php endif; ?>
+            if ($('billing:region'))
+                Event.observe('billing:region', 'change', function () {
+                    if (checkBillingFieldsUpdate()) {
+                        oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                    }
+                });
+        <?php if (!$this->getQuote()->isVirtual()): ?>
+                if ($('shipping:region'))
+                    Event.observe('shipping:region', 'change', function () {
+                        if (checkShippingFieldsUpdate()) {
+                            oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                        }
+                    });
+        <?php endif; ?>
+
+
+    <?php endif; ?>
+    <?php if ($value == 'postcode'): ?>
+            if ($('billing:postcode'))
+                Event.observe('billing:postcode', 'change', function () {
+                    if (checkBillingFieldsUpdate()) {
+                        oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                    }
+                });
+        <?php if (!$this->getQuote()->isVirtual()): ?>
+                if ($('shipping:postcode'))
+                    Event.observe('shipping:postcode', 'change', function () {
+                        if (checkShippingFieldsUpdate()) {
+                            oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                        }
+                    });
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
+
+    function saveShippingMethod(shipping_method) {
+        oscheckout.saveShippingMethods(shipping_method);
+    }
+
+    function switchMethod(payment_method) {
+        oscheckout.savePaymentMethods(payment_method);
+    }
+
+
+    var loadingImage = '<img id="load-popup" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>Advanced/load.gif" width="20" height="14" />';
+<?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?>
+        function fillAddress(type, street, city, region_id, region, country, postal_code, sublocality) {
+
+            if (street) {
+                if ($(type + ':street1')) {
+                    document.getElementById(type + ':street1').value = street;
+                }
+            }
+            if (sublocality) {
+                if ($(type + ':street2')) {
+                    document.getElementById(type + ':street2').value = sublocality;
+                }
+            }
+            if (city) {
+                if ($(type + ':city')) {
+                    document.getElementById(type + ':city').value = city;
+                }
+            }
+            if (country) {
+                if ($(type + ':country_id')) {
+                    document.getElementById(type + ':country_id').value = country;
+                }
+            }
+            if (type == 'billing') {
+                billingRegionUpdater.update();
+            }
+            if (type == 'shipping') {
+                shippingRegionUpdater.update();
+            }
+            var params = {country: country, region_id: region_id};
+            var request = new Ajax.Request(
+                    '<?php echo $this->getUrl('onestepcheckout/index/getreionid'); ?>',
+                    {
+                        method: 'post',
+                        onSuccess: function (transport) {
+                            if (transport.status == 200) {
+                                var id = JSON.parse(transport.responseText).id;
+                                if (region_id) {
+                                    if ($(type + ':region_id')) {
+                                        document.getElementById(type + ':region_id').value = id;
+                                    }
+                                }
+                            }
+                        },
+                        onFailure: '',
+                        parameters: params
+                    });
+            if (region) {
+                if ($(type + ':region')) {
+                    document.getElementById(type + ':region').value = region;
+                }
+            }
+            if (postal_code) {
+                if ($(type + ':postcode')) {
+                    document.getElementById(type + ':postcode').value = postal_code;
+                }
+            }
+            oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview);
+            <?php if ($osc_design == 'material') : ?>
+                if(typeof Materialize != 'undefined')
+                    Materialize.updateTextFields();
+            <?php endif;?>
+        }
+<?php endif; ?>
+
+
+    oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview);
+    for (var i = 0; i < $$('input[name^=payment[method]]').length; i++) {
+        var element = $$('input[name^=payment[method]]')[i];
+        var name = 'payment_form_' + element.value;
+        if (element.checked) {
+            var form = $(name);
+            var container = $('payment_form_' + element.value);
+            if (element !== null && container !== null) {
+
+                $('payment_form_' + element.value).show();
+            }
+        }
+    }
+</script>
+<script>
+    if ($('billing:taxvat'))
+        Event.observe('billing:taxvat', 'change', function () {
+<?php if (Mage::getStoreConfig('onestepcheckout/vat/enabled', Mage::app()->getStore()->getStoreId())): ?>
+                $('image_tax_loading').show();
+                $('vat_notify').hide();
+                var params = {taxvat: $('billing:taxvat').value, country: $('billing:country_id').value};
+                var request = new Ajax.Request(
+                        '<?php echo $this->getUrl('onestepcheckout/index/checkvat'); ?>',
+                        {
+                            method: 'post',
+                            onSuccess: function (transport) {
+                                if (transport.status == 200) {
+                                    var result = JSON.parse(transport.responseText);
+                                    $('image_tax_loading').hide();
+                                    $('vat_notify').show();
+                                    if (result.verify_result) {
+                                        $('vat_notify').innerHTML = '<span style="color:#8AC236; font-size: 11px;font-weight: 100;" id="vat_notify"><?php echo $this->__('Verified') ?></span>';
+
+                                        oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                                    } else {
+                                        $('vat_notify').innerHTML = '<span style="color:#E04929; font-size: 11px;font-weight: 100;" id="vat_notify"><?php echo $this->__('Not Verified') ?></span>';
+                                        oscheckout.saveAddress(loadshipping,loadpayment,loadorderreview); 
+                                    }
+                                }
+                            },
+                            onFailure: '',
+                            parameters: params
+                        });
+<?php else: ?>
+                $('billing:vat_id').value = $('billing:taxvat').value;
+<?php endif; ?>
+        });
+        <?php if($this->braziZipcodevalid()):?>
+            if($('billing:postcode'))
+                Event.observe('billing:postcode','change',function(){
+                    if($('billing:country_id').value=='BR'){
+                        oscheckout.brazilZipcodevalid($('billing:postcode').value,'<?php echo $this->getUrl('onestepcheckout/index/brazilzipcode'); ?>','billing');
+                    }else{
+                        $('billing:postcode').classList.remove('validate-brazil-zipcode');
+                    }
+                });
+            if($('shipping:postcode'))
+                Event.observe('shipping:postcode','change',function(){
+                    if($('shipping:country_id').value=='BR'){
+                        oscheckout.brazilZipcodevalid($('shipping:postcode').value,'<?php echo $this->getUrl('onestepcheckout/index/brazilzipcode'); ?>','shipping');
+                    }else{
+                        $('shipping:postcode').classList.remove('validate-brazil-zipcode');
+                    }
+                });
+        <?php endif;?>
+    
+        <?php if($this->braziTaxvalid()):?>
+            $$('input[name^=tax_type]').invoke('observe', 'click', function(e) { 
+                    
+                        if($('billing:taxvat')){
+                            
+                            if(!$('billing:taxvat').value)
+                                return;
+                            if($('billing:country_id').value=='BR'){
+                                oscheckout.brazilTaxvalid($('billing:taxvat'),'<?php echo $this->getUrl('onestepcheckout/index/brazilcpnj'); ?>');
+                            }else{                            
+                                $('billing:taxvat').classList.remove('validar_cpf');
+                                $('billing:taxvat').classList.remove('validar_cnpj');
+                            }
+                        }
+                        
+                        if($('shipping:taxvat')){
+                            if(!$('shipping:taxvat').value)
+                                return;
+                            if($('shipping:country_id').value=='BR'){
+                                oscheckout.brazilTaxvalid($('shipping:taxvat'),'<?php echo $this->getUrl('onestepcheckout/index/brazilcpnj'); ?>');
+                            }else{                            
+                                $('shipping:taxvat').classList.remove('validar_cpf');
+                                $('shipping:taxvat').classList.remove('validar_cnpj');
+                            }
+                        }
+            });
+                if($('billing:taxvat'))
+                    Event.observe('billing:taxvat','change',function(){
+                        if($('billing:country_id').value=='BR'){
+                            oscheckout.brazilTaxvalid($('billing:taxvat'),'<?php echo $this->getUrl('onestepcheckout/index/brazilcpnj'); ?>');
+                        }else{                            
+                            $('billing:taxvat').classList.remove('validar_cpf');
+                            $('billing:taxvat').classList.remove('validar_cnpj');
+                        }
+                    });
+                if($('shipping:taxvat'))
+                    Event.observe('shipping:taxvat','change',function(){
+                        if($('shipping:country_id').value=='BR'){
+                            oscheckout.brazilTaxvalid($('shipping:taxvat'),'<?php echo $this->getUrl('onestepcheckout/index/brazilcpnj'); ?>');
+                        }else{                            
+                            $('shipping:taxvat').classList.remove('validar_cpf');
+                            $('shipping:taxvat').classList.remove('validar_cnpj');
+                        }
+                    });
+                    
+            <?php endif;?>
+        if($('billing:email'))
+                    Event.observe('billing:email','change',function(){
+                        var params = {email: $('billing:email').value};
+                var request = new Ajax.Request(
+                        '<?php echo $this->getUrl('onestepcheckout/index/checkemail'); ?>',
+                        {
+                            method: 'post',
+                            onSuccess: function (transport) {
+                                if (transport.status == 200) {
+                                    var result = JSON.parse(transport.responseText);
+                                    if(result.error){                                        
+                                        Validation.add('validate-emailexist',result.error_messages,function(v){
+                                            return false;
+                                        });
+                                        $('billing:email').addClassName('validate-emailexist');
+                                        Validation.validate('billing:email');
+                                    }else{
+                                        Validation.add('validate-emailexist',result.error_messages,function(v){
+                                            return true;
+                                        });                                    
+                                        Validation.validate('billing:email');
+                                    }
+                                    
+                                }
+                            },
+                            onFailure: '',
+                            parameters: params
+                        });
+                        
+                    });
+</script>
+
+<script>
+    var cb = function () {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'https://fonts.googleapis.com/css?family=<?php echo $osc_font; ?>';
+        var h = document.getElementsByTagName('head')[0];
+        h.parentNode.insertBefore(l, h);
+    };
+    var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+            webkitRequestAnimationFrame || msRequestAnimationFrame;
+    if (raf)
+        raf(cb);
+    else
+        window.addEventListener('load', cb);
+</script>

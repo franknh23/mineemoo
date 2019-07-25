@@ -1,0 +1,48 @@
+<?php 
+	$orderId = Mage::app()->getRequest()->getParam('order_id');
+?>
+<?php if($this->getLastItem()):?>
+</table>
+<!-- Survey -->
+<?php $survey = Mage::getModel('onestepcheckout/survey')->load($orderId, 'order_id');?>
+<?php if($survey->getId()):?>
+<div class="entry-edit">
+	<fieldset>	
+	<div class="delivery">
+		<div class="entry-edit-head">
+			<h4 class="icon-head head-account">
+				<?php echo Mage::helper('onestepcheckout')->__('Survey') ?>
+			</h4>								
+		</div>
+	</div>
+	<div class="grid">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="data">
+				<tbody>					
+					<tr class="odd">
+						
+						<td class="a-left" style="width:50%;height:35px;line-height:35px;font-weight:bold;padding-left:10px;">
+							<?php echo $this->__('Question');?>
+						</td>						
+						<td class="a-left" style="width:50%;height:35px;line-height:35px;font-weight:bold;padding-left:10px;">
+							<?php echo $this->__('Answer');?>
+						</td>						
+					</tr>														
+					<tr class="odd">
+						
+						<td class="a-left" style="width:50%;height:35px;line-height:35px;padding-left:10px;">
+							<?php echo $survey->getQuestion();?>
+						</td>						
+						<td class="a-left" style="width:50%;height:35px;line-height:35px;padding-left:10px;">
+							<?php echo $survey->getAnswer();?>
+						</td>						
+					</tr>														
+													
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</fieldset>
+</div>
+<?php endif;?>
+<?php endif;?>

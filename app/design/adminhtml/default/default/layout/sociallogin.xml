@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <sociallogin_adminhtml_sociallogin_index>
+        <reference name="content">
+            <block type="sociallogin/adminhtml_sociallogin" name="sociallogin" />
+        </reference>
+    </sociallogin_adminhtml_sociallogin_index>
+</layout>

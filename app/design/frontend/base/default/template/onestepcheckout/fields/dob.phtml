@@ -1,0 +1,39 @@
+<label for="<?php echo $this->getFieldId('month') ?>"<?php if ($this->isRequired()) echo ' class="required"' ?>><?php echo $this->__('Date of Birth') ?>
+    <?php if ($this->isRequired()): ?>
+        <span class="required">*</span>
+    <?php endif ?>
+</label>
+<div class="advanced-row customer-dob">
+    <div class="advanced-col-xs-12">
+        <?php
+        $this->setDateInput('d', '<div class="advanced-col-xs-4 dob-day">
+             <input placeholder="' . $this->__('DD') . '" type="text" id="' . $this->getFieldId('day') . '" name="' . $this->getFieldName('day') . '" value="' . $this->getDay() . '" title="' . $this->__('Day') . '" class="input-text validate-custom" ' . $this->getFieldParams() . ' />
+            
+         </div>'
+        );
+
+        $this->setDateInput('m', '<div class="advanced-col-xs-4 dob-month">
+             <input placeholder="' . $this->__('MM') . '" type="text" id="' . $this->getFieldId('month') . '" name="' . $this->getFieldName('month') . '" value="' . $this->getMonth() . '" title="' . $this->__('Month') . '" class="input-text validate-custom" ' . $this->getFieldParams() . ' />
+            
+         </div>'
+        );
+
+        $this->setDateInput('y', '<div class="advanced-col-xs-4 dob-year">
+             <input placeholder="' . $this->__('YYYY') . '" type="text" id="' . $this->getFieldId('year') . '" name="' . $this->getFieldName('year') . '" value="' . $this->getYear() . '" title="' . $this->__('Year') . '" class="input-text validate-custom" ' . $this->getFieldParams() . ' />
+            
+         </div>'
+        );
+        ?>
+        <?php echo $this->getSortedDateInputs() ?>
+        <div class="dob-full" style="display:none;">
+            <input type="hidden" id="<?php echo $this->getFieldId('dob') ?>" name="<?php echo $this->getFieldName('dob') ?>" />
+        </div>
+
+        <div class="validation-advice" style="display:none;"></div>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var customer_dob = new Varien.DOB('.customer-dob', <?php echo $this->isRequired() ? 'true' : 'false' ?>, '<?php echo $this->getDateFormat() ?>');
+//]]>
+</script>

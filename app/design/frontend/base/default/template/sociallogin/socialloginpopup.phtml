@@ -1,0 +1,45 @@
+<?php
+if ($this->isEnable() && $this->isEnablePopupOSC()):
+    ?>
+    <h2><?php echo $this->__('Signin with'); ?></h2>
+    <div class="et_monarch">
+        <div class="et_pb_row">
+            <div class="et_pb_column et_pb_column_4_4">
+                <div class="et_pb_text et_pb_bg_layout_light et_pb_text_align_left">
+                    <div class="et_social_networks et_social_2col et_social_flip et_social_left et_social_fadein et_social_withnetworknames">
+                        <ul class="et_social_icons_container">
+                            <?php
+                            foreach ($this->getListSocial() as $sort_name => $sort_value) {
+                                ?>
+
+                                <?php
+                                if (trim(Mage::getStoreConfig('sociallogin/' . $sort_name . '_login/is_active'))) :
+                                    echo '<li class="et_social_' . $sort_name . '">' . $this->getChildHtml('sociallogin_popup_' . $sort_name . 'login') . '</li>';
+                                endif;
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        function open_windowLogin(url, title) {
+            var width = 500;
+            var height = 300;
+            var left = (screen.width / 2) - (width / 2);
+            var top = (screen.height / 2) - (height / 2);
+
+            var open_window = window.open(url, title, ('width=' + width + ',height=' + height + ',left=' + left + ',top=' + top));
+
+            if (window.focus) {
+                open_window.focus()
+            }
+            return false;
+        }
+    </script>
+    <?php
+endif;
+?>

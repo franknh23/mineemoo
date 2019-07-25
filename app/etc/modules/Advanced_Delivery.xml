@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Advanced_Delivery>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_Shipping />
+                <Mage_Checkout />
+                <Mage_Sales />
+            </depends>
+            <nonechecklicense>true</nonechecklicense>	
+        </Advanced_Delivery>
+    </modules>
+</config>

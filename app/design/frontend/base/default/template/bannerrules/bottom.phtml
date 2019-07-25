@@ -1,0 +1,69 @@
+<?php 
+/**
+ * Stabeaddon
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Stabeaddon.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.stabeaddon.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Stabeaddon
+ * @package     Stabeaddon_Bannerrules
+ * @copyright   Copyright (c) 2012 Stabeaddon (http://www.stabeaddon.com/)
+ * @license     http://www.stabeaddon.com/license-agreement.html
+ */
+
+/**
+ * Bannerrules template
+ * 
+ * @see Advanced_Bannerrules_Block_Bannerrules
+ */
+?>
+<?php
+
+$displayBlocks = $this->getDisplayBlocks();
+$currentModule = Mage::app()->getRequest()->getModuleName();
+$controllerName = Mage::app()->getRequest()->getControllerName();
+$show = false;
+$storeId = Mage::app()->getStore()->getStoreId();
+$page = '';
+if($currentModule == 'checkout' && $controllerName == 'cart'){
+    $page = 'cart';
+}
+if($currentModule == 'checkout' && $controllerName == 'onepage'){
+    $page = 'onepage';
+}
+if($currentModule == 'onestepcheckout'){
+    $page = 'onestep';
+}
+?>
+
+<?php if($page):?>
+    <?php foreach($displayBlocks as $block):?>
+        <?php $blocks = explode(',', $block->getShowBlock()); ?>
+
+        <?php if($page == 'cart' && $block->getPositionCart()==2):?>
+            <?php foreach($blocks as $id => $_block):?>
+                <?php  echo $this->getLayout()->createBlock('cms/block')->setBlockId($_block)->toHtml(); ?>
+            <?php endforeach;?>
+        <?php endif;?>
+
+        <?php if($page == 'onepage' && $block->getPositionCheckout()==2):?>
+            <?php foreach($blocks as $id => $_block):?>
+                <?php  echo $this->getLayout()->createBlock('cms/block')->setBlockId($_block)->toHtml(); ?>
+            <?php endforeach;?>
+        <?php endif;?>
+        <?php if($page == 'onestep' && $block->getPositionOscheckout()==2):?>
+            <?php foreach($blocks as $id => $_block):?>
+                <?php  echo $this->getLayout()->createBlock('cms/block')->setBlockId($_block)->toHtml(); ?>
+            <?php endforeach;?>
+        <?php endif;?>
+
+    <?php endforeach;?>
+<?php endif;?>

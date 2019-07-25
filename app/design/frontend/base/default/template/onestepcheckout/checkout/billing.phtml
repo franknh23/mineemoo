@@ -1,0 +1,460 @@
+<?php
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Onestepcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+/**
+ * onestepcheckout template
+ * 
+ * @see Advanced_Onestepcheckout_Block_Onestepcheckout
+ */
+?>
+
+
+<?php $storeId = Mage::app()->getStore()->getStoreId(); ?>
+<?php $style = Mage::getStoreConfig('onestepcheckout/style/list_style', $storeId); ?>
+<?php $websiteId = Mage::app()->getWebsite()->getId(); ?>
+<?php $helper = Mage::helper('onestepcheckout'); ?>
+<?php $fields = $helper->getFields($storeId, $websiteId); ?>
+<?php $widgetNameBlock = Mage::getBlockSingleton('customer/widget_name') ?>
+
+
+
+<div class="advanced-row">
+    <?php if ($this->customerHasAddresses()): ?>
+        <div class="advanced-col-md-12">
+            <label style="padding: 0 10px;" for="billing-address-select"><?php echo $this->__('Select a billing address from your address book or enter a new address.') ?></label>
+            <div class="input-box advanced-col-md-12">
+                <?php echo $this->getAddressesHtmlSelect('billing') ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    <div id="advanced-form-billing" class="advanced-form-style" <?php if ($this->customerHasAddresses()): ?> style="display:none;"<?php endif; ?>>
+        <?php $count_col_xs_6 = 0; ?>
+        <?php foreach ($fields as $id => $fieldValue): ?>
+
+            <?php if ($fieldValue['remove'] == 'remove'): ?>
+                <?php continue; ?>
+            <?php endif; ?>
+            <?php if (Mage::getSingleton('customer/session')->isLoggedIn() && $fieldValue['path'] == 'email'): ?>
+                <?php continue; ?>
+            <?php endif; ?>
+            <?php if (Mage::getSingleton('customer/session')->isLoggedIn() && $fieldValue['path'] == 'gender'): ?>
+                <?php continue; ?>
+            <?php endif; ?>
+            <?php if (Mage::getSingleton('customer/session')->isLoggedIn() && $fieldValue['path'] == 'birthday'): ?>
+                <?php continue; ?>
+            <?php endif; ?>
+
+
+            <?php
+            if ($fields[$id]['width'] == 1):
+                ?>        
+                <div class="advanced-col-xs-12  input-field">
+
+                <?php else: ?>
+                    <div class="advanced-col-xs-6 input-field">
+                    <?php endif; ?>
+
+                    <?php if ($fieldValue['path'] == 'country'): ?>
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required select-active"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                        <?php echo $this->getCountryHtmlSelect('billing') ?>
+                        <?php if ($fieldValue['required'] != 1): ?>	
+                            <script type="text/javascript">
+                                if ($('billing:country_id'))
+                                    $('billing:country_id').removeClassName('validate-select');
+                            </script>
+                        <?php endif ?>
+
+                    <?php elseif ($fieldValue['path'] == 'region'): ?>
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required select-active"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                        <select id="billing:region_id" name="billing[region_id]" title="<?php echo $this->__('State/Province') ?>" <?php if ($fieldValue['required'] == 1) echo 'class="validate-select"' ?> style="display:none;">
+                            <option value=""><?php echo $this->__('Please select region, state or province') ?></option>
+                        </select>
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            $('billing:region_id').setAttribute('defaultValue', "<?php echo $this->getBillingAddress()->getRegionId() ?>");
+        <?php if ($fieldValue['required'] != 1): ?>
+                                if ($('billing:region_id'))
+                                    $('billing:region_id').removeClassName('validate-select');
+        <?php endif ?>
+                            //]]>
+                        </script>
+                        <input  type="text" id="billing:<?php echo $fieldValue['path'] ?>" name="billing[<?php echo $fieldValue['path'] ?>]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getData($fieldValue['path'])) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/>
+
+                    <?php elseif ($fieldValue['path'] == 'street'): ?>
+
+
+                        <div class="advanced-row">
+                            <?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?>
+                                <div class="advanced-col-xs-12">
+                                    <label class="select-active <?php if ($fieldValue['required'] == 1) echo 'required' ?>" for="billing:street1" ><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                                    <input  type="text" id="billing:street1" <?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?> <?php endif; ?> name="billing[street][]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getStreet(1)) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?> "/>
+                                    <a class="mylocation" onclick="geolocateUser()">
+                                        <i title="<?php echo $this->__('Click to get your location') ?>" class="fa fa-map-marker fa-2x faa-vertical animated"></i>
+                                    </a>
+                                </div>
+
+                            <?php else : ?>
+                                <div class="advanced-col-xs-12  input-field">
+                                    <label for="billing:street1" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                                    <input  type="text" id="billing:street1" <?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?> <?php endif; ?> name="billing[street][]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getStreet(1)) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?> "/>
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+                        <?php $fieldValue['required'] = trim(str_replace('required-entry', '', $fieldValue['required'])); ?>
+                        <?php for ($_i = 2, $_n = $this->helper('customer/address')->getStreetLines(); $_i <= $_n; $_i++): ?>                                 
+                            <input  type="text" title="<?php echo $this->__('Street Address %s', $_i) ?>" name="billing[street][]" id="billing:street<?php echo $_i ?>" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getStreet($_i)) ?>" class="input-text <?php echo $fieldValue['required'] ?>" />
+
+                        <?php endfor; ?>
+                    <?php elseif ($fieldValue['path'] == 'prefix_name'): ?>
+
+
+                        <?php if ($widgetNameBlock->getPrefixOptions() === false): ?>
+                            <label for="billing:prefix" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                            <input  type="text" id="billing:prefix" name="billing[prefix]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getPrefix()) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/> 
+                        <?php else: ?>
+                            <label for="billing:prefix" <?php if ($fieldValue['required'] == 1) echo 'class="required select-active"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                            <select id="<?php echo $widgetNameBlock->getFieldId('prefix') ?>" name="billing[<?php echo $widgetNameBlock->getFieldName('prefix') ?>]" title="<?php echo $this->__('Prefix') ?>" class="<?php if ($fieldValue['required'] == 1) echo "validate-select"; ?>" <?php echo $widgetNameBlock->getFieldParams() ?>>
+                                <option></option>
+                                <?php foreach ($widgetNameBlock->getPrefixOptions() as $_option): ?>
+                                    <option <?php
+                                    if ($this->getBillingAddress()->getPrefix() == $_option) {
+                                        echo 'selected="selected"';
+                                    }
+                                    ?> value="<?php echo $_option ?>"><?php echo $this->__($_option) ?></option>
+                                    <?php endforeach ?>
+                            </select>
+                        <?php endif; ?>
+
+                    <?php elseif ($fieldValue['path'] == 'suffix'): ?>
+                        <?php if ($widgetNameBlock->getSuffixOptions() === false): ?>
+                            <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                            <input  type="text" id="billing:<?php echo $fieldValue['path'] ?>" name="billing[<?php echo $fieldValue['path'] ?>]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getSuffix()) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/>       
+                        <?php else: ?>
+                            <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required select-active"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                            <select id="<?php echo $widgetNameBlock->getFieldId('suffix') ?>" name="billing[<?php echo $widgetNameBlock->getFieldName('suffix') ?>]" title="<?php echo $this->__('Suffix') ?>" class="<?php if ($fieldValue['required'] == 1) echo "validate-select"; ?>" <?php echo $widgetNameBlock->getFieldParams() ?>>
+                                <option></option>
+                                <?php foreach ($widgetNameBlock->getSuffixOptions() as $_option): ?>
+                                    <option <?php
+                                    if ($this->getBillingAddress()->getSuffix() == $_option) {
+                                        echo 'selected="selected"';
+                                    }
+                                    ?> value="<?php echo $_option ?>"><?php echo $this->__($_option) ?></option>
+                                    <?php endforeach ?>
+                            </select>
+                        <?php endif; ?>
+                    <?php elseif ($fieldValue['path'] == 'taxvat' && Mage::getStoreConfig('onestepcheckout/vat/enabled', $storeId)): ?>
+
+                        <?php $_taxvat = $this->getLayout()->createBlock('customer/widget_taxvat')->setTemplate('onestepcheckout/checkout/fields/taxvat.phtml') ?>
+
+                        <?php
+                        if ($this->getAddress()->getIsValidVat()) {
+                            $_taxvat->setIsValidVat(true);
+                        }
+
+                        if ($this->getAddress()->getBuyWithoutVat()) {
+                            $_taxvat->setCheckedWithoutVat(true);
+                        }
+                        ?>
+
+                        <?php echo $_taxvat->setTaxvat($this->getQuote()->getCustomerTaxvat())->setFieldIdFormat('billing_%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+
+                    <?php elseif ($fieldValue['path'] == 'taxvat'): ?>
+                                
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span>
+                        </label>
+                            <?php if(Mage::getStoreConfig('onestepcheckout/brazil/tax',$storeId)):?>
+                            
+                                <div id="brazil_tax_form" style="width:100%; float:left; <?php echo ($this->getQuote()->getBillingAddress()->getCountryId()=='BR')?'':'display:none';?>">
+                                    <input type="radio" name="billing[brazil_tax]" checked="checked" value="CPF"/><?php echo $this->__('Private individual')?>
+                                    <input type="radio" name="billing[brazil_tax]" value="CNPJ"/><?php echo $this->__('Legal entity')?>
+                                </div>
+                            <?php endif;?>
+                        <input  type="text" id="billing:<?php echo $fieldValue['path'] ?>" name="billing[<?php echo $fieldValue['path'] ?>]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getData($fieldValue['path'])) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/>			
+                        <input type="hidden" id="billing:vat_id" name="billing[vat_id]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getData('vat_id')) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text validate-taxvat"/>                     
+                    <?php elseif ($fieldValue['path'] == 'birthday'): ?>
+                        <?php $_dob = $this->getLayout()->createBlock('onestepcheckout/fields_dob') ?>
+                        <?php echo $_dob->setDate($this->getQuote()->getCustomerDob())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml() ?>
+
+                    <?php elseif ($fieldValue['path'] == 'gender'): ?>
+                        <?php $_gender = $this->getLayout()->createBlock('customer/widget_gender') ?>
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required select-active"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span></label>
+                        <select id="<?php echo $_gender->getFieldId('gender') ?>" name="billing[<?php echo $_gender->getFieldName('gender') ?>]" title="<?php echo $this->__('Gender') ?>" class="<?php if ($fieldValue['required'] == 1) echo "validate-select"; ?>" <?php echo $_gender->getFieldParams() ?>>
+                            <?php $options = Mage::getResourceSingleton('customer/customer')->getAttribute('gender')->getSource()->getAllOptions(); ?>
+                            <?php $value = $_gender->getGender(); ?>
+                            <?php foreach ($options as $option): ?>
+                                <option value="<?php echo $option['value'] ?>"<?php if ($option['value'] == $value) echo ' selected="selected"' ?>><?php echo $option['label'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php elseif ($fieldValue['path'] == 'telephone' || $fieldValue['path'] == 'fax'): ?>
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span>
+
+                        </label> 
+                        <input  type="tel" id="billing:<?php echo $fieldValue['path'] ?>" name="billing[<?php echo $fieldValue['path'] ?>]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getData($fieldValue['path'])) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/>
+                    <?php elseif ($fieldValue['path'] == 'email'): ?>
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span>
+
+                        </label>
+                        <input  type="email" id="billing:<?php echo $fieldValue['path'] ?>" name="billing[<?php echo $fieldValue['path'] ?>]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getData($fieldValue['path'])) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/>
+                    <?php else: ?>
+                        <label for="billing:<?php echo $fieldValue['path'] ?>" <?php if ($fieldValue['required'] == 1) echo 'class="required"' ?>><span><?php echo $helper->getFieldsLabel($fieldValue['path']) ?></span>
+
+                        </label>
+                        <input  type="text" id="billing:<?php echo $fieldValue['path'] ?>" name="billing[<?php echo $fieldValue['path'] ?>]" value="<?php echo $this->escapeHtml($this->getBillingAddress()->getData($fieldValue['path'])) ?>" title="<?php echo $helper->getFieldsLabel($fieldValue['path']) ?>" maxlength="255" class="input-text <?php if ($fieldValue['required'] == 1) echo 'required-entry' ?>"/>
+                    <?php endif; ?>
+                </div>
+                <?php if ($count_col_xs_6 == 2) : ?>
+                </div>
+            </div>
+
+            <?php
+            $count_col_xs_6 = 0;
+        endif;
+        ?>
+    <?php endforeach; ?>
+    <?php if (!Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+        <?php $allowGuest = Mage::helper('checkout')->isAllowedGuestCheckout(Mage::getSingleton('checkout/type_onepage')->getQuote()); ?>
+        <?php $mustLogin = Mage::helper('checkout')->isCustomerMustBeLogged(); ?>
+        <?php
+        $showCheckout = false;
+        $showPassword = false;
+        if ($allowGuest) {
+            $showCheckout = true;
+        }
+        if (!$allowGuest) {
+            if (!$mustLogin)
+                $showCheckout = true;
+            else
+                $showPassword = true;
+        }
+        ?>
+        <!-- password form -->
+        
+        <div class="advanced-col-xs-12 input-field">
+            <input <?php
+            if (!Mage::helper('checkout')->isAllowedGuestCheckout(Mage::getSingleton('checkout/type_onepage')->getQuote()) && Mage::helper('checkout')->isCustomerMustBeLogged()) {
+                echo 'checked="checked"';
+            }
+            ?> onclick="oscheckout.showPasswordForm()" style="<?php
+                if (!$showCheckout) {
+                    echo 'display:none';
+                }
+                ?>" type="checkbox" id="billing:createaccount" name="billing[createaccount]" title="<?php echo $this->__('Create an account for later use') ?>" alt="<?php echo $this->__('Create an account for later use') ?>"/>
+            <label style="<?php if (!$showCheckout) echo 'display:none'; ?>" for="billing:createaccount"><?php echo $this->__('Create an account for later use') ?></label>
+        </div>
+
+        <div id="password-form" style=" <?php
+        if (!$showPassword) {
+
+            echo 'display:none';
+        }
+        ?>">
+            <div class="advanced-col-xs-6 input-field">
+
+                <input placeholder="<?php echo $this->__('Password') ?>" type="password" id="billing:customer_password" name="billing[customer_password]" value="" title="<?php echo $this->__('Password') ?>" maxlength="255" class="input-text required-entry validate-password"/>
+            </div>
+
+            <div class="advanced-col-xs-6 input-field">
+                <input placeholder="<?php echo $this->__('Confirm Password') ?>" type="password" id="billing:confirm_password" name="billing[confirm_password]" value="" title="<?php echo $this->__('Confirm Password') ?>" maxlength="255" class="input-text required-entry validate-cpassword"/>
+
+            </div>
+
+
+
+        </div>
+    <?php endif; ?>
+<?php if ($this->isCustomerLoggedIn() && $this->customerHasAddresses()): ?>
+
+
+
+        <div class="advanced-col-xs-12  input-field">                    
+            <p class="label_checkbox_pair">                           
+                <input type="checkbox" name="billing[save_in_address_book]" value="1" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Save in address book')) ?>" id="billing:save_in_address_book" <?php if ($this->getAddress()->getSaveInAddressBook()): ?> checked="checked"<?php endif; ?> class="checkbox" /><label for="billing:save_in_address_book"><?php echo $this->__('Save in address book') ?></label>
+            </p>
+        </div>
+    <?php else: ?>
+        <div class="no-display"><input type="hidden" name="billing[save_in_address_book]" value="1" /></div>
+<?php endif; ?>
+
+
+</div>
+    <div class="advanced-form-style">
+        <!-- show check box shipping to billing address -->
+        <?php if (!$this->getQuote()->isVirtual() && Mage::getStoreConfig('onestepcheckout/general/shipping_address', $storeId)): ?>
+                <div class="advanced-col-xs-12  input-field">
+                    <input onclick="oscheckout.showShippingAddressForm()" checked="true" value="1" type="checkbox" id="billing:shippingaddress" name="billing:shippingaddress" title="<?php echo $this->__('Ship to the same address') ?>" alt="<?php echo $this->__('Ship to the same address') ?>"/>
+                    <label for="billing:shippingaddress"><?php echo $this->__('Ship to the same address') ?></label>
+                </div>
+        <?php endif; ?>
+    </div>
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+    var billing = '';
+    var billingRegionUpdater = new RegionUpdater('billing:country_id', 'billing:region', 'billing:region_id', <?php echo $this->helper('directory')->getRegionJson() ?>, undefined, 'billing:postcode');
+    //]]>
+    if ($('billing-address-select')) {
+        Event.observe('billing-address-select', 'change', function () {
+            var isNew = $('billing-address-select').value ? false : true;
+            oscheckout.showform(isNew, 'advanced-form-billing');
+        });
+    }
+
+
+<?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?>
+        var autocompleteBilling;
+        var componentBillingForm = {
+            street_number: 'short_name',
+            route: 'long_name',
+            locality: 'long_name',
+            administrative_area_level_1: 'short_name',
+            country: 'short_name',
+            postal_code: 'short_name',
+            sublocality: 'long_name'
+        };
+
+        autocompleteBilling = new google.maps.places.Autocomplete(
+                (document.getElementById('billing:street1')),
+                {types: ['geocode']});
+
+        google.maps.event.addListener(autocompleteBilling, 'place_changed', function () {
+            fillBillingAddress();
+        });
+
+        function fillBillingAddress() {
+            var place = autocompleteBilling.getPlace();
+            var street, city, region_id, region, country, postal_code, sublocality;
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentBillingForm[addressType]) {
+                    if (addressType == 'street_number') {
+                        if (street)
+                            street += ' ' + place.address_components[i][componentBillingForm['street_number']];
+                        else
+                            street = place.address_components[i][componentBillingForm['street_number']];
+                    }
+                    if (addressType == 'route') {
+                        if (street)
+                            street += ' ' + place.address_components[i][componentBillingForm['route']];
+                        else
+                            street = place.address_components[i][componentBillingForm['route']];
+                    }
+                    if (addressType == 'locality')
+                        city = place.address_components[i][componentBillingForm['locality']];
+                    if (addressType == 'administrative_area_level_1') {
+                        region_id = place.address_components[i]['short_name'];
+                        region = place.address_components[i]['long_name'];
+                    }
+                    if (addressType == 'country')
+                        country = place.address_components[i][componentBillingForm['country']];
+                    if (addressType == 'postal_code')
+                        postal_code = place.address_components[i][componentBillingForm['postal_code']];
+                    if (addressType == 'sublocality')
+                        sublocality = place.address_components[i][componentBillingForm['sublocality']];
+                }
+            }
+            fillAddress('billing', street, city, region_id, region, country, postal_code, sublocality);
+        }
+        function writeAddressName(latLng) {
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({
+                          "location": latLng
+                    },
+                    function (results, status) {
+                          if (status == google.maps.GeocoderStatus.OK) {
+                                document.getElementById("billing:street1").value = results[0].formatted_address;
+
+                    var place = results[0];
+                    var street, city, region_id, region, country, postal_code, sublocality;
+
+                    for (var i = 0; i < place.address_components.length; i++) {
+                        var addressType = place.address_components[i].types[0];
+                        if (componentBillingForm[addressType]) {
+                            if (addressType == 'street_number') {
+                                if (street)
+                                    street += ' ' + place.address_components[i][componentBillingForm['street_number']];
+                                else
+                                    street = place.address_components[i][componentBillingForm['street_number']];
+                            }
+                            if (addressType == 'route') {
+                                if (street)
+                                    street += ' ' + place.address_components[i][componentBillingForm['route']];
+                                else
+                                    street = place.address_components[i][componentBillingForm['route']];
+                            }
+                            if (addressType == 'locality')
+                                city = place.address_components[i][componentBillingForm['locality']];
+                            if (addressType == 'administrative_area_level_1') {
+                                region_id = place.address_components[i]['short_name'];
+                                region = place.address_components[i]['long_name'];
+
+
+
+                            }
+                            if (addressType == 'country')
+                                country = place.address_components[i][componentBillingForm['country']];
+                            if (addressType == 'postal_code')
+                                postal_code = place.address_components[i][componentBillingForm['postal_code']];
+                            if (addressType == 'sublocality')
+                                sublocality = place.address_components[i][componentBillingForm['sublocality']];
+                        }
+
+
+
+
+                    }
+                    fillAddress('billing', street, city, region_id, region, country, postal_code, sublocality);
+                } else
+                    document.getElementById("error").innerHTML += "Unable to retrieve your address" + "<br />";
+                    });
+
+
+              }
+                                                                                                         
+
+              function geolocationSuccess(position) {
+                    var userLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    // Write the formatted address
+                    writeAddressName(userLatLng);
+              }
+
+                                                                                                         
+
+              function geolocationError(positionError) {
+                    document.getElementById("error").innerHTML += "Error: " + positionError.message + "<br />";
+              }
+                                                                                                         
+
+              function geolocateUser() {
+                    // If the browser supports the Geolocation API
+                    if (navigator.geolocation)
+                    {
+                          var positionOptions = {
+                                enableHighAccuracy: true,
+                                timeout: 10 * 1000 // 10 seconds
+                          };
+                          navigator.geolocation.getCurrentPosition(geolocationSuccess, geolocationError, positionOptions);
+                    }
+                    
+              }
+<?php endif; ?>
+
+</script>

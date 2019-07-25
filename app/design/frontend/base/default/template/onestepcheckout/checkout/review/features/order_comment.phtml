@@ -1,0 +1,32 @@
+<?php
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Onestepcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+/**
+ * onestepcheckout template
+ * 
+ * @see Advanced_Onestepcheckout_Block_Onestepcheckout
+ */
+?>
+<div class="advanced-form-style form-group-p-10 input-field">
+    <label for="order_comment"><?php echo $this->__('Comment') ?></label>
+    <textarea id="order_comment" name="billing[order_comment]" col="15" title="<?php echo $this->__('Comment') ?>" alt="<?php echo $this->__('Comment') ?>"></textarea>
+    <input type="hidden" name="remove" id="remove-coupone" value="0" />
+</div>
+<div class="advanced-empty-space"></div>

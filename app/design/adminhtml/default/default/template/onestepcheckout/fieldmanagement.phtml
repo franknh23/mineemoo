@@ -1,0 +1,314 @@
+<?php $fields = $this->getFields(); ?>
+
+<form id="fieldForm" method="post">
+    <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+    <input type="hidden" id="store" name="store" value="<?php echo Mage::app()->getRequest()->getParam('store'); ?>" />
+    <input type="hidden" id="website" name="website" value="<?php echo Mage::app()->getRequest()->getParam('website'); ?>" />
+
+    <?php
+    
+    foreach ($fields as $id => $value) {
+   if (!is_array($value))
+        continue;
+        ?>
+        <input type="hidden" id="<?php echo $value['path']; ?>-width" name="field[<?php echo $value['path']; ?>][width]" value="<?php echo $value['width']; ?>" />
+        <input type="hidden" id="<?php echo $value['path']; ?>-remove" name="field[<?php echo $value['path']; ?>][remove]" value="<?php echo $value['remove']; ?>" />
+        <input type="hidden" id="<?php echo $value['path']; ?>-position" name="field[<?php echo $value['path']; ?>][position]" value="<?php echo $value['position']; ?>" />
+        <input type="hidden" id="<?php echo $value['path']; ?>-required" name="field[<?php echo $value['path']; ?>][required]" value="<?php echo $value['required']; ?>" />
+        <?php
+    }
+    ?>
+
+    <div class="content-header">
+        <table cellspacing="0">
+            <tbody>
+                <tr>
+                    <td style="width:50%;"><h3><?php echo $this->__('Field Management')?></h3></td>
+                    <td class="a-right">
+                        <button type="submit" class="scalable save" type="button" title="<?php echo $this->__('Save')?>" id="id_aec749adaaf2d5713bf776d7dae69701"><span><span><span><?php echo $this->__('Save')?></span></span></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+<div id="category-edit-container" class="category-content">
+    <ul id="category_info_tabs" class="tabs-horiz">
+        <li>
+            <a title="<?php echo $this->__('Field Management')?>" class="tab-item-link active" tab-id="field-management-content">
+                <span><span class="changed" title="The information in this tab has been changed."></span><span class="error" title="<?php echo $this->__('Field Management')?>"></span><?php echo $this->__('Field Management')?></span>
+            </a>
+
+        </li>
+       <!-- <li>
+            <a title="Style Management" class="tab-item-link " tab-id="style-management-content">
+                <span><span class="changed" title="The information in this tab has been changed."></span><span class="error" title="This tab contains invalid data. Please solve the problem before saving."></span>Style Management</span>
+            </a>
+        </li>
+       -->
+    </ul>
+</div>
+
+
+<div class="management-content advanced-row advanced-m-b-10x">
+    <div class="advanced-col-xs-12">
+        <?php echo $this->_getFieldHtml();?>
+    </div>
+</div>
+</form>
+
+
+<div id="field-management-content" class="management-content advanced-row">
+    <div class="advanced-col-xs-12">
+        <div class="advanced-row">
+            <div class="advanced-col-xs-6">
+                <h2 style="margin-bottom: 46px;"><?php echo $this->__('Disabled Fields')?></h2>
+                <div id="available-container">
+                    <div id="avaiable-overlay" class="overlay" style="display:none"></div>
+                    <div id="available-fields" class="advanced-row draggable-sortable">
+                        <?php
+                        
+                        foreach ($fields as $id => $value) {
+                            if (!is_array($value))
+                                continue;
+                            if (isset($value['remove']) && $value['remove'] == 'remove') {
+                                ?>
+                                <div class="<?php
+                                if ($value['width']) : echo 'advanced-col-xs-12';
+                                else : echo 'advanced-col-xs-6';
+                                endif;
+                                ?>">
+                                    <div class="ui-state-default"  ui-id="<?php echo $value['path']; ?>" ui-width="<?php echo $value['width']; ?>" ui-state-index="<?php echo $value['position']; ?>" >
+                                        <span class="advanced-text-bold"><?php echo $value['path']; ?></span>
+                                        <span class="advanced-pull-right"><input class="checkbox-required-field" id="<?php echo $value['path']; ?>-required-field" name="required-field" value="" type="checkbox" <?php if ($value['required']) echo 'checked'; ?>> Required</span>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="advanced-col-xs-6">
+                <h2><?php echo $this->__('Enabled Fields')?></h2>
+                <comment style="font-style: italic;">(Drag and Drop to arrange fields' position. To remove any field from checkout page, move it to Disabled fields box.)</comment>
+                <div id="billing-container">
+                     <div id="billing-overlay" class="overlay" style="display:none"></div>
+                    <div id="billing-fields" class=" draggable-sortable advanced-row">
+                        <?php
+                        foreach ($fields as $value) {
+                            if (!is_array($value))
+                                continue;
+                            
+                            $disabled = '';
+                            $disabled_draggable = '';
+                            if(in_array($value['path'], array('firstname','lastname','email'))){
+                                $disabled = 'disabled';
+                                $disabled_draggable = 'disabled-draggable';
+                            }
+                            if (isset($value['remove']) && $value['remove'] == '') {
+                                ?>
+                        <div class="<?php echo $disabled_draggable; ?> <?php
+                                if ($value['width']) : echo 'advanced-col-xs-12';
+                                else : echo 'advanced-col-xs-6';
+                                endif;
+                                ?>">
+                                    <div class="ui-state-default"  ui-id="<?php echo $value['path']; ?>" ui-width="<?php echo $value['width']; ?>" ui-state-index="<?php echo $value['position']; ?>" >
+                                        <span class="advanced-text-bold"><?php echo $value['path']; ?></span>
+                                        <span class="advanced-pull-right"><input <?php echo $disabled;?> class="checkbox-required-field" id="<?php echo $value['path']; ?>-required-field" name="required-field" value="" type="checkbox" <?php if ($value['required']) echo 'checked'; ?>> Required</span>
+                                    </div>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var $_adj = jQuery.noConflict();
+    $_adj(function () {
+        $_adj(".draggable-sortable").sortable({
+            connectWith: '.draggable-sortable',
+            placeholder: "sortable-placeholder",
+
+            start: function (event, ui) {
+                $_adj('.sortable-placeholder').width(ui.helper.outerWidth() - 38);
+            },
+            stop: function (event, ui) {                
+                ui.item.removeAttr('style');
+                
+                if(ui.item.parent().attr('id') === 'available-fields' && ui.item.hasClass('disabled-draggable')) return !ui;
+                
+                var i = 1;
+
+                $_adj("#billing-fields .ui-state-default").each(function () {
+                    $_adj(this).attr('ui-state-index', i);
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-width').val($_adj(this).attr('ui-width'));
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-remove').val('');
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-position').val(i);
+                    if ($_adj(this).find('input[type=checkbox]').is(':checked')) {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(1);
+                    } else {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(0);
+                    }
+
+                    i++;
+                });
+
+                $_adj("#available-fields .ui-state-default").each(function () {
+                    $_adj(this).attr('ui-state-index', i);
+
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-width').val($_adj(this).attr('ui-width'));
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-remove').val('remove');
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-position').val(i);
+                    if ($_adj(this).find('input[type=checkbox]').is(':checked')) {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(1);
+                    } else {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(0);
+                    }
+                    i++;
+
+                });
+
+                $_adj("#billing-fields .ui-state-default").resizable("enable");
+            }
+        });
+        
+        $_adj(".ui-state-default").resizable({
+            maxHeight: 40,
+            minHeight: 40,
+            cursor: "crosshair",
+            helper: "ui-resizable-helper",
+            stop: function (event, ui) {
+                var percent = (ui.size.width / $_adj('#billing-fields').outerWidth()) * 100;
+                if (percent >= 60) {
+                    $_adj(this).parent().removeClass('advanced-col-xs-6');
+                    $_adj(this).parent().addClass('advanced-col-xs-12');
+                    $_adj(this).parent().removeAttr('style');
+                    $_adj(this).removeAttr('style');
+                    $_adj(this).attr('ui-width', 1);
+                } else {
+                    $_adj(this).parent().removeClass('advanced-col-xs-12');
+                    $_adj(this).parent().addClass('advanced-col-xs-6');
+                    $_adj(this).parent().removeAttr('style');
+                    $_adj(this).removeAttr('style');
+                    $_adj(this).attr('ui-width', 0);
+                }
+
+                var i = 1;
+
+                $_adj("#billing-fields .ui-state-default").each(function () {
+                    $_adj(this).attr('ui-state-index', i);
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-width').val($_adj(this).attr('ui-width'));
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-remove').val('');
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-position').val(i);
+                    if ($_adj(this).find('input[type=checkbox]').is(':checked')) {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(1);
+                    } else {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(0);
+                    }
+
+                    i++;
+                });
+
+                $_adj("#available-fields .ui-state-default").each(function () {
+                    $_adj(this).attr('ui-state-index', i);
+
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-width').val($_adj(this).attr('ui-width'));
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-remove').val('remove');
+                    $_adj('#' + $_adj(this).attr('ui-id') + '-position').val(i);
+                    if ($_adj(this).find('input[type=checkbox]').is(':checked')) {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(1);
+                    } else {
+                        $_adj('#' + $_adj(this).attr('ui-id') + '-required').val(0);
+                    }
+                    i++;
+
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $_adj('.tab-item-link').click(function () {
+        $_adj('.tab-item-link').removeClass('active');
+        $_adj('.management-content').hide();
+        $_adj('#' + $_adj(this).attr('tab-id')).show();
+        $_adj(this).addClass('active');
+    });
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+    var formId = 'fieldForm';
+    var fieldForm = new varienForm(formId, true);
+    var postUrl = '<?php echo Mage::helper("adminhtml")->getUrl("adminhtml/adminhtml_fieldmanagement/save"); ?>';
+
+    function fieldFormSubmitAjax() {
+        if (fieldForm.validator.validate()) {
+            new Ajax.Updater({success: 'formSuccess'}, postUrl, {
+                method: 'post',
+                asynchronous: true,
+                evalScripts: false,
+                onComplete: function (request, json) {
+                    Element.hide('loading-mask');
+                    Element.show('formSuccess');
+                },
+                onLoading: function (request, json) {
+                    Element.show('formLoader');
+                },
+                parameters: $(formId).serialize(true),
+            });
+        }
+    }
+
+    Event.observe(formId, 'submit', function (e) {
+        e.stop();
+        fieldFormSubmitAjax();
+    });
+
+    $$('.checkbox-required-field').invoke('observe', 'click', function (e) {
+        var path = this.id;
+        path = path.replace('-required-field', '');
+
+        if (this.checked) {
+            $('' + path + '-required').value = '1';
+        } else {
+            $('' + path + '-required').value = '0';
+        }
+    });
+    
+    //$_adj('.checkbox-required-field').prop('disabled', true);
+    if($('onestepcheckout_position_manage_inherit') && $('onestepcheckout_position_manage_inherit').checked){
+        $('avaiable-overlay').style.display = 'block';
+        $('available-container').addClassName('undefault');
+        $('billing-overlay').style.display = 'block';
+        $('billing-container').addClassName('undefault');
+    }
+    if($('onestepcheckout_position_manage_inherit')){
+        Event.observe('onestepcheckout_position_manage_inherit','click',function(){
+            if($('onestepcheckout_position_manage_inherit').checked){
+                $('avaiable-overlay').style.display = 'block';
+                $('available-container').addClassName('undefault');
+                $('billing-overlay').style.display = 'block';
+                $('billing-container').addClassName('undefault');
+            }else{
+                $('avaiable-overlay').style.display = 'none';
+                $('available-container').removeClassName('undefault');
+                $('billing-overlay').style.display = 'none';
+                $('billing-container').removeClassName('undefault');
+            }
+        });
+    }
+//]]>
+</script>

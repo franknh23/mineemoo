@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout>
+
+    <adminhtml_adminhtml_surveyreport_index>
+         <reference name="content">
+            <block type="onestepcheckout/adminhtml_surveyreport" name="surveyreport" />
+        </reference>
+    </adminhtml_adminhtml_surveyreport_index>
+    <adminhtml_adminhtml_fieldmanagement_index>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>css/advanced/onestepcheckout/style.css</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/advanced/onestepcheckout/jquery-1.10.2.min.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/advanced/onestepcheckout/jquery-ui.min.js</name>
+            </action>
+        </reference>
+        <reference name="left">
+            <block type="adminhtml/system_config_switcher" name="adminhtml.system.config.switcher" before="-"/>
+        </reference>
+        <reference name="content">
+            <block type="onestepcheckout/adminhtml_fieldmanagement" name="fieldmanagement" />
+        </reference>  
+    </adminhtml_adminhtml_fieldmanagement_index>
+    <adminhtml_sales_order_view>
+        <reference name="order_item_extra_info">			
+            <block type="onestepcheckout/adminhtml_sales_order_view_tab_extra" as="onestepcheckout_extra" />
+        </reference>  
+    </adminhtml_sales_order_view>
+</layout>

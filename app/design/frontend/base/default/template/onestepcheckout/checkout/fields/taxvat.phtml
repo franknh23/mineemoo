@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Advanced Checkout
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the www.advancedcheckout.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.advancedcheckout.com/license-agreement
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category 	Advanced Checkout
+ * @package 	Advanced_Onestepcheckout
+ * @copyright 	Copyright (c) 2015 Advanced Checkout (http://www.advancedcheckout.com/)
+ * @license 	http://www.advancedcheckout.com/license-agreement
+ */
+
+?>
+<?php $helper = Mage::helper('onestepcheckout') ?>
+<?php $storeId = Mage::app()->getStore()->getStoreId(); ?>
+<?php $websiteId = Mage::app()->getWebsite()->getId(); ?>
+<?php $fields = $helper->getFields($storeId, $websiteId); ?>
+<?php
+
+foreach ($fields as $id => $fieldValue) {
+    if ($fieldValue['path'] == 'taxvat') {
+        $taxField = $fieldValue;
+    }
+}
+$taxVAT = '';
+$cookie = Mage::getSingleton('core/cookie');
+        if($cookie->get('uc_tax_vat')){
+            $taxVAT = $cookie->get('uc_tax_vat');
+        }
+?>
+<label for="billing:<?php echo $taxField['path'] ?>" <?php if ($taxField['required'] == 1) echo 'class="required"' ?>>
+    
+    <span><?php echo $helper->getFieldsLabel($taxField['path']) ?></span>
+    <img id="image_tax_loading" style="float: left; width: 20px;margin-left: 5px;display: none;" src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif');?>"/>
+    <span id="vat_notify">
+        <?php if ($this->getIsValidVat() !== null): ?>
+            <?php if ($this->getIsValidVat()): ?>
+                <span style="color:#8AC236; font-size: 11px;font-weight: 100;" id="vat_notify"><?php echo $this->__('Verified') ?></span>
+            <?php else: ?>
+                <span style="color:#E04929; font-size: 11px;font-weight: 100;" id="vat_notify"><?php echo $this->__('Not Verified') ?></span>
+            <?php endif; ?>
+<?php endif; ?>            
+    </span>
+</label>
+
+<input <?php if ($this->getIsReadonly()): ?> readonly="readonly" <?php endif; ?> type="text" id="billing:<?php echo $taxField['path'] ?>" name="billing[<?php echo $taxField['path'] ?>]" value="<?php echo $this->escapeHtml($taxVAT) ?>" title="<?php echo $helper->getFieldsLabel($taxField['path']) ?>" maxlength="255" class="input-text validate-taxvat <?php if ($taxField['required'] == 1) echo 'required-entry' ?>"/>
+<input type="hidden" id="billing:vat_id" name="billing[vat_id]" value="<?php echo $this->escapeHtml($taxVAT) ?>" title="<?php echo $helper->getFieldsLabel($taxField['path']) ?>" maxlength="255" class="input-text validate-taxvat"/>                     
+

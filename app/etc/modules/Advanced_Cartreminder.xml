@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Advanced_Cartreminder>
+            <active>true</active>
+            <codePool>local</codePool> 			
+            <nonechecklicense>true</nonechecklicense>	
+        </Advanced_Cartreminder>
+    </modules>
+</config> 

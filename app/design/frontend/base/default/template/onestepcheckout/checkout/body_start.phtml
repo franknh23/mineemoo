@@ -1,0 +1,218 @@
+<?php
+$storeId = Mage::app()->getStore()->getStoreId();
+$styleBackgroundIcon = Mage::getStoreConfig('onestepcheckout/style/style_background_icon', $storeId);
+$styleDesign = Mage::getStoreConfig('onestepcheckout/style/design', $storeId);
+$classHeaderSpan = 'advanced-panel-'.$styleBackgroundIcon;
+        switch ($styleDesign) {
+            case 'material':
+               $classHeaderSpan = '';
+        }
+?>
+
+<div id="social-login-popup" class="advanced-container-style" style="display: none;">
+    <form action="#" method="post" id="form-login-validate">
+        <div class="advanced-panel-header">
+            <span class="advanced-pull-left advanced-panel-header-icons"><i class="fa fa-lock fa-2x"></i></span>
+            <span class="advanced-pull-left <?php echo $classHeaderSpan?>"></span>
+            <span class="advanced-pull-left"><h3 id="social-login-popup-title" class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Already registered?') ?></h3></span>
+            <span class="advanced-pull-right"><a id="close-login" title="<?php echo $this->__('Close') ?>" onclick="$_adj.advancedfancybox.close();"><i class="fa fa-times fa-2x close-window right"></i></a></span>
+            <span class="advanced-pull-right"><i id="load-login" class="fa fa-spinner fa-2x fa-pulse" style="display: none;"></i></span>
+        </div>
+        <div class="advanced-clearfix"></div>
+
+        <div class="advanced-form-style left">
+            <ul class="mw-row-messages"><li class="mw-row-error-msg" id="advanced-sociallogin-popup-alert-error"></li></ul>
+
+            <div class="advanced-row">
+                <div class="advanced-col-xs-12 input-field">
+                    <label for="email" class="required"><em>*</em><?php echo $this->__('Email Address'); ?></label>
+                    <input autocapitalize="off" autocorrect="off" spellcheck="false" name="username" value="" id="email" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address'); ?>" type="email">
+                </div>
+
+                <div class="advanced-col-xs-12 input-field">
+                    <label for="pass" class="required"><em>*</em><?php echo $this->__('Password'); ?></label>
+                    <input name="password" class="input-text required-entry validate-password" id="pass" title="<?php echo $this->__('Password'); ?>" type="password">
+                </div>
+
+                <div class="advanced-col-xs-12">
+                    <a href="javascript:void(0);" class="f-left" id="advanced-button-forgot-your-password"><?php echo $this->__('Forgot Your Password?'); ?></a>
+                </div>
+
+                <div class="advanced-col-xs-12">
+                    <div class="advanced-buttons-set">
+                        <button type="submit" class="advanced-button advanced-pull-right btn waves-effect waves-light" title="<?php echo $this->__('Login'); ?>" name="send" id="advanced-social-login-button"><span><span><?php echo $this->__('Login'); ?></span></span></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <form action="" method="post" id="form-forgot-password-validate" style="display: none;">
+        <div class="advanced-panel-header">
+            <span class="advanced-pull-left advanced-panel-header-icons"><i class="fa fa-lock fa-2x"></i></span>
+            <span class="advanced-pull-left <?php echo $classHeaderSpan; ?>"></span>
+            <span class="advanced-pull-left"><h3 id="social-login-popup-title" class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Forgot Your Password?') ?></h3></span>
+            <span class="advanced-pull-right"><a id="close-forgot-password" title="<?php echo $this->__('Close') ?>" onclick="$_adj.advancedfancybox.close();"><i class="fa fa-times fa-2x close-window right"></i></a></span>
+            <span class="advanced-pull-right"><i id="load-forgot-password" class="fa fa-spinner fa-2x fa-pulse" style="display: none;"></i></span>
+        </div>
+        <div class="advanced-clearfix"></div>
+
+        <div class="advanced-form-style left">
+            <ul class="mw-row-messages"><li class="mw-row-error-msg" id="advanced-sociallogin-forgot-password-alert-error"></li></ul>
+
+            <div class="advanced-row">
+                <div class="advanced-col-xs-12 input-field">
+                    <label for="email-forgot" class="required"><em>*</em><?php echo $this->__('Email Address'); ?></label>
+                    <input id="email-forgot" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" value="" class="input-text required-entry validate-email" title="<?php echo $this->__('Email Address'); ?>" type="email">
+                </div>
+                <div class="advanced-col-xs-12">
+                    <a href="javascript:void(0)" class="f-left" id="advanced-button-back-login"><?php echo $this->__('Back to login'); ?></a>
+
+                </div>
+                <div class="advanced-col-xs-12">
+                    <button type="submit" class="advanced-button advanced-pull-right btn waves-effect waves-light" title="<?php echo $this->__('Submit'); ?>" id="advanced-social-forgot-password-button"><span><span><?php echo $this->__('Submit'); ?></span></span></button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <div class="advanced-form-style left">
+        <form action="" method="post" id="form-forgot-register-validate" style="display: none;">
+        </form>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div class="advanced-form-style left">
+        <?php echo $this->getBlockHtml('socialloginpopup') ?>
+    </div>
+</div>
+
+<!-- Edit Product Form -->
+
+<div id="edit-product-popup" class="advanced-container-style" style="display: none;background: transparent;text-align: left;">
+    <div id="edit-product-form">
+        <div class="loadding-edit-product">
+            <div class="loadding-edit-product-icon">
+                <i class="fa fa-spinner fa-3x fa-pulse" id="load-popup"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Term and condition -->
+
+<div id="tern-and-condition-popup" class="advanced-container-style" style="display: none;">
+
+    <div class="advanced-panel-header">
+        <span class="advanced-pull-left advanced-panel-header-icons"><i class="fa fa-file-text fa-2x"></i></span>
+        <span class="advanced-pull-left <?php echo $classHeaderSpan; ?>"></span>
+        <span class="advanced-pull-left"><h3 id="social-login-popup-title" class="advanced-col-xs-8 advanced-white-space-nowrap"><?php echo $this->__('Terms and Conditions') ?></h3></span>
+        <span class="advanced-pull-right"><a title="<?php echo $this->__('Close') ?>" onclick="$_adj.advancedfancybox.close();"><i class="fa fa-times fa-2x close-window right"></i></a></span>
+    </div>
+    <div class="advanced-clearfix"></div>
+
+    <div class="advanced-form-style advanced-form-scroll">
+        <span style="width:100%; float:left; margin: 5px 0;  text-transform: capitalize; font-size: 25px;"><?php echo Mage::getStoreConfig('onestepcheckout/features/term_title', Mage::app()->getStore()->getStoreId()); ?></span>
+
+        <?php echo Mage::getStoreConfig('onestepcheckout/features/term_content', Mage::app()->getStore()->getStoreId()); ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+<?php if (Mage::helper('core')->isModuleEnabled('Advanced_Sociallogin')): ?>
+        Event.observe(window, 'load', function () {
+
+            var options = {
+                login_handler_url: "<?php echo $this->getUrl('sociallogin/popup/login'); ?>",
+                forgot_password_handler_url: "<?php echo $this->getUrl('sociallogin/popup/forgotPassword'); ?>",
+                create_account_handler_url: "<?php echo $this->getUrl('sociallogin/popup/createAccount'); ?>"
+            };
+            Login = new AdvancedSocialLogin(options);
+
+        });
+<?php else: ?>
+        Event.observe('advanced-button-forgot-your-password', 'click', function () {
+            $('form-forgot-password-validate').show();
+            $('form-login-validate').hide();
+        });
+        Event.observe('advanced-button-back-login', 'click', function () {
+            $('form-forgot-password-validate').hide();
+            $('form-login-validate').show();
+        });
+        Event.observe(window, 'load', function () {
+            
+            var options = {
+                login_handler_url: "<?php echo $this->getUrl('onestepcheckout/index/loginPost'); ?>",
+                forgot_password_handler_url: "<?php echo $this->getUrl('onestepcheckout/index/forgotpassword'); ?>",
+                //create_account_handler_url: "<?php echo $this->getUrl('sociallogin/popup/createAccount'); ?>"
+            };
+            Login = new AdvancedSocialLogin(options);
+
+        });
+<?php endif; ?>
+
+</script>
+<script type="text/javascript">
+    
+    $_adj(document).ready(function () {
+       
+        updateqty();
+        $_adj(".modalbox").advancedfancybox({
+            'width': 400,
+            'padding': 0,
+            'height': 'auto',
+            'autoSize': false,
+            'closeBtn': false,
+            helpers: {
+                overlay: {
+                    locked: false
+                }
+            },
+            beforeShow: function () {
+                $_adj("body").css({'overflow-y': 'hidden'});
+            },
+            afterClose: function () {
+               closepopup('login');
+            }
+        });
+
+        $_adj(".termsbox").advancedfancybox({
+            'width': 700,
+            'height': 380,
+            'padding': 0,
+            'scrolling': 'true',
+            'autoSize': false,
+            'closeBtn': false,
+            helpers: {
+                overlay: {
+                    locked: false
+                }
+            },
+            beforeShow: function () {
+                $_adj("body").css({'overflow-y': 'hidden'});
+            },
+            afterClose: function () {
+                closepopup('term');                
+            }
+        });
+
+
+        $_adj(".window").advancedfancybox({
+            'width': 700,
+            'padding': 0,
+            helpers: {
+                overlay: {
+                    locked: false
+                }
+            },
+            beforeShow: function () {
+                $_adj("body").css({'overflow-y': 'hidden'});
+            },
+            afterClose: function () {
+                closepopup('edit');                 
+            }
+        });
+    });
+</script>

@@ -1,0 +1,160 @@
+
+<div id="field-management" style="float: left;">
+    <div style="width:100%; float:left; margin: 5px 0;">
+        <button type="button" onclick="addEmptyField();
+                return false;" class="scalable add" value="<?php echo $this->__('Add Null Field') ?>"><span><span><?php echo $this->__('Add Null Field') ?></span></span>
+        </button>
+    </div>
+
+    <div id="containment" style="position: relative; float:left">
+        <div id="field-disable" style="float: left; position: absolute; opacity: 0.08; z-index: 1000; min-height: 100%; min-width: 90.5%; display:<?php echo $disable ?>"></div>
+
+        <div style="width:98%">
+            <ul id="column" style="cursor: move; width:90%; float:left; margin-right:10px;  border:1px solid grey; padding:10px" class="sortable-list">
+                <?php
+                foreach ($fieldspostion as $id => $value):
+                    if (!is_array($value))
+                        continue;
+
+                    $opacity = '';
+                    $disableEmpty = '';
+                    $checked = '';
+                    $checkedRequire = '';
+                    $disable = '';
+
+                    if (isset($value['remove']) && $value['remove'] == 'remove') {
+                        $opacity = "opacity: 0.5;";
+                        $disableEmpty = 'disabled';
+                        $checked = 'checked';
+                    }
+                    if (isset($value['remove']) && $value['required']) {
+                        $checkedRequire = 'checked';
+                    }
+
+                    if ($value['path'] == 'firstname' || $value['path'] == 'lastname' || $value['path'] == 'email') {
+                        $disable = 'disabled="disabled" checked="checked"';
+                    }
+
+                    $nameField = ($value['path'] == 'empty') ? '' : $helper->getFieldsLabel($value['path']);
+                    ?>
+                    <li id="li-<?php echo $value['path'] ?>" style="<?php echo $opacity ?> text-align: left; width: 422px; float:left; padding: 5px; margin:5px;background-color: #fff;box-shadow: 0 1px 3px #666;" class="sortable-item"><?php echo $nameField; ?><input class="hidden" id="<?php echo $value['path']; ?>" type="hidden" name="groups[position][fields][enable][manage][]" value="<?php echo $value['path']; ?>"/>
+
+                        <input class="hidden" id="remove_<?php echo $value['path']; ?>" type="hidden" name="remove[]" value="<?php if ($value['remove'] == 'remove') {
+                    echo 'remove';
+                } ?>"/>
+
+    <?php if ($value['path'] != 'empty'): ?>
+
+                            <div style="float:right; margin:0 5px;">
+                                <input <?php echo $disable ?> <?php echo $disableEmpty ?> <?php echo $checkedRequire ?> style="margint:0 5px;" type="checkbox" id="require_<?php echo $value['path']; ?>" name="require_<?php echo $value['path']; ?>" /> 
+                            <?php echo Mage::helper('onestepcheckout')->__('Required'); ?>
+                            </div>
+
+                                <?php if ($value['path'] != 'firstname' && $value['path'] != 'lastname' && $value['path'] != 'email'): ?>
+                                <div style="float:right">
+                                    <?php if ($value['path'] != 'empty'): ?>
+                                        <input <?php echo $checked; ?> onclick="removeField(this, '<?php echo $value['path'] ?>')" style="margin:0 5px;" type="checkbox" id="delete_<?php echo $value['path'] ?>" name="delete" value="<?php echo Mage::helper('onestepcheckout')->__('Remove') ?>"/> <?php echo Mage::helper('onestepcheckout')->__('Remove') ?>
+                                    <?php else: ?>
+                                        <input onclick="javascript:this.parentElement.parentElement.remove()" style="margin-right: 5px;" type="checkbox" id="delete_<?php echo $value['path'] ?>" name="delete" value="<?php echo Mage::helper('onestepcheckout')->__('Remove') ?>"/><?php echo Mage::helper('onestepcheckout')->__('Remove') ?>
+                                    <?php endif; ?>
+                                    <?php if ($value['path'] != 'empty'): ?>
+                                        <input <?php echo $disableEmpty; ?> onclick="emptyField('<?php echo $value['path'] ?>', this)" style="margin:0 5px;" type="checkbox" id="empty_<?php echo $value['path'] ?>" name="empty" value="<?php echo Mage::helper('onestepcheckout')->__('Null'); ?>"/><?php echo Mage::helper('onestepcheckout')->__('Null'); ?>
+                                <?php endif; ?>
+                                </div>
+
+                            <?php endif; ?>
+
+
+    <?php else: ?>
+                            <div style="float:right">
+
+                                <input <?php echo $checked; ?> onclick="javascript:this.parentElement.parentElement.remove()" style="margin:0 5px;" type="checkbox" id="delete_<?php echo $value['path'] ?>" name="delete" value="<?php echo Mage::helper('onestepcheckout')->__('Remove') ?>"/> <?php echo Mage::helper('onestepcheckout')->__('Remove') ?>
+                            </div>
+                    <?php endif; ?>
+
+                    </li>
+<?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function () {
+        jQuery("#field-management .sortable-list").sortable({
+            connectWith: "#field-management .sortable-list",
+            containment: "#containment"
+        });
+    });
+
+    //set empty 
+    function emptyField(id, element) {
+        if (element.checked) {
+            var name = $(id).name;
+            var clon = $("li-" + id).clone();
+            clon.innerHTML = $("li-" + id).innerHTML;
+            $("column").appendChild(clon);
+            $("li-" + id).innerHTML = '<input class="hidden" id="remove_empty" type="hidden" name="remove[]" value=""/>';
+            $("li-" + id).innerHTML += '<div style="float:right"><input type="hidden" name="' + name + '" value="empty"/><input type="checkbox" value="Remove" name="delete" id="delete_empty" style="margin-right: 5px;" onclick="javascript:this.parentElement.parentElement.remove()">Remove</div>';
+            $("li-" + id).id = "li-empty";
+        }
+    }
+
+    //remove element
+    function removeField(element, hidden) {
+        if (element.checked) {
+            $("li-" + hidden).style.opacity = "0.5";
+            $("remove_" + hidden).value = "remove";
+            $("empty_" + hidden).disable();
+            $("require_" + hidden).disable();
+            $("delete_" + hidden).checked = true;
+            $("column").appendChild($("li-" + hidden));
+            setTimeout(function () {
+                $("delete_" + hidden).checked = true;
+            }, 500);
+        } else {
+            $("li-" + hidden).style.opacity = "1";
+            $("remove_" + hidden).value = "";
+            $("empty_" + hidden).enable();
+            $("require_" + hidden).enable();
+            $("delete_" + hidden).checked = false;
+            setTimeout(function () {
+                $("delete_" + hidden).checked = false;
+            }, 500);
+        }
+    }
+    function showStoreEdit() {
+        if ($("onestepcheckout_position_manage_inherit").checked) {
+            $("field-disable").style.display = "block";
+        } else {
+            $("field-disable").style.display = "none";
+        }
+    }
+    //add empty field        
+
+    function addEmptyField() {
+        if ($("li-empty")) {
+            var clon = $("li-empty").clone();
+            clon.innerHTML = $("li-empty").innerHTML;
+        } else {
+            var clonHtml = '<input class="hidden" id="remove_empty" type="hidden" name="remove[]" value=""/>';
+            clonHtml += '<div style="float:right"><input type="hidden" name="groups[position][fields][enable][manage][]" value="empty"/><input type="checkbox" value="Remove" name="delete" id="delete_empty" style="margin-right: 5px;" onclick="javascript:this.parentElement.parentElement.remove()">Remove</div>';
+
+            var clon = document.createElement("li");
+            clon.id = "li-empty";
+            clon.addClassName("sortable-item");
+            clon.style.textAlign = 'left';
+            clon.style.width = '422px';
+            clon.style.float = 'left';
+            clon.style.border = '1px solid grey';
+            clon.style.padding = '5px';
+            clon.style.margin = '5px';
+            clon.innerHTML = clonHtml;
+        }
+        $("column").appendChild(clon);
+        return;
+    }
+
+</script>

@@ -1,0 +1,34 @@
+<?php
+$router = Mage::app()->getRequest()->getRouteName();
+if ($router != 'onestepcheckout'):
+    ?>
+    <script type="text/javascript">
+        var getosclayoutUrl = '<?php echo $this->getUrl('onestepcheckout/cart/osclayout'); ?>';
+
+    </script>
+    <?php
+    $storeId = Mage::app()->getStore()->getStoreId();
+    $styleDesign = Mage::getStoreConfig('onestepcheckout/style/design', $storeId);
+    switch ($styleDesign) {
+        case 'material':
+            echo '<script type="text/javascript" src="' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) . 'advanced/materialize.min.js"></script>"';
+            echo '<link rel="stylesheet" href="' . $this->getSkinUrl('css/advanced/materialize.css') . '"/>';
+            break;
+    }
+    ?>
+    <?php if (Mage::getStoreConfig('onestepcheckout/features/autocomplete', Mage::app()->getStore()->getStoreId())): ?>
+        <?php $language = substr(Mage::getStoreConfig('general/locale/code', Mage::app()->getStore()->getId()), 0, 2); ?>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&language=<?php echo $language ?>"></script>
+    <?php endif; ?>
+    <div id="osc-waiting" class="osc-waiting">    
+        <div class="advanced-row">
+
+            <div class="advanced-col-md-12" id="spinner-loadding" style="display: none;">
+                <i class="fa fa-spinner fa-2x fa-pulse" style="margin: 20px 0; font-size: 60px;"></i>
+            </div>
+            <div class="advanced-col-md-12" id="osc-poup-button">
+
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
