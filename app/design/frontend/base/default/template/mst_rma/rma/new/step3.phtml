@@ -1,0 +1,19 @@
+<?php
+/* @var $this Mirasvit_Rma_Block_Rma_New_Step3 */
+/* @var $rma Mirasvit_Rma_Model_Rma */
+$rma = $this->getRma();
+$orders = $rma->getOrders();
+?>
+<div class="page-title">
+    <h1><?php echo $this->getShippingBlockTitle() ?></h1>
+</div>
+
+<div class="fieldset">
+    <div>
+        <?php echo $this->getShippingBlockContent() ?>
+    </div>
+</div>
+
+<div class="buttons-set">
+    <button type="submit" title="<?php echo $this->__('Next Step') ?>" class="button" id='rma_submit' onclick="window.location='<?php echo $this->getSuccessUrl($rma); ?>'"><span><span><?php echo $this->__('Next  Step') ?></span></span></button>
+</div>

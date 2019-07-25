@@ -1,0 +1,213 @@
+<?php
+/* @var $this Mirasvit_Rma_Block_Rma_New_Step2 */
+?>
+<div class="rma-new-step2">
+    <div class="page-title">
+        <h1><?php echo $this->__('Request New Return') ?></h1>
+    </div>
+    <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+    <form action="<?php echo $this->getStep2PostUrl()?>" method="POST" enctype="multipart/form-data" id="rma-form-validate" >
+        <?php echo $this->getBlockHtml('formkey')?>
+        <input name="form_uid" type="hidden" value="<?php echo rand(1, 1000) ?>">
+
+        <div class="fieldset">
+            <h2 class="legend"><?php echo $this->__('Enter information for each item') ?></h2>
+        </div>
+        <?php if ($this->getAllowGift()): ?>
+            <?php echo $this->getChildHtml('rma.new.gift') ?>
+        <?php endif?>
+
+        <table class="data-table order" id="my-orders-reason-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        <?php echo $this->__('Product Name') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->__('Qty') ?>
+                    </th>
+                    <th>
+                        <?php echo $this->__('Order') ?>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->getItems() as $orderId => $items): ?>
+                    <?php
+                    $order = $this->getOrderById($orderId);
+                    ?>
+                    <?php foreach ($items as $itemId => $item): ?>
+                        <?php
+                        $qty = $item['qty'];
+                        if (empty($item['is_offline'])) {
+                            $item = $this->getOrderItemById($itemId);
+                        } else {
+                            $item = $this->getOfflineOrderItemById($order, $itemId);
+                        }
+                        if (
+                            ($item->getProductType() == 'bundle' &&
+                            $this->getConfig()->getPolicyBundleOneByOne()) ||
+                            $qty < 1
+                        ) {
+                            continue;
+                        }
+                        ?>
+                        <tr>
+                            <td>
+                                <input name="orders[<?php echo $order->getId() ?>]" type="hidden" value="<?php echo $order->getId() ?>">
+                                <?php if ($order->getIsOffline()): ?>
+                                    <input name="offline_orders[<?php echo $order->getId() ?>][id]" type="hidden" value="<?php echo $order->getId() ?>">
+                                <?php endif; ?>
+                                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][is_return]" value="1">
+                                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][qty_requested]"
+                                       value="<?php echo $qty; ?>"
+                                    >
+                                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId(); ?>][name]"
+                                       value="<?php echo isset($orderItems[$order->getId()][$item->getOrderItemId()]['name']) ? $orderItems[$order->getId()][$item->getOrderItemId()]['name'] : ''; ?>"
+                                    >
+                                <?php if ($item->getProduct()): ?>
+                                    <img id="image" src="<?php echo $this->helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(200) ?>" width="100px" />
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <b><?php echo Mage::helper('rma')->getOrderItemLabel($item) ?></b>
+                            </td>
+                            <td>
+                                <?php echo $qty; ?>
+                            </td>
+                            <td><?php echo Mage::helper('rma')->getOrderLabel($order); ?></td>
+                            <td>
+                                <?php if ($this->getConfig()->isCustomerReasonRequired()): ?>
+                                    <div class="rma__customer-option">
+                                        <label id="user-conditional" class="required"><?php echo $this->__('Reason') ?><em id="em-requered"> *</em></label>
+
+                                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][reason_id]" id="reason_id<?php echo $item->getOrderItemId() ?>" class="required-entry">
+                                            <option value=""><?php echo $this->__('-- Select a Reason --')?></option>
+                                            <?php foreach ($this->getReasonCollection() as $reason): ?>
+                                                <option value="<?php echo $reason->getId()?>"><?php echo $reason->getName() ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                    </div>
+                                <?php endif ?>
+                                <?php if ($this->getConfig()->isCustomerConditionRequired()): ?>
+                                    <div class="rma__customer-option">
+                                        <label id="user-conditional" class="required"><?php echo $this->__('Condition') ?><em id="em-requered"> *</em></label>
+
+                                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][condition_id]" id="condition_id<?php echo $item->getOrderItemId() ?>" class="required-entry">
+                                            <option value=""><?php echo $this->__('-- Select a Condition --')?></option>
+                                            <?php foreach ($this->getConditionCollection() as $condition): ?>
+                                                <option value="<?php echo $condition->getId()?>"><?php echo $condition->getName() ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                <?php endif ?>
+                                <?php if ($this->getConfig()->isCustomerResolutionRequired()): ?>
+                                    <div class="rma__customer-option">
+                                        <label id="user-conditional" class="required"><?php echo $this->__('Resolution') ?><em id="em-requered"> *</em></label>
+
+                                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][resolution_id]" id="resolution_id<?php echo $item->getOrderItemId() ?>" class="required-entry">
+                                            <option value=""><?php echo $this->__('-- Select a Resolution --')?></option>
+                                            <?php foreach ($this->getResolutionCollection() as $resolution): ?>
+                                                <option value="<?php echo $resolution->getId()?>"><?php echo $resolution->getName() ?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                <?php endif; ?>
+                                <?php if (!$order->getIsOffline()): ?>
+                                    <?php $another = $this->getRmasByOrderItem($item->getOrderItem()) ?>
+                                    <?php if ($another): ?>
+                                        <div id="another-rma">
+                                            <?php echo $this->__('Another RMA for this product: %s', $another) ?>
+                                        </div>
+                                    <?php endif ?>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+
+        <div class="clearfix"></div>
+
+        <?php
+        $customFields = $this->getCustomFields();
+        if ($customFields->count()):
+        ?>
+            <div class="fieldset">
+                <ul class="form-list">
+                    <?php foreach ($customFields as $field): ?>
+                    <li class="control">
+                        <label id="customer-field" for="<?php echo $field->getCode()?>" <?php echo $field->getIsRequiredCustomer() ? 'class="required"><em>*</em>' : '>'?><?php echo $this->__($field->getName()) ?></label>
+                        <?php echo Mage::helper('rma/field')->getInputHtml($field)?>
+                        <p id="user-description"><?php echo $field->getDescription() ?></p>
+                    </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        <?php endif ?>
+
+        <div class="fieldset">
+            <h2 class="legend" id="additional-information"><?php echo $this->__('Additional Information') ?></h2>
+            <ul class="form-list">
+                <li class="wide">
+                    <div class="input-box">
+                        <textarea name="comment" id="comment" class="input-text"></textarea>
+                    </div>
+                </li>
+                <li class="wide">
+                    <label for="attachment"><?php echo $this->__('Attach files') ?>
+                    </label>
+                    <div class="input-box">
+                        <?php echo Mage::helper('mstcore/attachment')->getFileInputHtml(Mage::helper('rma/attachment')->getAllowedExtensions()) ?>
+                    </div>
+                    <?php echo Mage::helper('rma/attachment')->getAttachmentLimits() ?>
+                </li>
+            </ul>
+        </div>
+
+        <?php if ($this->getPolicyIsActive()): ?>
+        <div class="fieldset">
+            <h2 class="legend" id="policy-title"><?php echo $this->getPolicyTitle() ?></h2>
+            <ul class="form-list">
+                <li class="wide" id="policy-text">
+                    <?php echo $this->getPolicyContent() ?>
+                </li>
+
+                <li class="control">
+                    <div class="input-box" id="agree-input-box">
+                        <input id='agree' type='checkbox' class='required-entry checkbox'> <label for='agree'><?php echo $this->__('I agree') ?></label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <?php endif ?>
+
+        <div class="buttons-set">
+            <button type="submit" title="<?php echo $this->getSubmitButtonName() ?>" class="button" id='rma_submit' onclick="return rmaDataFormSubmit(this)"><span><span><?php echo $this->getSubmitButtonName()  ?></span></span></button>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+    //<![CDATA[
+        var rmaDataForm = new VarienForm("rma-form-validate", true);
+        function rmaDataFormSubmit(button){
+            if(rmaDataForm.validator &&  rmaDataForm.validator.validate()){
+                Form.Element.disable(button);
+                rmaDataForm.submit();
+            }
+            return false;
+        }
+    //]]>
+    </script>
+
+    <style type="text/css">
+        #rma_remove_item1 {
+            display: none;
+        }
+    </style>
+    <div style="display:none" id="error_message_no_items"><?php echo $this->__('Please, select RMA items which you would like to return.') ?></div>
+</div>
