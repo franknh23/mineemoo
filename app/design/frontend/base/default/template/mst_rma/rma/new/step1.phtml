@@ -1,0 +1,249 @@
+<?php
+/* @var $this Mirasvit_Rma_Block_Rma_New_Step1 */
+$orders = $this->getOrderCollection();
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Request New Return') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<?php if (($orders && $orders->count()) || $this->getConfig()->getGeneralIsOfflineOrdersAllowed()): ?>
+    <form action="<?php echo $this->getStep1PostUrl() ?>" method="POST" id="rma-form-validate" >
+        <div class='fieldset'>
+            <h2 class="legend" id="please-select-order">
+                <?php echo $this->__('Select order items for return') ?>
+            </h2>
+
+            <ul class="form-list">
+                <li class="wide">
+                    <?php if ($orders && !$orders->count()): ?>
+                        <label for="order_id"><?php echo $this->__('You have no completed orders or your orders were placed more than %s days ago. You can add order manually', $this->getReturnPeriod()) ?></label>
+                    <?php endif ?>
+
+                    <div class="input-box">
+                        <table class="data-table UI-ORDER-BLOCK">
+                        <?php foreach ($orders as $order): ?>
+                            <thead class="order collapsible" data-order="<?php echo $order->getId() ?>">
+                                <tr>
+                                    <th>
+                                        <input id="my-orders-table_collapseable_<?php echo $order->getId(); ?>-state" type="hidden" value="0">
+                                        <input type="checkbox" name="orders[]" id="reorder-item-<?php echo $order->getId() ?>" value="<?php echo $order->getId() ?>"
+                                               class="checkbox select-order UI-SELECT-ORDER" data-order="<?php echo $order->getId() ?>">
+                                    </th>
+                                    <th width="120px"><?php echo $order->getRealOrderId() ?></th>
+                                    <th width="50%"><span class="nobr"><?php echo $this->formatDate($order->getCreatedAtStoreDate()) ?></span></th>
+                                    <th><?php echo $order->getShippingAddress() ? $this->escapeHtml($order->getShippingAddress()->getName()) : '&nbsp;' ?></th>
+                                    <th><?php echo $order->formatPrice($order->getGrandTotal()) ?></th>
+                                    <th><em><?php echo $order->getStatusLabel() ?></em></th>
+                                    <th><a href="#">&nbsp;</a></th>
+                                </tr>
+                            </thead>
+                            <tbody data-order="<?php echo $order->getId() ?>" style="display: none;">
+                                <?php $odd = ''; ?>
+                                <?php foreach (Mage::helper('rma')->getRmaItemsByOrders($order) as $item): ?>
+                                    <?php
+                                            if ($item->getProductType() == 'bundle' && $this->getConfig()->getPolicyBundleOneByOne()) {
+                                                continue;
+                                            }
+                                            $disabled = '';
+                                            $qty = $item->getQtyAvailable();
+                                            if ($qty <= 0) {
+                                                $disabled = 'disabled';
+                                            }
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][checkbox]"
+                                                       value="1" title="" class="checkbox select-order-item UI-SELECT-PRODUCT" <?php echo $disabled ?>>
+                                            </td>
+                                            <td width="120px">
+                                                <img id="image" src="<?php echo $this->helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(180) ?>" width="90px" />
+                                            </td>
+                                            <td width="50%">
+                                                <b><?php echo Mage::helper('rma')->getOrderItemLabel($item) ?></b>
+                                            </td>
+                                            <td class="nobr"><?php echo $this->__('Sku').': '.$item->getProductSku() ?></td>
+                                            <td class="nobr">
+                                                <?php echo $this->__('Qty'); ?>:
+                                                <?php if ($qty == 0): ?>
+                                                0
+                                                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][qty_requested]" class="order-item-qty " value="-1">
+                                                <?php elseif ($qty == 1): ?>
+                                                1
+                                                <input type="hidden" name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][qty_requested]" class="order-item-qty " value="1">
+                                                <?php elseif ($qty > 1 && $qty < 10): ?>
+                                                        <select name="items[<?php echo $order->getId() ?>][<?php echo $item->getOrderItemId() ?>][qty_requested]" class="UI-ORDER-ITEM-QTY form-list-select-fix digits-range-1-<?php echo $qty;?>" <?php echo $disabled; ?>>
+                                                            <?php
+                                                            for ($i = 1; $i <= $qty; ++$i) {
+                                                                echo '<option value="'.$i.'"';
+                                                                if ($i == $qty) {
+                                                                    echo ' selected';
+                                                                }
+                                                                echo '>'.$i.'</option>';
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                <?php elseif ($qty >= 10): ?>
+                                                    <input type="number" name="items[<?php echo $order->getId(); ?>][<?php echo $item->getOrderItemId(); ?>][qty_requested]" class="UI-ORDER-ITEM-QTY digits-range-1-<?php echo $qty;?>" value="" min="1" max="<?php echo $qty;?>" <?php echo $disabled; ?>>
+                                                <?php endif ?>
+                                            </td>
+                                            <td class="nobr"><em><?php echo $this->__('Price').': '.$order->formatPrice($item->getProduct()->getPrice()) ?></em></td>
+                                            <td>
+                                                <?php if (!$order->getIsOffline()): ?>
+                                                    <?php $another = $this->getRmasByOrderItem($item->getOrderItem()) ?>
+                                                    <?php if ($another): ?>
+                                                        <div id="another-rma">
+                                                            <?php echo $this->__('Another RMA for this product: %s', $another) ?>
+                                                        </div>
+                                                    <?php endif ?>
+                                                <?php endif ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                        <?php endforeach ?>
+                        </table>
+
+                        <?php if ($this->getConfig()->getGeneralIsOfflineOrdersAllowed()): ?>
+                            <div id="add_new_offline_order">
+                                <button type="button" title="<?php echo $this->__('Add items manually') ?>" class="button button-secondary">
+                                    <span><span><?php echo $this->__('Add items manually') ?></span></span>
+                                </button>
+                            </div>
+                            <div id="add_new_offline_order_container"></div>
+                        <?php endif ?>
+                    </div>
+                </li>
+            </ul>
+            <button type="button" title="<?php echo $this->__('Add another order'); ?>" class="button add-other-manual-order" onclick="jQuery('#add_new_offline_order button').click()" style="display: none">
+                <span><span><?php echo $this->__('Add another order') ?></span></span>
+            </button>
+            <button type="submit" title="<?php echo $this->__('Next Step') ?>" class="button go-step2" onclick="return rmaDataFormSubmit(this)">
+                <span><span><?php echo $this->__('Next Step') ?></span></span>
+            </button>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        var rmaDataForm = new VarienForm("rma-form-validate", true);
+        function rmaDataFormSubmit(button){
+            if (!jQuery("input.select-order-item:checked" ).length && !jQuery('.order-container').length) {
+                alert("<?php echo $this->__('Please, select RMA items which you would like to return.') ?>");
+                return false;
+            }
+            $$('tbody').each(function(item) {
+                if (item.style.display == 'none') {
+                    item.style.visibility = 'hidden';
+                    item.style.display = 'table-column';
+                }
+            });
+            if(rmaDataForm.validator &&  rmaDataForm.validator.validate()){
+                Form.Element.disable(button);
+                rmaDataForm.submit();
+            } else {
+                $$('tbody').each(function(item) {
+                    item.style.visibility = '';
+                    if (item.style.display == 'table-column') {
+                        item.style.display = 'none';
+                    }
+                    if (jQuery('.validation-failed', item).length) {
+                        item.style.display = '';
+                    }
+                });
+            }
+            return false;
+        }
+
+        //]]>
+    </script>
+    <?php if ($this->getConfig()->getGeneralIsOfflineOrdersAllowed()): ?>
+        <script id="order_offline_template" type="text/x-custom-template">
+            <table class="data-table order collapseable" id="my-orders-table_collapseable_{{order_id}}-head" collapse-id="my-orders-table_collapseable_{{order_id}}">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="hidden" name="offline_orders[]" id="reorder-item-{{order_id}}" value="{{order_id}}" title="" class="checkbox select-order">
+                        <input type="hidden" name="offline_orders[{{order_id}}][address]" value="{{order_address}}" title="" class="checkbox select-order">
+                        <input type="checkbox" name="offline_orders[{{order_id}}][id]" id="reorder-item-{{order_id}}" value="{{order_id}}" title="" class="checkbox select-order">
+                    </th>
+                    <th>{{order_id}}</th>
+                    <th><a href="#">&nbsp;</a></th>
+                </tr>
+                </thead>
+                <tbody id="my-orders-table_collapseable_{{order_id}}" class="collapseable" style="display: none;">
+                    {{order_items}}
+                </tbody>
+            </table>
+        </script>
+        <script id="order_items_offline_template" type="text/x-custom-template">
+            <tr>
+                <td><input type="checkbox" name="offline_items[{{order_id}}][{{item_id}}]" value="offline" title="" class="checkbox select-order-item"></td>
+                <td>
+                    <input type="hidden" name="offline_items[{{order_id}}][{{item_id}}][name]" value="{{item_name}}">
+                    <b>{{item_name}}</b>
+                </td>
+                <td>
+                    <input type="hidden" name="offline_items[{{order_id}}][{{item_id}}][qty_requested]" value="{{item_qty}}">
+                    {{item_qty}}
+                </td>
+            </tr>
+        </script>
+
+        <script id="order_id_template" type="text/x-custom-template">
+            <div class="order-container rma__order-offline UI-ORDER-CONTAINER">
+                <div class="field name-itemname">
+                    <label for="itemname" class="required"><?php echo $this->__('Order or Receipt #') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="orders[]" class="input-text UI-OFFLINE-ORDER-INPUT required-entry">
+                        <input type="hidden" name="" value="" class="offline_order_id">
+                    </div>
+
+                    <button class="delete_offline_order button button-secondary" type="button" title="<?php echo $this->__('Delete Order') ?>">
+                        <span><span><?php echo $this->__('Delete Order') ?></span></span>
+                    </button>
+                </div>
+                <div class="offline_items"></div>
+            </div>
+        </script>
+
+        <script id="order_item_template" type="text/x-custom-template">
+            <div class="rma__order-offline-item UI-OFFLINE-PRODUCT">
+                <div class="field name-itemname">
+                    <label for="itemname" class="required"><?php echo $this->__('Returned Item') ?></label>
+                    <div class="input-box">
+                        <input type="text" name="itemname[]" value="" title="Item Name" maxlength="255" class="input-text itemname required-entry UI-ITEMNAME">
+                        <input type="hidden" name="" value="1" title="" class="UI-OFFLINE-SELECT-ORDER">
+                        <input type="hidden" name="" value="1" title="" class="UI-IS-OFFLINE">
+                    </div>
+                </div>
+
+                <div class="field name-itemqty">
+                    <label for="itemqty" class="required"><?php echo $this->__('Returned Qty') ?></label>
+                    <div class="input-box">
+                        <input type="number" name="itemqty[]" value="" title="Qty" maxlength="255" class="input-text itemqty required-entry UI-ITEMQTY">
+                    </div>
+                </div>
+
+                <div class="field name-remove">
+                    <button class="delete_offline_item button button-secondary" type="button" title="<?php echo $this->__('Delete item') ?>">
+                        <span><span><?php echo $this->__('Delete') ?></span></span>
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <button class="add_offline_item button" type="button" title="<?php echo $this->__('Add another item') ?>">
+                    <span><span><?php echo $this->__('Add another item') ?></span></span>
+                </button>
+            </div>
+        </script>
+    <?php endif ?>
+<?php else: ?>
+<div class='fieldset'>
+    <p><?php echo $this->__('You have no completed orders to request RMA or your orders were placed more than %s days ago. Please, contact customer service.', $this->getReturnPeriod()) ?></p>
+</div>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo Mage::helper('rma/url')->getRmaListUrl()?>"><small>&laquo; </small><?php echo $this->__('Back to My Returns') ?></a></p>
+</div>
+<?php endif ?>

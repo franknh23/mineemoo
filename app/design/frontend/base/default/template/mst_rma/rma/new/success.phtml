@@ -1,0 +1,125 @@
+<?php
+/* @var $this Mirasvit_Rma_Block_Rma_New_Success */
+
+/* @var $rma Mirasvit_Rma_Model_Rma */
+$rma = $this->getRma();
+?>
+
+<script>
+    function rmaShowConfirmationForm()
+    {
+        $('rma-confirmation-form').show();
+        $('rma-confirmation-form-overlay').show();
+    }
+    function rmaHideConfirmationForm()
+    {
+        $('rma-confirmation-form').hide();
+        $('rma-confirmation-form-overlay').hide();
+    }
+</script>
+<div class="rma-view">
+    <div class="page-title">
+        <h1><?php echo $this->__('RMA has been successfully submitted') ?></h1>
+    </div>
+    <div class="fieldset">
+        <h2 class="legend" id="request-information"><?php echo $this->__('Request Information') ?></h2>
+        <table width="100%">
+            <tr>
+                <td width="50%" valign="top">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td><b><?php echo $this->__('RMA') ?>:</b></td>
+                            <td class="rma-italic">
+                                #<?php echo $rma->getIncrementId() ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b><?php echo $this->__('Date Requested') ?>:</b>
+                            </td>
+                            <td class="rma-italic">
+                                <?php echo Mage::helper('core')->formatDate($rma->getCreatedAt(), 'medium') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b><?php echo $this->__('Status') ?>:</b>
+                            </td>
+                            <td class="rma-italic">
+                                <?php echo $this->__($rma->getStatus()->getName()) ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="fieldset">
+        <h2 class="legend" id="items-rma-request-for"><?php echo $this->__('Items RMA Requested for') ?></h2>
+        <table class="data-table" id="rma-table">
+            <thead>
+                <tr class="first last">
+                    <th></th>
+                    <th><?php echo $this->__('Product Name') ?></th>
+                    <th><?php echo $this->__('Order') ?></th>
+                    <th><?php echo $this->__('SKU') ?></th>
+                    <th><?php echo $this->__('Price') ?></th>
+                    <th><?php echo $this->__('Qty') ?></th>
+                    <?php if (Mage::helper('rma')->getConfig()->isCustomerReasonRequired()): ?>
+                        <th><?php echo $this->__('Reason') ?></th>
+                    <?php endif; ?>
+                    <?php if (Mage::helper('rma')->getConfig()->isCustomerConditionRequired()): ?>
+                        <th><?php echo $this->__('Condition') ?></th>
+                    <?php endif; ?>
+                    <?php if (Mage::helper('rma')->getConfig()->isCustomerResolutionRequired()): ?>
+                        <th><?php echo $this->__('Resolution') ?></th>
+                    <?php endif; ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rma->getItemCollection() as $item):?>
+                <tr>
+                    <td>
+                        <?php if ($item->getProduct()): ?>
+                            <img id="image" src="<?php echo $this->helper('catalog/image')->init($item->getProduct(), 'thumbnail')->resize(150) ?>" width="75px" />
+                        <?php endif; ?>
+                    </td>
+                    <td><?php echo Mage::helper('rma')->getOrderItemLabel($item) ?></td>
+                    <td>
+                        <?php echo Mage::helper('rma')->getItemOrderLabel($item)?>
+                    </td>
+                    <td><?php echo $item->getProductSku() ?></td>
+                    <td><?php echo Mage::helper('rma')->getOrderItemPriceFormatted($item)  ?></td>
+                    <td><?php echo $item->getQtyRequested() ?></td>
+                    <?php if (Mage::helper('rma')->getConfig()->isCustomerReasonRequired()): ?>
+                        <td class="rma-italic"><?php echo $this->__($item->getReasonName()) ?></td>
+                    <?php endif; ?>
+                    <?php if (Mage::helper('rma')->getConfig()->isCustomerConditionRequired()): ?>
+                        <td class="rma-italic"><?php echo $this->__($item->getConditionName()) ?></td>
+                    <?php endif; ?>
+                    <?php if (Mage::helper('rma')->getConfig()->isCustomerResolutionRequired()): ?>
+                        <td class="rma-italic"><?php echo $this->__($item->getResolutionName()) ?></td>
+                    <?php endif; ?>
+                </tr>
+                <?php endforeach?>
+            </tbody>
+        </table>
+    </div>
+
+    <?php if ($this->getSuccessBlockIsEnabled()) :?>
+    <div class="fieldset">
+        <h2 class="legend" id="success-title"><?php echo $this->getSuccessBlockTitle() ?></h2>
+        <div>
+            <?php echo $this->getSuccessBlockContent() ?>
+        </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="buttons-set">
+        <button type="submit" title="<?php echo $this->__('Go to returns') ?>" class="button" id='rma_submit' onclick="window.location='<?php echo $this->getRmaListUrl(); ?>'"><span><span><?php echo $this->__('Go to returns') ?></span></span></button>
+    </div>
+</div>

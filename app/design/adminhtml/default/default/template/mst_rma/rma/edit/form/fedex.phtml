@@ -1,0 +1,240 @@
+<?php
+    // Base variables
+    $rma = $this->getRma();
+    $order = $rma->getOrder();
+    $shippingMethod = $order->getShippingMethod();
+    if (!strpos($shippingMethod, 'fedex')) {
+        $shippingMethod = Mage::helper('rma/fedex')->getDefaultFedexMethod();
+    }
+?>
+
+<script>
+    function showFedexModal(mode) {
+        if(mode) {
+            $('shade').style.setProperty('display', 'block');
+            $('fedex_window').style.setProperty('display', 'block');
+        } else {
+            $('shade').style.setProperty('display', 'none');
+            $('fedex_window').style.setProperty('display', 'none');
+        }
+    }
+
+    function createPackage() {
+        var optionsTable = $('rma-options');
+        var packageTable = $('rma-package');
+
+        // Encode FedEx options
+        var options = {};
+        options['container'] = optionsTable.rows[1].cells.item(0).firstElementChild.value;
+        options['weight'] = optionsTable.rows[1].cells.item(1).firstElementChild.value;
+        options['customs_value'] = 0;
+        options['length'] = optionsTable.rows[1].cells.item(2).firstElementChild.value;
+        options['width'] = optionsTable.rows[1].cells.item(3).firstElementChild.value;
+        options['height'] = optionsTable.rows[1].cells.item(4).firstElementChild.value;
+        options['weight_units'] = optionsTable.rows[1].cells.item(1).lastElementChild.value;
+        options['dimension_units'] = optionsTable.rows[1].cells.item(5).firstElementChild.value;
+        options['content_type'] = null;
+        options['content_type_other'] = null;
+        options['delivery_confirmation'] = optionsTable.rows[1].cells.item(6).firstElementChild.value;
+
+        // Encode product data
+        var items = {};
+        for(var i = 1; i < packageTable.rows.length; i++) {
+            currentId = packageTable.rows[i].cells.item(3).firstElementChild.name.toString();
+            items[currentId] = {};
+            items[currentId]['qty'] = packageTable.rows[i].cells.item(3).firstElementChild.value;
+            items[currentId]['customs_value'] = 0;
+            items[currentId]['price'] = 0;
+            items[currentId]['name'] = packageTable.rows[i].cells.item(0).innerHTML;
+            items[currentId]['weight'] = packageTable.rows[i].cells.item(1).innerHTML;
+            items[currentId]['product_id'] = packageTable.rows[i].cells.item(3).lastElementChild.value;
+            items[currentId]['order_item_id'] = packageTable.rows[i].cells.item(3).firstElementChild.id;
+        }
+
+        var request = {};
+        request['params'] = options;
+        request['items'] = items;
+
+        // Make Ajax request so we can create shipment and FedEx label
+        new Ajax.Request('<?php echo $this->getUrl('*/rma_rma/createFedExLabel'); ?>', {
+            method: 'post',
+            parameters: {
+                rma_id: <?php echo $rma->getId() ?>,
+                data: JSON.stringify(request)
+            },
+            onComplete: function(response) {
+                var msgBox = $('fedex-msgbox');
+                if(response.getResponseHeader('status') == 'fail' || response.responseText.indexOf('http') == -1) {
+                    msgBox.innerHTML = response.responseText;
+                    msgBox.style.setProperty('display', 'block');
+                } else {
+                    showFedexModal(false);
+                    window.location.assign(response.responseText);
+                }
+            }
+        });
+    }
+
+    function downloadLabel($labelCell) {
+
+    }
+</script>
+
+<style>
+    #shade {
+        display: none;
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        width: 100%;
+        height: 150%;
+        background-color: #888888;
+        z-index:300;
+        -moz-opacity: 0.8;
+        opacity:.80;
+        filter: alpha(opacity=80);
+    }
+
+    #fedex_window {
+        position:absolute;
+        top:50%;
+        left:50%;
+        width: 60em;
+        margin-left:-30em;
+        border: 1px solid #ccc;
+        border: 2px solid black;
+        z-index: 310;
+    }
+
+    #fedex-msgbox {
+        margin: 10px;
+    }
+</style>
+
+<div id="shade" name="shade"></div>
+<div id="fedex_window" name="fedex_window" class="packaging-window" style="display:none;">
+    <div class="entry-edit-head">
+        <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('rma')->__('FedEx Shipping Label Settings') ?></h4>
+    </div>
+
+    <div id="fedex-msgbox" class="messages" style="display:none;"></div>
+
+    <div class="packaging-content">
+        <div class="messages" style="display:none;"></div>
+        <div id="package_template">
+            <div class="package-number"><?php echo Mage::helper('rma')->__('RMA Return Package') ?><span></span></div>
+            <table class="package-options" cellspacing="0" name="rma-options" id="rma-options">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Total Weight</th>
+                        <th>Length</th>
+                        <th>Width</th>
+                        <th>Height</th>
+                        <th>Units</th>
+                        <th>Signature Confirmation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select name="package_container" title="<?php echo Mage::helper('sales')->__('Package types are disregarded for USPS domestic shipments.') ?>">
+                                <?php foreach (Mage::helper('rma/fedex')->getContainers($shippingMethod, $order) as $key => $value): ?>
+                                    <option value="<?php echo $key ?>" >
+                                        <?php echo $value ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                        <td>
+                            <?php
+                            $totalWeight = 0;
+                            foreach ($rma->getItemCollection() as $item) {
+                                $totalWeight += $item->getOrderItem()->getWeight() * ($item->getQtyRequested() ? $item->getQtyRequested() : 0);
+                            }
+                            ?>
+                            <input type="text" class="options-weight input-text required-entry validate-greater-than-zero" name="container_weight"
+                                   value="<?php echo $totalWeight ?>" />
+                            <select name="container_weight_units" class="options-units-weight measures">
+                                <option value="<?php echo Zend_Measure_Weight::POUND ?>" selected="selected"  ><?php echo Mage::helper('sales')->__('lb') ?></option>
+                                <option value="<?php echo Zend_Measure_Weight::KILOGRAM ?>" ><?php echo Mage::helper('sales')->__('kg') ?></option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" class="input-text validate-greater-than-zero" name="container_length" />
+                        </td>
+                        <td>
+                            <input type="text" class="input-text validate-greater-than-zero" name="container_width" />
+                        </td>
+                        <td>
+                            <input type="text" class="input-text validate-greater-than-zero" name="container_height" />
+                        </td>
+                        <td>
+                            <select name="container_dimension_units" class="options-units-dimensions measures" onchange="packaging.changeMeasures(this);">
+                                <option value="<?php echo Zend_Measure_Length::INCH ?>" selected="selected" ><?php echo Mage::helper('sales')->__('in') ?></option>
+                                <option value="<?php echo Zend_Measure_Length::CENTIMETER ?>" ><?php echo Mage::helper('sales')->__('cm') ?></option>
+                            </select>
+                        </td>
+                        <td>
+                            <select name="delivery_confirmation_types">
+                                <?php foreach (Mage::helper('rma/fedex')->getDeliveryConfirmationTypes($order) as $key => $value): ?>
+                                    <option value="<?php echo $key ?>" >
+                                        <?php echo $value ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="package-block" style="margin-left: 10px; margin-right: 10px;">
+        <div class="package-add-products">
+            <div class="package_prapare">
+                <div class="entry-edit-head">
+                    <h4><?php echo Mage::helper('rma')->__('Package Items') ?></h4>
+                </div>
+                <div class="grid">
+                    <div class="hor-scroll">
+                        <table class="data" cellspacing="0" name="rma-package" id="rma-package">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="no-link"><span class="nobr"><?php echo Mage::helper('rma')->__('Product Name') ?></span></th>
+                                    <th class="no-link"><span class="nobr"><?php echo Mage::helper('rma')->__('Weight') ?></span></th>
+                                    <th class="no-link"><span class="nobr"><?php echo Mage::helper('rma')->__('Ordered') ?></span></th>
+                                    <th class="no-link"><span class="nobr"><?php echo Mage::helper('rma')->__('Returned') ?></span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($rma->getItemCollection() as $item): ?>
+                                    <tr>
+                                        <td class="name"><?php echo $item->getName() ?></td>
+                                        <td class="name"><?php echo $item->getOrderItem()->getWeight() ?></td>
+                                        <td class="name"><?php echo $item->getQtyOrdered() ?></td>
+                                        <td class="name">
+                                            <input class="input-text" value="<?php echo $item->getQtyRequested() ? $item->getQtyRequested() : 0 ?>"
+                                                   name="<?php echo $item->getId() ?>" id="<?php echo $item->getOrderItem()->getId() ?>" style="width: 50px;">
+                                            <input type="hidden" name="product_id" value="<?php echo $item->getProduct()->getId() ?>">
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons-set a-right">
+
+        <button type="button" class="scalable SavePackagesBtn" onClick="createPackage()">
+            <span><span><span><?php echo Mage::helper('sales')->__('OK') ?></span></span></span>
+        </button>
+        <button type="button" class="scalable" onclick="showFedexModal(false);">
+            <span><span><span><?php echo Mage::helper('sales')->__('Cancel') ?></span></span></span>
+        </button>
+    </div>
+</div>
