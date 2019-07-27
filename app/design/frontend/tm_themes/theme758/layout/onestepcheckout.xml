@@ -279,14 +279,6 @@
         <reference name="before_body_end">
             <block type="gene_braintree/js" ifconfig="payment/gene_braintree_creditcard/active" name="gene_braintree_setup" template="gene/braintree/js/setup.phtml" />
             <block type="gene_braintree/js" ifconfig="payment/gene_braintree_creditcard/active" name="gene_braintree_js" template="onestepcheckout/braintree/js/advancedcheckout.phtml" />
-
-            <!-- We include device data at the end of the larger form -->
-            <block type="gene_braintree/js" ifconfig="payment/gene_braintree_creditcard/active" name="gene_braintree_data" template="gene/braintree/js/data.phtml">
-                <action method="setData">
-                    <key>payment_form_id</key>
-                    <value>onestepcheckout</value>
-                </action>
-            </block>
         </reference>
        
     </onestepcheckout_index_index>
