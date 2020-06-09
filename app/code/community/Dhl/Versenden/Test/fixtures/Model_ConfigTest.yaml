@@ -1,0 +1,62 @@
+scope:
+  store: # Initializes store views
+# Store 1 (DE origin, DHL not active)
+    - store_id: 1
+      website_id: 1
+      group_id: 1
+      code: store_one
+      name: Store One
+      is_active: 1
+# Store 2 (AT origin, DHL active – legacy)
+    - store_id: 2
+      website_id: 1
+      group_id: 1
+      code: store_two
+      name: Store Two
+      is_active: 1
+# Store 3 (DE origin, DHL active)
+    - store_id: 3
+      website_id: 1
+      group_id: 1
+      code: store_three
+      name: Store Three
+      is_active: 1
+
+config:
+  default/dev/template/allow_symlink: 1
+  default/dhl_versenden/dev/autoload_enabled: "0"
+  default/shipping/origin/country_id: "US"
+  stores/store_one/shipping/origin/country_id: "DE"
+  stores/store_two/shipping/origin/country_id: "AT"
+  stores/store_three/shipping/origin/country_id: "DE"
+
+  default/carriers/dhlversenden/title:          "foo"
+  stores/store_one/carriers/dhlversenden/title: "bar"
+  stores/store_two/carriers/dhlversenden/title: "baz"
+  stores/store_three/carriers/dhlversenden/title: "bay"
+
+  default/carriers/dhlversenden/active:          "1"
+  stores/store_one/carriers/dhlversenden/active: "0"
+
+  default/carriers/dhlversenden/sandbox_mode:          "1"
+  stores/store_two/carriers/dhlversenden/sandbox_mode: "0"
+
+  default/carriers/dhlversenden/logging_enabled:    "1"
+  default/carriers/dhlversenden/log_level:          "7"
+
+  default/carriers/dhlversenden/service_parcelannouncement_enabled: "1"
+  default/carriers/dhlversenden/service_preferredlocation_enabled: "1"
+  stores/store_two/carriers/dhlversenden/service_parcelannouncement_enabled: "2"
+
+  default/carriers/dhlversenden/webservice_auth_username: "uFoo"
+  default/carriers/dhlversenden/webservice_auth_password: "pFoo"
+
+  default/carriers/dhlversenden/sandbox_auth_username: "uBar"
+  default/carriers/dhlversenden/sandbox_auth_password: "pBar"
+  default/carriers/dhlversenden/sandbox_endpoint: "sandbox endpoint"
+
+  default/carriers/dhlversenden/shipment_dhlmethods: "flatrate_foo"
+
+  default/carriers/dhlversenden/service_preferredday_handling_fee: 5
+  default/carriers/dhlversenden/service_preferredday_handling_fee_text: This will cost $1
+
