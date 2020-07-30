@@ -39,7 +39,7 @@
                       <?php $_product = Mage::getModel('catalog/product')->load($_product->getId()); ?>
                         <div class="label-product">             
                             <?php if($_product->getData('new')){echo '<span class="new">'.$this->__('New').'</span>';  }?>
-                            <?php if($_product->getData('sale')){echo '<span class="sale">'.$this->__('Sale').'</span>';  }?>
+                            <?php if($_product->getData('sale')){echo '<span class="sale test">'.$this->__('Sale').'</span>';  }?>
                         </div>
                 </li>
             <?php endforeach; ?>

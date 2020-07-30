@@ -34,9 +34,9 @@
             <default_setup>
                 <connection>
                     <host>localhost</host>
-                    <username>root</username>
-                    <password>root</password>
-                    <dbname>mineemoo</dbname>
+                    <username/>
+                    <password/>
+                    <dbname>magento</dbname>
                     <model>mysql4</model>
                     <initStatements>SET NAMES utf8</initStatements>
                     <type>pdo_mysql</type>

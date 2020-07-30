@@ -27,18 +27,4 @@
  */
 class Iways_PayPalPlus_Block_Onepage_Review_Button extends Mage_Core_Block_Template
 {
-    const AWESOME_TEMPLATE = 'paypalplus/awesome/review/button.phtml';
-    /**
-     * Override template file for different checkouts
-     * @return string
-     */
-    public function getTemplate()
-    {
-        if (Mage::getStoreConfig('payment/iways_paypalplus_payment/active')) {
-            if (Mage::helper('iways_paypalplus')->isAwesomeCheckout()) {
-                return self::AWESOME_TEMPLATE;
-            }
-        }
-        return parent::getTemplate();
-    }
 }

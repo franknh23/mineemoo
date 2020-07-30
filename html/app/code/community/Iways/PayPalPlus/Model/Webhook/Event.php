@@ -225,6 +225,7 @@ class Iways_PayPalPlus_Model_Webhook_Event
     {
         $this->_order->setStatus(Mage_Paypal_Model_Info::ORDER_STATUS_REVERSED);
         $this->_order->save();
+
         $this->_order
             ->addStatusHistoryComment(
                 $webhookEvent->getSummary(),

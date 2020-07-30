@@ -1,0 +1,17 @@
+<?php
+$servicePointUrl = Mage::getStoreConfig('sendcloud/servicepoint');
+if ($servicePointUrl) {
+    $locale = Mage::app()->getLocale()->getLocaleCode();
+    $parts = explode('_', $locale);
+    $language = isset($parts[0]) ? $parts[0] : 'en';
+
+    $session = Mage::getSingleton('checkout/session');
+    $quoteId = $session->getQuoteId();
+?>
+    <script type="text/javascript">
+        var SENDCLOUDSHIPPING_LANGUAGE = "<?php echo $language ?>";
+        var SENDCLOUDSHIPPING_QUOTE_ID = "<?php echo $quoteId ?>";
+    </script>
+    <script type="text/javascript" src="<?php echo $servicePointUrl ?>"></script>
+<?php
+}

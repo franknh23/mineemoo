@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Iways_PayPalPlus>
-            <version>1.9.2</version>
+            <version>1.8.3</version>
         </Iways_PayPalPlus>
     </modules>
     <global>
@@ -28,19 +28,8 @@
             <checkout>
                 <rewrite>
                     <onepage_payment_methods>Iways_PayPalPlus_Block_Onepage_Payment_Methods</onepage_payment_methods>
-                    <onepage_review>Iways_PayPalPlus_Block_Onepage_Review</onepage_review>
                 </rewrite>
             </checkout>
-            <onestepcheckout>
-                <rewrite>
-                    <onestepcheckout>Iways_PayPalPlus_Block_Magestore_Onestepcheckout</onestepcheckout>
-                </rewrite>
-            </onestepcheckout>
-            <aw_onestepcheckout>
-                <rewrite>
-                    <onestep_form_paymentmethod>Iways_PayPalPlus_Block_Aw_Paymentmethod</onestep_form_paymentmethod>
-                </rewrite>
-            </aw_onestepcheckout>
         </blocks>
         <events>
             <controller_front_init_before>

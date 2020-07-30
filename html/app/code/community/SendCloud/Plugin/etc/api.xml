@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>
+            <sendcloud_servicepoint translate="title" module="SendCloud_Plugin">
+                <model>SendCloud_Plugin/servicepoint_api</model>
+                <title>SendCloud Service Point API</title>
+                <acl>SendCloud_Plugin/servicepoint</acl>
+                <methods>
+                    <activate translate="title" module="SendCloud_Plugin">
+                        <title>Activate Service Point</title>
+                    </activate>
+                    <deactivate translate="title" module="SendCloud_Plugin">
+                        <title>Deactivate Service Point</title>
+                    </deactivate>
+                </methods>
+            </sendcloud_servicepoint>
+        </resources>
+        <resources_alias>
+            <servicepoint>sendcloud_servicepoint</servicepoint>
+        </resources_alias>
+        <v2>
+            <resources_function_prefix>
+                <servicepoint>sendcloudServicepoint</servicepoint>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <SendCloud_Plugin translate="title" module="SendCloud_Plugin">
+                    <title>SendCloud</title>
+                    <sort_order>5</sort_order>
+                    <servicepoint translate="title" module="SendCloud_Plugin">
+                        <title>Service Point</title>
+                    </servicepoint>
+                </SendCloud_Plugin>
+            </resources>
+        </acl>
+    </api>
+</config>

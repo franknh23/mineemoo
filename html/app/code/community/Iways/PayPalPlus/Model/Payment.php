@@ -52,17 +52,6 @@ class Iways_PayPalPlus_Model_Payment extends Mage_Payment_Model_Method_Abstract
     protected $_canRefundInvoicePartial = true;
     protected $_canUseCheckout = true;
 
-    /**
-     * Check if quote has grand total amount
-     *
-     * @param Mage_Sales_Model_Quote $quote
-     * @param int|null $checksBitMask
-     * @return bool
-     */
-    public function isApplicableToQuote($quote, $checksBitMask)
-    {
-        return ((float) $quote->getBaseGrandTotal()) && parent::isApplicableToQuote($quote, $checksBitMask);
-    }
 
     /**
      * Authorize payment method

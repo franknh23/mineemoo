@@ -126,67 +126,29 @@ class Iways_PayPalPlus_IndexController extends Mage_Checkout_Controller_Action
                 $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
                 return;
             }
-
-            if (Mage::helper('iways_paypalplus')->isAmastyScheckout()) {
-                if ($requiredAgreements = Mage::helper('checkout')->getRequiredAgreementIds()) {
-                    $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
-                    if ($diff = array_diff($requiredAgreements, $postedAgreements)) {
-                        $response = array(
-                            'status' => 'error',
-                            'message' => $this->__('Please agree to all the terms and conditions before placing the order.')
-                        );
-                        $this->getResponse()->setHeader('Content-type', 'application/json');
-                        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
-                        return;
-                    }
-                }
-                Mage::getSingleton('checkout/session')->setAmscheckoutIsSubscribed(Mage::app()->getRequest()->getParam('is_subscribed',
-                        false) == true);
-            }
             if ($this->getRequest()->getParam('pppId')) {
                 Mage::getSingleton('customer/session')->setPayPalPaymentId($this->getRequest()->getParam('pppId'));
             }
-            if (Mage::helper('iways_paypalplus')->isIdevOsc()) {
-                /* Save Idev_Onestepcheckout POST Data to Quote */
-                $this->getLayout()->createBlock('Iways_PayPalPlus_Block_Idev_Checkout',
-                    'iways_paypalplus_handle_post_block');
-            } else {
-                if (Mage::helper('iways_paypalplus')->isFirecheckout()) {
-                    Mage::getSingleton('firecheckout/type_standard')->applyShippingMethod($this->getRequest()->getPost('shipping_method', false));
+            $billing = $this->getRequest()->getPost('billing', array());
+            $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
 
-                    $quote = Mage::getSingleton('firecheckout/type_standard')->getQuote();
-                    $ordercomment = $this->getRequest()->getPost('ordercomment', false);
 
-                    if($ordercomment && isset($ordercomment['comment']) && !empty($ordercomment['comment'])) {
-                        $quote->setFirecheckoutCustomerComment($ordercomment['comment']);
-                    }
-
-                    foreach (Mage::helper('checkoutfields')->getEnabledFields() as $fieldName => $fieldConfig) {
-                        $value = (string)$this->getRequest()->getPost($fieldName);
-                        $quote->setData($fieldName, $value);
-                    }
-                    $quote->save();
-                }
-
-                $billing = $this->getRequest()->getPost('billing', array());
-                $customerBillingAddressId = $this->getRequest()->getPost('billing_address_id', false);
-
-                if (isset($billing['email'])) {
-                    $billing['email'] = trim($billing['email']);
-                }
-                $this->getOnepage()->saveBilling($billing, $customerBillingAddressId);
-
-                $shipping = $this->getRequest()->getPost('shipping', array());
-                if (isset($billing['use_for_shipping']) && $billing['use_for_shipping']) {
-                    $shipping = $billing;
-                }
-                $customerShippingAddressId = $this->getRequest()->getPost('shipping_address_id', false);
-                $this->getOnepage()->saveShipping($shipping, $customerShippingAddressId);
-
-                $this->getOnepage()->saveShippingMethod($this->getRequest()->getPost('shipping_method', ''));
-
-                $this->getOnepage()->savePayment($this->getRequest()->getPost('payment', array()));
+            if (isset($billing['email'])) {
+                $billing['email'] = trim($billing['email']);
             }
+            $this->getOnepage()->saveBilling($billing, $customerBillingAddressId);
+
+            $shipping = $this->getRequest()->getPost('shipping', array());
+            if ($billing['use_for_shipping']) {
+                $shipping = $billing;
+            }
+            $customerShippingAddressId = $this->getRequest()->getPost('shipping_address_id', false);
+            $this->getOnepage()->saveShipping($shipping, $customerShippingAddressId);
+
+            $this->getOnepage()->saveShippingMethod($this->getRequest()->getPost('shipping_method', ''));
+
+            $this->getOnepage()->savePayment($this->getRequest()->getPost('payment', array()));
+
             $responsePayPal = Mage::getModel('iways_paypalplus/api')->patchPayment($this->getOnepage()->getQuote());
             if ($responsePayPal) {
                 $response = array('status' => 'success');
@@ -199,6 +161,7 @@ class Iways_PayPalPlus_IndexController extends Mage_Checkout_Controller_Action
         } catch (Exception $ex) {
             $response = array('status' => 'error', 'message' => $ex->getMessage());
         }
+
         $this->getResponse()->setHeader('Content-type', 'application/json');
         $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($response));
     }

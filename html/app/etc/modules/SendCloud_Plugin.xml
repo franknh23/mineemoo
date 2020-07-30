@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <SendCloud_Plugin>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Admin />
+                <Mage_Sales />
+            </depends>
+        </SendCloud_Plugin>
+    </modules>
+</config>

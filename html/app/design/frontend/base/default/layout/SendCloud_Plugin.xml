@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <reference name="content">
+            <block type="core/template" name="sendcloud_js" template="SendCloud/checkout_service_point.phtml"></block>
+        </reference>
+    </checkout_onepage_index>
+
+    <onestepcheckout_index_index>
+        <reference name="content">
+            <block type="core/template" name="sendcloud_js" template="SendCloud/checkout_service_point.phtml"></block>
+        </reference>
+    </onestepcheckout_index_index>
+
+    <opc_index_index>
+        <reference name="content">
+            <block type="core/template" name="sendcloud_js" template="SendCloud/checkout_service_point.phtml"></block>
+        </reference>
+    </opc_index_index>
+
+    <firecheckout_index_index>
+        <reference name="content">
+            <block type="core/template" name="sendcloud_js" template="SendCloud/checkout_service_point.phtml"></block>
+        </reference>
+    </firecheckout_index_index>
+
+    <sales_order_view>
+        <reference name="my.account.wrapper">
+            <block type="sales/order_info" name="service_point_info" template="SendCloud/sales_order_info_service_point.phtml" after="sales.order.info"></block>
+        </reference>
+    </sales_order_view>
+</layout>

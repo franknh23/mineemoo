@@ -28,58 +28,6 @@
 class Iways_PayPalPlus_Block_Onepage_Payment_Methods extends Mage_Checkout_Block_Onepage_Payment_Methods
 {
     /**
-     * Default PayPal Plus method template
-     */
-    const DEFAULT_TEMPLATE = 'paypalplus/methods.phtml';
-    /**
-     * Magestore PayPal Plus method template
-     */
-    const MAGESTORE_TEMPLATE = 'paypalplus/magestore/onestepcheckout/payment_method.phtml';
-
-    /**
-     * Awesome PayPal Plus method template
-     */
-    const AWESOME_TEMPLATE = 'paypalplus/awesome/payment/methods.phtml';
-
-    /**
-     * Idev PayPal Plus method template
-     */
-    const IDEV_TEMPLATE = 'paypalplus/onestepcheckout/payment_method.phtml';
-
-    /**
-     * Firecheckout PayPal Plus method template
-     */
-    const FIRECHECKOUT_TEMPLATE = 'paypalplus/firecheckout/checkout/payment/methods.phtml';
-
-
-    /**
-     * Override template file for different checkouts
-     * @return string
-     */
-    public function getTemplate()
-    {
-        if (Mage::getStoreConfig('payment/iways_paypalplus_payment/active')) {
-            if (Mage::helper('iways_paypalplus')->isFirecheckout()) {
-                return self::FIRECHECKOUT_TEMPLATE;
-            }
-            if (Mage::helper('iways_paypalplus')->isMagestoreOsc()) {
-                return self::MAGESTORE_TEMPLATE;
-            }
-            if (Mage::helper('iways_paypalplus')->isIwdOsc()) {
-                return self::DEFAULT_TEMPLATE;
-            }
-            if (Mage::helper('iways_paypalplus')->isAwesomeCheckout()) {
-                return self::AWESOME_TEMPLATE;
-            }
-            if (Mage::helper('iways_paypalplus')->isIdevOsc()) {
-                return self::IDEV_TEMPLATE;
-            }
-        }
-        return parent::getTemplate();
-    }
-
-
-    /**
      * Builds third party methods array
      *
      * @return array

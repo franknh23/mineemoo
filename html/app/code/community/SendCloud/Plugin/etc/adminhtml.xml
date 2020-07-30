@@ -1,0 +1,22 @@
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sendcloud translate="title" module="SendCloud_Plugin">
+                                        <title>SendCloud</title>
+                                        <sort_order>999</sort_order>
+                                    </sendcloud>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
