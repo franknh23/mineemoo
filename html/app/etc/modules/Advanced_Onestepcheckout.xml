@@ -23,7 +23,7 @@
 <config>
     <modules>
         <Advanced_Onestepcheckout>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
             <depends>
                 <Mage_Payment />
