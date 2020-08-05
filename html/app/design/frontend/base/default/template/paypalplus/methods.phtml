@@ -65,7 +65,7 @@
                     $$('#review-buttons-container > button')[0].enable();
                 }
             } catch (e) {
-                console.log(e);
+
             }
             return this.parentSwitchMethod(method);
         }
@@ -79,6 +79,7 @@ $thirdPartyMethods = $this->getThirdPartyMethods();
 $pppActive = $this->isPPPActive();
 
 $hideStyle = ' style="display:none;"';
+$hideClass = ' ppp-hide'
 ?>
 <?php if (empty($methods) && !$pppActive): ?>
     <dt>
@@ -95,7 +96,9 @@ $hideStyle = ' style="display:none;"';
             $hide = false;
         }
         ?>
-        <dt class="ppp <?php echo $_code ?>"<?php if ($hide || $_code == Iways_PayPalPlus_Model_Payment::METHOD_CODE) {
+        <dt class="ppp <?php echo $_code ?><?php if ($hide || $_code == Iways_PayPalPlus_Model_Payment::METHOD_CODE) {
+            echo $hideClass;
+        } ?>"<?php if ($hide || $_code == Iways_PayPalPlus_Model_Payment::METHOD_CODE) {
             echo $hideStyle;
         } ?>>
             <?php if (!$oneMethod): ?>
@@ -115,7 +118,9 @@ $hideStyle = ' style="display:none;"';
                 <?php echo $this->getMethodLabelAfterHtml($_method) ?>
             </label>
         </dt>
-        <dd class="ppp <?php echo $_code ?>"<?php if ($hide) {
+        <dd class="ppp <?php echo $_code ?><?php if ($hide) {
+            echo $hideClass;
+        } ?>"<?php if ($hide) {
             echo $hideStyle;
         } ?>><?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?><?php echo $html; ?><?php endif; ?></dd>
     <?php endforeach;
