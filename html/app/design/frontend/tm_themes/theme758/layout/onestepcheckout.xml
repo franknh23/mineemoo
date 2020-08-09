@@ -51,28 +51,28 @@
             <action method="addItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>skin_js</type>
                 <name>js/bundle.js</name>
-            </action>         
+            </action>
             <action method="addCss" ifconfig="onestepcheckout/features/popupcheckout">
                 <stylesheet>css/advanced/font-awesome/css/font-awesome.min.css</stylesheet>
-            </action>		
-            
+            </action>
+
             <action method="removeItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>js</type>
                 <name>varien/form.js</name>
                 <params />
-            </action> 
+            </action>
             <action method="removeItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>js</type>
                 <name>varien/form.js</name>
                 <params />
-            </action>          
+            </action>
             <action method="addJs" ifconfig="onestepcheckout/features/popupcheckout">
                 <script>advanced/checkout/varien/form.js</script>
-            </action>           
+            </action>
             <action method="addJs" ifconfig="onestepcheckout/features/popupcheckout">
                 <script>advanced/checkout/checkout.js</script>
             </action>
-            
+
             <action method="addItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>skin_css</type>
                 <name>css/advanced/fancybox/jquery.fancybox.css</name>
@@ -81,7 +81,7 @@
                 <type>skin_js</type>
                 <name>js/advanced/jquery/jquery-1.10.2.min.js</name>
             </action>
-            
+
             <action method="addItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>js</type>
                 <name>advanced/app.js</name>
@@ -96,7 +96,7 @@
             <action method="addItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>skin_css</type>
                 <name>css/advanced/style.css</name>
-            </action>              
+            </action>
             <action method="addItem" ifconfig="onestepcheckout/features/popupcheckout">
                 <type>skin_css</type>
                 <name>css/advanced/sociallogin/style.css</name>
@@ -109,12 +109,12 @@
         <reference name="footer">
             <action method="append" ifconfig="onestepcheckout/features/popupcheckout">
                 <block>onestepcheckout_popup</block>
-            </action>          
+            </action>
         </reference>
         <reference name="after_body_start">
              <action method="append" ifconfig="onestepcheckout/features/popupcheckout">
                 <block>login-popup-quick</block>
-            </action>             		
+            </action>
         </reference>
     </default>
     <onestepcheckout_index_index>
@@ -146,32 +146,32 @@
                 <type>skin_js</type>
                 <name>js/bundle.js</name>
             </action>
-         
+
             <action method="addCss">
                 <stylesheet>css/advanced/font-awesome/css/font-awesome.min.css</stylesheet>
-            </action>		
-            
+            </action>
+
             <action method="removeItem">
                 <type>js</type>
                 <name>varien/form.js</name>
                 <params />
-            </action> 
+            </action>
             <action method="removeItem">
                 <type>js</type>
                 <name>varien/form.js</name>
                 <params />
-            </action>  
+            </action>
             <action method="removeItem">
                 <type>js</type>
                 <name>advanced/checkout/checkoutpopup.js</name>
-            </action>        
+            </action>
             <action method="addJs">
                 <script>advanced/checkout/varien/form.js</script>
-            </action>           
+            </action>
             <action method="addJs">
                 <script>advanced/checkout/checkout.js</script>
             </action>
-            
+
             <action method="addItem">
                 <type>skin_css</type>
                 <name>css/advanced/fancybox/jquery.fancybox.css</name>
@@ -179,11 +179,11 @@
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/advanced/jquery/jquery-1.10.2.min.js</name>
-            </action>            
+            </action>
             <action method="addItem">
                 <type>js</type>
                 <name>advanced/app.js</name>
-            </action>         
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/advanced/fancybox/jquery.fancybox.js</name>
@@ -196,15 +196,15 @@
                 <type>skin_css</type>
                 <name>css/advanced/handle-counter.css</name>
             </action>
-           
+
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/advanced/jquery/noconflict.js</name>
-            </action>  
+            </action>
             <action method="addItem">
                 <type>skin_js</type>
                 <name>js/advanced/handleCounter.js</name>
-            </action> 
+            </action>
             <action method="addItem" ifconfig="payment/cryozonic_stripe/active">
                 <type>skin_js</type>
                 <name>js/advanced/paymentmethods/cryozonic_stripe.js</name>
@@ -221,8 +221,8 @@
         </reference>
         <reference name="content">
             <block type="onestepcheckout/onestepcheckout" name="onestepcheckout" after="-" template="onestepcheckout/standard.phtml" >
-                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_billing" template="onestepcheckout/checkout/billing.phtml"/>                
-                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_shipping" template="onestepcheckout/checkout/shipping.phtml"/>                
+                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_billing" template="onestepcheckout/checkout/billing.phtml"/>
+                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_shipping" template="onestepcheckout/checkout/shipping.phtml"/>
                 <block type="checkout/onepage_shipping_method_available" name="onestepcheckout_checkout_shippingmethod" template="onestepcheckout/checkout/shipping_method/available.phtml"/>
                 <block type="checkout/onepage_payment_methods" name="onestepcheckout_checkout_paymentmethod" template="onestepcheckout/checkout/payment/methods.phtml">
                     <action method="setMethodFormTemplate">
@@ -254,41 +254,41 @@
                         <template>onestepcheckout/checkout/review/item.phtml</template>
                     </action>
                     <block type="checkout/cart_totals" name="onestepcheckout.review.info.totals" as="totals" template="onestepcheckout/checkout/review/totals.phtml"/>
-                    <block type="checkout/cart_coupon" name="onestepcheckout.review.coupon" as="coupon" template="onestepcheckout/checkout/review/features/coupon.phtml"/>                    
+                    <block type="checkout/cart_coupon" name="onestepcheckout.review.coupon" as="coupon" template="onestepcheckout/checkout/review/features/coupon.phtml"/>
                     <block type="onestepcheckout/giftmessage_inline" name="onestepcheckout.review.giftmessage" as="giftmessage" template="onestepcheckout/giftmessage/inline.phtml"/>
                     <block type="onestepcheckout/onestepcheckout" name="onestepcheckout.review.order_comment" as="order_comment" template="onestepcheckout/checkout/review/features/order_comment.phtml"/>
-                    
+
                     <block type="core/text_list" name="onestepcheckout.review.info.items.before" as="items_before" translate="label">
                         <label>Items Before</label>
                     </block>
                     <block type="core/text_list" name="onestepcheckout.review.info.items.after" as="items_after" translate="label">
                         <label>Items After</label>
                     </block>
-                    <block type="checkout/agreements" name="onestepcheckout.agreements" as="agreements" template="onestepcheckout/checkout/review/agreements.phtml"/>                                        
+                    <block type="checkout/agreements" name="onestepcheckout.agreements" as="agreements" template="onestepcheckout/checkout/review/agreements.phtml"/>
                 </block>
                 <block type="core/text_list" name="onestepcheckout.after" as="onestepcheckout_after" translate="label">
                         <label>Items After</label>
                     </block>
-            </block>            
+            </block>
         </reference>
-       
+
         <reference name="after_body_start">
-            <block type="core/template" template="onestepcheckout/checkout/body_start.phtml" name="login-popup" />			
+            <block type="core/template" template="onestepcheckout/checkout/body_start.phtml" name="login-popup" />
         </reference>
-        
+
         <reference name="before_body_end">
             <block type="gene_braintree/js" ifconfig="payment/gene_braintree_creditcard/active" name="gene_braintree_setup" template="gene/braintree/js/setup.phtml" />
             <block type="gene_braintree/js" ifconfig="payment/gene_braintree_creditcard/active" name="gene_braintree_js" template="onestepcheckout/braintree/js/advancedcheckout.phtml" />
         </reference>
-       
+
     </onestepcheckout_index_index>
-    
-    <onestepcheckout_index_index>       
+
+    <onestepcheckout_index_index>
         <reference name="onestepcheckout.review.info.items.after">
-            <block type="paypal/iframe" name="paypal.iframe" />            
-        </reference>                
+            <block type="paypal/iframe" name="paypal.iframe" />
+        </reference>
     </onestepcheckout_index_index>
-    
+
     <onestepcheckout_index_review>
         <remove name="right"/>
         <remove name="left"/>
@@ -314,19 +314,19 @@
                 <template>onestepcheckout/checkout/review/item.phtml</template>
             </action>
             <block type="checkout/cart_totals" name="onestepcheckout.review.info.totals" as="totals" template="onestepcheckout/checkout/review/totals.phtml"/>
-            <block type="checkout/cart_coupon" name="onestepcheckout.review.coupon" as="coupon" template="onestepcheckout/checkout/review/features/coupon.phtml"/>                    
+            <block type="checkout/cart_coupon" name="onestepcheckout.review.coupon" as="coupon" template="onestepcheckout/checkout/review/features/coupon.phtml"/>
             <block type="onestepcheckout/onestepcheckout" name="onestepcheckout.review.order_comment" as="order_comment" template="onestepcheckout/checkout/review/features/order_comment.phtml"/>
-            
+
             <block type="core/text_list" name="onestepcheckout.review.info.items.before" as="items_before" translate="label">
                 <label>Items Before</label>
             </block>
             <block type="core/text_list" name="onestepcheckout.review.info.items.after" as="items_after" translate="label">
                 <label>Items After</label>
             </block>
-            <block type="checkout/agreements" name="onestepcheckout.agreements" as="agreements" template="onestepcheckout/checkout/review/agreements.phtml"/>                                        
+            <block type="checkout/agreements" name="onestepcheckout.agreements" as="agreements" template="onestepcheckout/checkout/review/agreements.phtml"/>
         </block>
     </onestepcheckout_index_review>
-    
+
     <onestepcheckout_index_shippingmethod>
         <remove name="right"/>
         <remove name="left"/>
@@ -342,7 +342,7 @@
             <block type="core/template" name="checkout.onepage.payment.methods.additional" as="additional" />
         </block>
     </onestepcheckout_index_paymentmethod>
-    
+
     <!--Order -->
     <sales_order_invoice>
         <reference name="invoice_totals">
@@ -359,7 +359,7 @@
             <block type="onestepcheckout/totals_invoice_giftwrap" name="onestepcheckout.total.giftwrap" />
         </reference>
     </sales_email_order_invoice_items>
-    
+
     <sales_order_creditmemo>
         <reference name="creditmemo_totals">
             <block type="onestepcheckout/totals_creditmemo_giftwrap" name="onestepcheckout.total.giftwrap" />
@@ -391,7 +391,7 @@
             <block type="onestepcheckout/totals_order_giftwrap" name="onestepcheckout.total.giftwrap" />
         </reference>
     </sales_email_order_items>
-    
+
     <sales_order_invoice>
         <reference name="invoice_totals">
             <block type="onestepcheckout/totals_invoice_giftwrap" name="onestepcheckout.total.giftwrap" />
@@ -407,7 +407,7 @@
             <block type="onestepcheckout/totals_invoice_giftwrap" name="onestepcheckout.total.giftwrap" />
         </reference>
     </sales_email_order_invoice_items>
-    
+
     <sales_order_creditmemo>
         <reference name="creditmemo_totals">
             <block type="onestepcheckout/totals_creditmemo_giftwrap" name="onestepcheckout.total.giftwrap" />
@@ -423,11 +423,11 @@
             <block type="onestepcheckout/totals_creditmemo_giftwrap" name="onestepcheckout.total.giftwrap" />
         </reference>
     </sales_email_order_creditmemo_items>
-     
+
     <onestepcheckout_again>
         <block type="onestepcheckout/onestepcheckout" name="onestepcheckout" after="-" template="onestepcheckout/standard.phtml" >
-                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_billing" template="onestepcheckout/checkout/billing.phtml"/>                
-                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_shipping" template="onestepcheckout/checkout/shipping.phtml"/>                
+                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_billing" template="onestepcheckout/checkout/billing.phtml"/>
+                <block type="onestepcheckout/checkout_address" name="onestepcheckout_checkout_shipping" template="onestepcheckout/checkout/shipping.phtml"/>
                 <block type="checkout/onepage_shipping_method_available" name="onestepcheckout_checkout_shippingmethod" template="onestepcheckout/checkout/shipping_method/available.phtml"/>
                 <block type="checkout/onepage_payment_methods" name="onestepcheckout_checkout_paymentmethod" template="onestepcheckout/checkout/payment/methods.phtml">
                     <action method="setMethodFormTemplate">
@@ -459,18 +459,18 @@
                         <template>onestepcheckout/checkout/review/item.phtml</template>
                     </action>
                     <block type="checkout/cart_totals" name="onestepcheckout.review.info.totals" as="totals" template="onestepcheckout/checkout/review/totals.phtml"/>
-                    <block type="checkout/cart_coupon" name="onestepcheckout.review.coupon" as="coupon" template="onestepcheckout/checkout/review/features/coupon.phtml"/>                    
+                    <block type="checkout/cart_coupon" name="onestepcheckout.review.coupon" as="coupon" template="onestepcheckout/checkout/review/features/coupon.phtml"/>
                     <block type="onestepcheckout/giftmessage_inline" name="onestepcheckout.review.giftmessage" as="giftmessage" template="onestepcheckout/giftmessage/inline.phtml"/>
                     <block type="onestepcheckout/onestepcheckout" name="onestepcheckout.review.order_comment" as="order_comment" template="onestepcheckout/checkout/review/features/order_comment.phtml"/>
-                    
+
                     <block type="core/text_list" name="onestepcheckout.review.info.items.before" as="items_before" translate="label">
                         <label>Items Before</label>
                     </block>
                     <block type="core/text_list" name="onestepcheckout.review.info.items.after" as="items_after" translate="label">
                         <label>Items After</label>
                     </block>
-                    <block type="checkout/agreements" name="onestepcheckout.agreements" as="agreements" template="onestepcheckout/checkout/review/agreements.phtml"/>                                        
+                    <block type="checkout/agreements" name="onestepcheckout.agreements" as="agreements" template="onestepcheckout/checkout/review/agreements.phtml"/>
                 </block>
-            </block> 
+            </block>
     </onestepcheckout_again>
 </layout>
