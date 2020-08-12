@@ -27,3 +27,4 @@ shell/.htaccess
 
 downloader/connect.cfg
 downloader/cache.cfg
+/.htaccess
