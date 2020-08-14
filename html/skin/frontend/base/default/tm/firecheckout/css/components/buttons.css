@@ -88,7 +88,7 @@
 .firecheckout-set button.btn-primary.loading:focus,
 .firecheckout-window button.button.loading,
 .firecheckout-window button.button.loading:hover,
-.firecheckout-window button.button.loading:focus { background-color: #40c781; }
+.firecheckout-window button.button.loading:focus { background-color: #5f94bf; }
 
 .firecheckout-window button.button {
     padding: 0 20px;
