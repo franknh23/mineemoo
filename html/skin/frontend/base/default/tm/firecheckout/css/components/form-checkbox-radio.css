@@ -13,7 +13,7 @@
 }
 .firecheckout-set input[type="checkbox"][hidden],
 .firecheckout-set input[type="radio"][hidden] {
-    display: none;
+    display: block;
 }
 .firecheckout-set input[type="checkbox"],
 .firecheckout-set input[type="radio"] {
@@ -97,5 +97,5 @@
 .firecheckout-set input[type="radio"] + label::before,
 .firecheckout-set input[type="radio"] + * + label::before,
 .firecheckout-set input[type="radio"] + span > label::before {
-    display: none !important;
+    display: block !important;
 }
