@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <shipcloud_adminhtml_shipcloud_index>
+        <reference name="content">
+            <block type="shipcloud/adminhtml_shipcloud" name="shipcloud" />
+        </reference>
+    </shipcloud_adminhtml_shipcloud_index>
+    <shipcloud_adminhtml_shipcloud_intermediate>
+        <reference name="content">
+            <block type="shipcloud/adminhtml_shipcloud" name="intermediate" template="shipcloud/intermediate.phtml" />
+        </reference>
+    </shipcloud_adminhtml_shipcloud_intermediate>
+    <shipcloud_adminhtml_shipcloud_showlabel>
+        <reference name="content">
+            <block type="shipcloud/adminhtml_shipcloud" name="showlabel" template="shipcloud/showlabel.phtml"/>
+        </reference>
+    </shipcloud_adminhtml_shipcloud_showlabel>
+    <shipcloud_adminhtml_shipcloud_deletelabel>
+        <reference name="content">
+            <block type="shipcloud/adminhtml_shipcloud" name="deletelabel" template="shipcloud/deletelabel.phtml"/>
+        </reference>
+    </shipcloud_adminhtml_shipcloud_deletelabel>
+    <adminhtml_sales_order_shipment_new>
+        <!--<update handle="order_items"/>-->
+        <reference name="content">
+            <reference name="sales_shipment_create">
+                <reference name="form">
+                    <reference name="order_items">
+                        <update handle="order_items"/>
+                        <action method="setTemplate"><template>shipcloud/sales/order/shipment/create/items.phtml</template></action>
+                    </reference>
+                </reference>
+            </reference>
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+
+    <adminhtml_sales_order_shipment_view>
+        <reference name="content">
+            <reference name="sales_shipment_create">
+                <reference name="form">
+                  <update handle="form"/>
+                  <action method="setTemplate"><template>shipcloud/sales/order/shipment/view/form.phtml</template></action>
+                </reference>
+            </reference>
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+    <adminhtml_sales_order_view>
+        <reference name="left">
+            <reference name="sales_order_tabs">
+                <reference name="order_tab_info">
+                  <update handle="order_tab_info"/>
+                  <action method="setTemplate"><template>shipcloud/sales/order/view/tab/info.phtml</template></action>
+                </reference>
+            </reference>
+        </reference>
+    </adminhtml_sales_order_view>
+</layout>
