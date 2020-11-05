@@ -1,0 +1,52 @@
+﻿<div class="page-title">
+	<h1><?php echo $this->__('PAKADOO ID') ?></h1>
+</div>
+
+
+<?php 
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+$pakadooId = '';
+if(Mage::getSingleton('customer/session')->isLoggedIn()) {
+     	$customerData = Mage::getSingleton('customer/session')->getCustomer();
+     	$customerId = $customerData->getId();
+
+	$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+    $prefix = (string) Mage::getConfig()->getTablePrefix();
+	$querry = "SELECT * FROM `".$prefix."pakadoo` WHERE `customer_id` = '".$customerId."'";
+	$pakadooCollection = $write->fetchAll($querry);
+
+	if(!empty($pakadooCollection) && isset($pakadooCollection[0]['pakadoo_id'])){
+		$pakadooId = $pakadooCollection[0]['pakadoo_id'];
+	}
+}else{
+	$emptyError['error'][] = 'You are Logged Out!';
+	Mage::getSingleton('core/session')->addError(implode(', ', $emptyError['error'])); 
+}
+
+?>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<div id="savePpakadooIdBlock">
+	<form id="pakadooIdForm" name="pakadooIdForm" method="post" action="<?php echo $this->getUrl('customer/pakadoo/save') ?>">
+		<div>
+			<input id="pakadooId" name="pakadooId" type="text" size="10" value="<?php echo $pakadooId; ?>">
+		</div>
+		<div class="buttons-set">
+			<p class="back-link">
+				<a href="<?php echo $this->getUrl('customer/account/') ?>">
+					<small>« </small>
+					<?php echo $this->__('Back') ?>
+				</a>
+			</p>
+			<button type="submit" title="Save" class="button">
+				<span>
+					<span>Save</span>
+				</span>
+			</button>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+</script>
