@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Stork_Shipcloud>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Stork_Shipcloud>
+    </modules>
+</config> 

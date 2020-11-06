@@ -1,0 +1,241 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * Author Rudyuk Vitalij Anatolievich
+ * Email rvansp@gmail.com
+ * Blog www.cervic.info
+ */
+$backLink = Mage::registry('backLink');
+$params = $this->getRequest()->getParams();
+$shipment_ids = explode(':',$params['shipment_id']);
+$models = Mage::registry('model');
+$error = Mage::registry('error');
+$models2 = Mage::registry('model2');
+//var_dump($models);
+foreach ($shipment_ids as $id) {
+  $model = $models[$id];
+
+  $arrModelData = $model->getData();
+
+  $pathUrl = trim(Mage::getBaseUrl('media'), '/') . DS . 'shipcloud' . DS . 'label' . DS;
+  $path = Mage::getBaseDir('media') . DS . 'shipcloud' . DS . 'label' . DS;
+  $labelExist = file_exists($path . $model->getLabelname());
+
+  ?>
+  <?php if (!empty($model) && !empty($arrModelData) && $labelExist):?>
+
+      <style>
+          .return-label-column {
+              float: left;
+              width: 526px;
+          }
+      </style>
+
+      <div class="return-label-column">
+          <h2><?php echo $model->getTitle(); ?></h2>
+          <a href="<?php echo $pathUrl . $model->getLabelname(); ?>"
+             target="_blank"><?php echo Mage::helper('adminhtml')->__('Print shipping label'); ?></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="delete-shipping-label" rel="<?php echo $model->getId() ?>" href="<?php echo $this->getUrl('shipcloud/adminhtml_shipcloud/deletelabel/id/' . $model->getId()); ?>"><?php echo Mage::helper('adminhtml')->__('Delete shipping label'); ?></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="<?php echo $backLink; ?>"><?php echo Mage::helper('adminhtml')->__('back'); ?></a>
+          <br><br>
+          <a id="shipcloud-label-img" style="display:none;" href="<?php echo $pathUrl . $model->getLabelname(); ?>"><img
+                  src="<?php echo $pathUrl . $model->getLabelimg(); ?>"></a>
+          <div id="shipcloud-label-iframe-wrap">
+              <iframe id="shipcloud-label-iframe" src="<?php echo $pathUrl . $model->getLabelname(); ?>" frameborder="0"
+                      width="450px" height="650px"></iframe>
+          </div>
+          <div id="shipcloud-label-no-img" style="display:none;">
+              <div align="center"><?php echo Mage::helper('adminhtml')->__('You can not see the label due to the lack of a special plugin on your browser.'); ?><br>
+                  <a href="#" id="shipcloud-label-no-img-a" target="_blank"><u><?php echo Mage::helper('adminhtml')->__('Get plugin.'); ?></u></a><br>
+                  <?php echo Mage::helper('adminhtml')->__('But you can'); ?> <a href="<?php echo $pathUrl . $model->getLabelname(); ?>" target="_blank"><u><?php echo Mage::helper('adminhtml')->__('print the label.'); ?></u></a>
+              </div>
+          </div>
+      </div>
+  <?php else: ?>
+
+      Shipping Label not exist or was deleted.
+      <a href="<?php echo $backLink; ?>"><?php echo Mage::helper('adminhtml')->__('back'); ?></a>
+
+  <?php endif; ?>
+  <?php
+
+$model2 = $models2[$id];
+
+if(!empty($model2)){
+  $arrModelData2 = $model2;
+} else {
+  $arrModelData2 = array();
+}
+
+    ?>
+  <?php if (!empty($model2) && !empty($arrModelData2)): ?>
+<?php $labelReturnExist = file_exists($path . $model2->getLabelname());?>
+      <div class="return-label-column">
+          <h2><?php echo $model2->getTitle(); ?></h2>
+          <a href="<?php echo $pathUrl . $model2->getLabelname(); ?>"
+             target="_blank"><?php echo Mage::helper('adminhtml')->__('Print shipping label'); ?></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a class="delete-shipping-label" rel="<?php echo $model2->getId() ?>" href="<?php echo $this->getUrl('shipcloud/adminhtml_shipcloud/deletelabel/id/' . $model2->getId()); ?>"><?php echo Mage::helper('adminhtml')->__('Delete shipping label'); ?></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+          <br><br>
+          <a id="shipcloud-label-img" style="display:none;" href="<?php echo $pathUrl . $model2->getLabelname(); ?>"><img
+                  src="<?php echo $pathUrl . $model2->getLabelimg(); ?>"></a>
+          <div id="shipcloud-label-iframe-wrap">
+              <iframe id="shipcloud-label-iframe" src="<?php echo $pathUrl . $model2->getLabelname(); ?>" frameborder="0"
+                      width="450px" height="650px"></iframe>
+          </div>
+          <div id="shipcloud-label-no-img" style="display:none;">
+              <div align="center"><?php echo Mage::helper('adminhtml')->__('You can not see the label due to the lack of a special plugin on your browser.'); ?><br>
+                  <a href="#" id="shipcloud-label-no-img-a" target="_blank"><u><?php echo Mage::helper('adminhtml')->__('Get plugin.'); ?></u></a><br>
+                  <?php echo Mage::helper('adminhtml')->__('But you can'); ?> <a href="<?php echo $pathUrl . $model2->getLabelname(); ?>" target="_blank"><u><?php echo Mage::helper('adminhtml')->__('print the label.'); ?></u></a>
+              </div>
+          </div>
+      </div>
+
+  <?php endif;
+}
+?>
+<div class="clear"></div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+
+        $('.delete-shipping-label').on('click', function (e) {
+            e.preventDefault();
+
+            if (confirm('Are you sure you want to delete this label?')) {
+                window.location.href = $(this).attr('href');
+            }
+        })
+
+    });
+
+    var getAcrobatInfo = function () {
+
+        var getBrowserName = function () {
+            return this.name = this.name || function () {
+                var userAgent = navigator ? navigator.userAgent.toLowerCase() : "other";
+                if (userAgent.indexOf("chrome") > -1)
+                    return "chrome";
+                else if (userAgent.indexOf("safari") > -1)
+                    return "safari";
+                else if (userAgent.indexOf("msie") > -1)
+                    return "ie";
+                else if (userAgent.indexOf("firefox") > -1)
+                    return "firefox";
+                return userAgent;
+            }();
+        };
+
+        var getActiveXObject = function (name) {
+            try {
+                return new ActiveXObject(name);
+            } catch (e) {
+            }
+        };
+
+        var getNavigatorPlugin = function (name) {
+            for (key in navigator.plugins) {
+                var plugin = navigator.plugins[key];
+                if (plugin.name == name)
+                    return plugin;
+            }
+        };
+
+        var getPDFPlugin = function () {
+            return this.plugin = this.plugin || function () {
+                if (getBrowserName() == 'ie') {
+                    //
+                    // load the activeX control
+                    // AcroPDF.PDF is used by version 7 and later
+                    // PDF.PdfCtrl is used by version 6 and earlier
+                    return getActiveXObject('AcroPDF.PDF') || getActiveXObject('PDF.PdfCtrl');
+                }
+                else {
+                    return getNavigatorPlugin('Adobe Acrobat') || getNavigatorPlugin('Chrome PDF Viewer') || getNavigatorPlugin('WebKit built-in PDF');
+                }
+            }();
+        };
+
+        var isAcrobatInstalled = function () {
+            return !!getPDFPlugin();
+        };
+
+        var getAcrobatVersion = function () {
+            try {
+                var plugin = getPDFPlugin();
+
+                if (getBrowserName() == 'ie') {
+                    var versions = plugin.GetVersions().split(',');
+                    var latest = versions[0].split('=');
+                    return parseFloat(latest[1]);
+                }
+
+                if (plugin.version)
+                    return parseInt(plugin.version);
+                return plugin.name
+
+            }
+            catch (e) {
+                return null;
+            }
+        }
+
+        //
+        // The returned object
+        //
+        return {
+            browser: getBrowserName(),
+            acrobat: isAcrobatInstalled() ? 'installed' : false,
+            acrobatVersion: getAcrobatVersion()
+        };
+    };
+    document.observe('dom:loaded', function () {
+
+        var info = getAcrobatInfo();
+        if (info.acrobat == false) {
+            var userAgent = navigator ? navigator.userAgent.toLowerCase() : "other", link = "";
+            if (userAgent.indexOf("macintosh") > -1) {
+                if (userAgent.indexOf("chrome") > -1) {
+                    link = "https://support.google.com/chrome/answer/142056";
+                }
+                else if (userAgent.indexOf("safari") > -1) {
+                    link = "http://www.adobe.com/support/downloads/product.jsp?product=1&platform=Mac";
+                }
+                else if (userAgent.indexOf("firefox") > -1) {
+                    link = "http://helpx.adobe.com/acrobat/kb/pdf-browser-plugin-configuration.html";
+                }
+            }
+            else if (userAgent.indexOf("windows") > -1) {
+                if (userAgent.indexOf("chrome") > -1) {
+                    link = "https://support.google.com/chrome/answer/142056";
+                }
+                else if (userAgent.indexOf("safari") > -1) {
+                    link = "http://www.adobe.com/support/downloads/product.jsp?product=1&platform=Mac";
+                }
+                else if (userAgent.indexOf("msie") > -1) {
+                    link = "http://216.60.44.147/help/PPE.htm";
+                }
+                else if (userAgent.indexOf("firefox") > -1) {
+                    link = "http://helpx.adobe.com/acrobat/kb/pdf-browser-plugin-configuration.html";
+                }
+            }
+            else if (userAgent.indexOf("linux") > -1) {
+                if (userAgent.indexOf("chrome") > -1) {
+                    link = "https://support.google.com/chrome/answer/142056";
+                }
+                else if (userAgent.indexOf("safari") > -1) {
+                    link = "http://www.adobe.com/support/downloads/product.jsp?product=1&platform=Mac";
+                }
+                else if (userAgent.indexOf("firefox") > -1) {
+                    link = "http://helpx.adobe.com/acrobat/kb/pdf-browser-plugin-configuration.html";
+                }
+            }
+
+        }
+    });
+</script>

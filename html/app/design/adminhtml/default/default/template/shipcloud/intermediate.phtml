@@ -1,0 +1,1169 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * Author Rudyuk Vitalij Anatolievich
+ * Email rvansp@gmail.com
+ * Blog www.cervic.info
+ */
+?>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        jQuery.noConflict();
+    </script>
+</head>
+<?php
+ $order_ids = explode(':',$this->getRequest()->getParam('order_id'));
+ //if(count($order_ids) > 1){
+
+   $orders = Mage::registry('orders');
+   $shipTos = Mage::registry('shipTo');
+
+   $carierServiceHtml = Mage::registry('carierServiceHtml');
+   /*$shipment = Mage::registry('shipment');
+   $type = Mage::registry('type');
+   $shipMethod = Mage::registry('shipMethod');
+   $shipMethod2 = Mage::registry('shipMethod2');
+
+   $shipmentTotalWeight = Mage::registry('shipmentTotalWeight');
+   $currentCurrency = Mage::app()->getStore()->getBaseCurrencyCode();*/
+   $countSelected = 0;
+   $default_country = Mage::getStoreConfig('shipcloud/cfcarrier_group/dcountry',Mage::app()->getStore());
+   $default_carrier = Mage::getStoreConfig('shipcloud/cfcarrier_group/dcarrier',Mage::app()->getStore());
+   $ndcarrier = Mage::getStoreConfig('shipcloud/cfcarrier_group/ndcarrier',Mage::app()->getStore());
+   $formUrlValidate = $this->getUrl('shipcloud/adminhtml_shipcloud/validate');
+
+   $formUrl = $this->getUrl('shipcloud/adminhtml_shipcloud/showlabel/order_id/' . $this->getRequest()->getParam('order_id') . '/shipment_id/' . $this->getRequest()->getParam('shipment_id') . '/type/' . $this->getRequest()->getParam('type'));
+
+   ?>
+
+   <form id="edit_form" action="<?=$formUrl?>" method="post">
+     <div class="f-right" style="clear:both;margin-bottom: 15px;">
+     	<span id="buttonTopImg"><img src="/skin/frontend/rwd/default/images/opc-ajax-loader.gif"></span>
+         <button id="buttonTop" type="button" class="scalable save submit-button"
+                 onclick="validateAndSubmitForm();" style="">
+             <span><?php echo Mage::helper('adminhtml')->__('Submit'); ?></span></button>
+     </div>
+   <?php
+   echo '';
+
+   foreach ($orders as $order_id_from_array => $order) {
+     $shipTo = $shipTos[$order_id_from_array];
+
+     $shipmentTotalWeight = Mage::registry('shipmentTotalWeight');
+     $currentCurrency = Mage::app()->getStore()->getBaseCurrencyCode();
+   ?>
+
+   <div class="clear"></div>
+   <div class="entry-edit-head">
+       <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('shipcloud')->__('Configuration options for order# %s',$order_id_from_array); ?></h4>
+   </div>
+   <div class="box-left">
+       <div class="entry-edit">
+           <div class="entry-edit-head">
+               <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Configuration options'); ?></h4>
+           </div>
+           <div class="np fieldset">
+               <div>
+                   <div class="content">
+                       <div class="hor-scroll">
+                           <table cellspacing="0" class="form-list">
+                               <tbody>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Packaging Description'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value"><input
+                                           name="params[<?=$order_id_from_array?>][packagingdescription]"
+                                           value="<?php echo Mage::getStoreConfig('shipcloud/profile/packagingdescription'); ?>"
+                                           class=" input-text required-entry" type="text">
+                                   </td>
+                               </tr>
+                               <?php if ($this->getRequest()->getParam('type') == 'shipment'): ?>
+                                   <tr>
+                                       <td class="label"><label
+                                               for="addtrack"><?php echo Mage::helper('adminhtml')->__('Add tracking number automatically ?'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isAddtrackSelected[0] = '';
+                                           $isAddtrackSelected[1] = '';
+                                           $isAddtrackSelected[Mage::getStoreConfig('shipcloud/profile/addtrack')] = ' SELECTED';
+                                           ?>
+                                           <select name="params[<?=$order_id_from_array?>][addtrack]" id="addtrack_<?=$order_id_from_array?>">
+                                               <option
+                                                   value="1"<?php echo $isAddtrackSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                               <option
+                                                   value="0"<?php echo $isAddtrackSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+                               <?php endif; ?>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shipmentdescription"><?php echo Mage::helper('adminhtml')->__('Shipment Description'); ?></label>
+                                   </td>
+                                   <td class="value"><textarea id="shipmentdescription_<?=$order_id_from_array?>"
+                                                               name="params[<?=$order_id_from_array?>][shipmentdescription]"
+                                                               rows="3"
+                                                               class=" input-text"><?php echo Mage::helper('adminhtml')->__('Customer') . ': ' . $shipTo->getFirstname() . ' ' . $shipTo->getLastname() . ' ' . Mage::helper('adminhtml')->__('Order Id') . ': ' . $order->getIncrementId(); ?></textarea>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Carrier'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <select id="carrier_<?=$order_id_from_array?>" name="params[<?=$order_id_from_array?>][carrier]">
+                                           <?php foreach (Mage::getModel('shipcloud/config_defaultcarrier')->toOptionArray() AS $k => $v): ?>
+                                             <?php
+                                             $customer_country = $shipTo->getCountryId();
+                                             if(($customer_country == $default_country && $v['value'] == $default_carrier)  || ($customer_country != $default_country && $v['value'] == $ndcarrier)){
+                                                     $stringSelected = ' SELECTED';
+                                                     $countSelected++;
+                                             }else{
+                                                     $stringSelected = '';
+                                             }
+
+                                             ?>
+                                               <option
+                                                   value="<?php echo $v['value']; ?>"
+                                                   <?php echo $stringSelected; ?>>
+                                                   <?php echo $v['label']; ?>
+                                              </option>
+                                           <?php endforeach; ?>
+                                       </select>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Carrier Service'); ?>
+                                       </label>
+                                   </td>
+                                   <td class="value">
+                                     <select id="default_carrier_type_<?=$order_id_from_array?>" name="params[<?=$order_id_from_array?>][carrier_service]">
+                                         <?php echo $carierServiceHtml  ?>
+                                     </select>
+
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Packagetype'); ?>
+                                           </label>
+                                   </td>
+                                   <td class="value">
+                                       <select id="packagetype_<?=$order_id_from_array?>" name="params[<?=$order_id_from_array?>][packagetype]">
+                                           <?php foreach (Mage::getModel('shipcloud/config_defaultpackagetypes')->toOptionArray() AS $M2 => $MV): ?>
+                                               <option
+                                                   value="<?php echo $MV['value']; ?>"<?php echo $shipMethod2 == $MV['value']? ' SELECTED' : (Mage::getStoreConfig('shipcloud/profile/defaultpackagetypes')==$MV['value']?'SELECTED':''); ?>><?php echo $MV['label']; ?></option>
+                                           <?php endforeach; ?>
+                                       </select>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="customdutydescription_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Custom Duty Description'); ?></label>
+                                   </td>
+                                   <td class="value"><textarea id="customdutydescription_<?=$order_id_from_array?>"
+                                                               name="params[<?=$order_id_from_array?>][customdutydescription]"
+                                                               rows="3"
+                                                               class=" input-text">Gift</textarea>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="returnlabelcreating_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('creating return label?'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <?php
+                                       $isReturnLabelSelected[0] = '';
+                                       $isReturnLabelSelected[1] = '';
+                                       $isReturnLabelSelected[Mage::getStoreConfig('shipcloud/profile/returnlabelcreating')] = ' SELECTED';
+                                       ?>
+                                       <select name="params[<?=$order_id_from_array?>][returnlabelcreating]" id="returnlabelcreating_<?=$order_id_from_array?>">
+                                           <option
+                                               value="1"<?php echo $isReturnLabelSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           <option
+                                               value="0"<?php echo $isReturnLabelSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                       </select>
+                                   </td>
+                               </tr>
+                                   <tr>
+                                       <td class="label"><label
+                                               for="pickup_requests_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Pickup requests'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isPickupRequestsSelected[0] = '';
+                                           $isPickupRequestsSelected[1] = '';
+                                           $isPickupRequestsSelected[Mage::getStoreConfig('shipcloud/sp_pickup_requests/pickup_requests_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="params[<?=$order_id_from_array?>][pickup_requests]" id="pickup_requests_<?=$order_id_from_array?>">
+                                               <option value="0"<?php echo $isPickupRequestsSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+   				            <option value="1"<?php echo $isPickupRequestsSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+   				<tr>
+                                       <td class="label"><label
+                                               for="dpd_saturday_delivery_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('DPD - Saturday delivery'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isDPDSaturdayDelivery[0] = '';
+                                           $isDPDSaturdayDelivery[1] = '';
+                                           $isDPDSaturdayDelivery[Mage::getStoreConfig('shipcloud/profile/dpd_saturday_delivery_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="params[<?=$order_id_from_array?>][dpd_saturday_delivery]" id="dpd_saturday_delivery_<?=$order_id_from_array?>">
+                                               <option value="0"<?php echo $isDPDSaturdayDelivery[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+   				            <option value="1"<?php echo $isDPDSaturdayDelivery[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+   				<tr>
+                                       <td class="label"><label
+                                               for="dhl_cash_on_delivery_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('DHL - COD (Cash on delivery)'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isDHLCashOnDelivery[0] = '';
+                                           $isDHLCashOnDelivery[1] = '';
+                                           $isDHLCashOnDelivery[Mage::getStoreConfig('shipcloud/sp_dhl_cash_on_delivery/dhl_cash_on_delivery_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="params[<?=$order_id_from_array?>][dhl_cash_on_delivery]" id="dhl_cash_on_delivery_<?=$order_id_from_array?>">
+                                               <option value="0"<?php echo $isDHLCashOnDelivery[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+				                                       <option value="1"<?php echo $isDHLCashOnDelivery[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+
+ 				                           <tr>
+                                       <td class="label"><label
+                                               for="dpd_service_predict_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('DPD – Service predict'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isDPDServicePredict[0] = '';
+                                           $isDPDServicePredict[1] = '';
+                                           $isDPDServicePredict[Mage::getStoreConfig('shipcloud/sp_dpd_service_predict/dpd_service_predict_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="params[<?=$order_id_from_array?>][dpd_service_predict]" id="dpd_service_predict_<?=$order_id_from_array?>">
+                                               <option value="0"<?php echo $isDPDServicePredict[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+				                                       <option value="1"<?php echo $isDPDServicePredict[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+
+                               <tr>
+                                   <td class="label"><label
+                                           for="tracking_change_customer_notification_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('tracking status change customer email info'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <?php
+                                       $isTrackingNotification[0] = '';
+                                       $isTrackingNotification[1] = '';
+                                       $isTrackingNotification[Mage::getStoreConfig('shipcloud/profile/tracking_change_customer_notification')] = ' SELECTED';
+                                       ?>
+                                       <select name="params[<?=$order_id_from_array?>][tracking_change_customer_notification]" id="tracking_change_customer_notification_<?=$order_id_from_array?>">
+                                           <option value="0"<?php echo $isTrackingNotification[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                           <option value="1"<?php echo $isTrackingNotification[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                       </select>
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="box-right">
+     <?php
+     $shipments = $order->getShipmentsCollection();
+     //var_dump($shipment);
+     /*foreach ($shipment as $ship_id) {
+       $id = $ship_id->getId();
+       $Label = Mage::getModel('shipcloud/shipcloud');
+       $labelLocal = $Label->load($id, 'shipment_id');
+       if(!empty($all_params['params'])){
+         $params = $all_params;
+         $params = array_merge($params,$all_params['params'][$order_id]);
+         unset($params['params']);
+         $params['order_id'] = $order_id;
+         $params['shipment_id'] = $id;
+       }else{
+         $params = $all_params;
+       }}*/
+       $all_params = $this->getRequest()->getParam('shipment_id');
+       $shipment_ids = explode(':',$all_params);
+      ?>
+     <?php foreach ($shipment_ids as $shipment) {
+
+       $shipment = Mage::getModel('sales/order_shipment')->load($shipment);
+       $label = Mage::getModel('shipcloud/shipcloud')->load($shipment->getId(), 'shipment_id');
+       if(!empty($label->getData()))
+        continue;
+       $shipmentAllItems = $shipment->getAllItems();
+       $totalPrice = 0;
+       $totalWight = 0;
+       $totalShipmentQty = 0;
+       foreach ($shipmentAllItems AS $item) {
+           $itemData = $item->getData();
+           $totalPrice += $itemData['price'] * $itemData['qty'];
+           $totalWight += $itemData['weight'] * $itemData['qty'];
+           $totalShipmentQty += $itemData['qty'];
+       }
+
+        ?>
+       <div class="entry-edit">
+           <div class="entry-edit-head">
+               <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('shipcloud')->__('Configuration weight for shipment #%s',$shipment->getId()); ?></h4>
+           </div>
+           <div class="np fieldset">
+               <div>
+                   <div class="content">
+                       <div class="hor-scroll">
+                           <table cellspacing="0" class="form-list">
+                               <tbody>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Weight'); ?> <span
+                                               class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text"
+                                              value="<?php echo round($totalWight, 1) > 0 ? round($totalWight, 1) : '0.1'; ?>"
+                                              name="params[<?=$order_id_from_array?>][conf_weight][<?=$shipment->getId()?>][weight]" class="input-text  required-entry">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Length'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" value="<?php echo Mage::getStoreConfig('shipcloud/profile/length'); ?>" name="params[<?=$order_id_from_array?>][conf_weight][<?=$shipment->getId()?>][length]" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Width'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" value="<?php echo Mage::getStoreConfig('shipcloud/profile/width'); ?>" name="params[<?=$order_id_from_array?>][conf_weight][<?=$shipment->getId()?>][width]" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Height'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" value="<?php echo Mage::getStoreConfig('shipcloud/profile/height'); ?>" name="params[<?=$order_id_from_array?>][conf_weight][<?=$shipment->getId()?>][height]" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Insurance value in'); ?> <?php echo $currentCurrency; ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input name="params[<?=$order_id_from_array?>][conf_weight][<?=$shipment->getId()?>][insurancevalue]" value="<?php echo Mage::getStoreConfig('shipcloud/profile/insurrancevalue'); ?>" class=" input-text" type="text" >
+                                   </td>
+                                   <td>
+                                       <input type="hidden" name="params[<?=$order_id_from_array?>][conf_weight][<?=$shipment->getId()?>][insurancecurrency]" value="<?php echo $currentCurrency; ?>">
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+     <?php }?>
+
+       <div class="entry-edit">
+           <div class="entry-edit-head">
+               <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Customer Address'); ?></h4>
+           </div>
+           <div class="np fieldset">
+               <div>
+                   <div class="content">
+                       <div class="hor-scroll">
+                           <table cellspacing="0" class="form-list">
+                               <tbody>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptocompanyname_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Company name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptocompanyname]" id="shiptocompanyname_<?=$order_id_from_array?>"
+                                              value="<?php echo strlen($shipTo->getCompany()) > 0 ? $shipTo->getCompany() : $shipTo->getFirstname() . ' ' . $shipTo->getLastname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptofirstname_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('First name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptofirstname]" id="shiptofirstname_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getFirstname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptolastname_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Last name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptolastname]" id="shiptolastname_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getLastname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptoattentionname_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Attention name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptoattentionname]" id="shiptoattentionname_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getFirstname() . ' ' . $shipTo->getLastname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptophonenumber"><?php echo Mage::helper('adminhtml')->__('Phone number'); ?>
+                                           </label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptophonenumber]" id="shiptophonenumber_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getTelephone(); ?>"
+                                              class="input-text">
+                                   </td>
+                               </tr>
+   							<?php
+   							$addressStreet1 = trim($shipTo->getStreet(1));
+   							$addressStreet2 = trim($shipTo->getStreet(2));
+
+   							if($addressStreet2 == ''){
+   								$arrAddressStreet2 = explode(' ', $addressStreet1);
+   								$newArrAddressStreet2 = array();
+   								foreach($arrAddressStreet2 as $key=>$value){
+   									if(trim($value) != ''){
+   										$newArrAddressStreet2[] = $value;
+   									}
+   								}
+
+   								$countArrAddressStreet2 = count($newArrAddressStreet2);
+   								if(!empty($newArrAddressStreet2) && $countArrAddressStreet2>=2){
+   									$addressStreet2 = $newArrAddressStreet2[($countArrAddressStreet2-1)];
+   									unset($newArrAddressStreet2[($countArrAddressStreet2-1)]);
+   									$addressStreet1 = implode(' ', $newArrAddressStreet2);
+   								}
+   							}
+   							?>
+   							<tr>
+                                   <td class="label"><label
+                                           for="street_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Street'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][street]" id="street_<?=$order_id_from_array?>"
+                                              value="<?php echo $addressStreet1; ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="streetno_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Street no'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][streetno]" id="streetno_<?=$order_id_from_array?>"
+                                              value="<?php echo $addressStreet2; ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <!--<tr>
+                                   <td class="label"><label
+                                           for="street"><?php //echo Mage::helper('adminhtml')->__('Street'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <?php //$addressLine1 = $shipTo->getStreet(); ?>
+                                       <input type="text" name="street" id="street"
+                                              value="<?php //echo (is_array($addressLine1) && array_key_exists(0, $addressLine1)) ? preg_replace('/([0-9]*[^0-9]+)\s.*$/i', "$1", trim($addressLine1[0]." ".$addressLine1[1])) : preg_replace('/([0-9]*[^0-9]+)\s.*$/i', "$1", trim($addressLine1)); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="streetno"><?php //echo Mage::helper('adminhtml')->__('Street no'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="streetno" id="streetno"
+                                              value="<?php //echo (is_array($addressLine1) && array_key_exists(0, $addressLine1)) ? preg_replace('/^.*?\s+([0-9]+[\w]*)$/i', "$1", trim($addressLine1[0]." ".$addressLine1[1])) : preg_replace('/^.*?\s+([0-9]+[\w]*)$/i', "$1", trim($addressLine1)); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>-->
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptocity_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('City'); ?> <span
+                                               class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptocity]" id="shiptocity_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getCity(); ?>" class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptostateprovincecode_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('State (province)'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptostateprovincecode]" id="shiptostateprovincecode_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getRegion(); ?>" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptopostalcode_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Postal code'); ?>
+                                           <span
+                                               class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptopostalcode]" id="shiptopostalcode_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getPostcode(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptocountrycode_<?=$order_id_from_array?>"><?php echo Mage::helper('adminhtml')->__('Country code'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="params[<?=$order_id_from_array?>][shiptocountrycode]" id="shiptocountrycode_<?=$order_id_from_array?>"
+                                              value="<?php echo $shipTo->getCountryId(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <input type="hidden" name="params[<?=$order_id_from_array?>][service]" value="" />
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+   <?php }
+//var_dump($shipTos);exit;
+    ?>
+    <div class="f-right" style="clear:both;">
+    	<span id="buttonBottomImg"><img src="/skin/frontend/rwd/default/images/opc-ajax-loader.gif"></span>
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>"/>
+        <button type="button" class="scalable save submit-button" id="form_intermediate_submit"
+                style="">
+            <span><?php echo Mage::helper('adminhtml')->__('Submit'); ?></span></button>
+    </div>
+     </div>
+   </form>
+
+   <script type="text/javascript">
+   	jQuery("#buttonTopImg").hide();
+   	jQuery("#buttonBottomImg").hide();
+   	editForm = new varienForm('edit_form', '');
+
+   	function validateAndSubmitForm(){
+   		if (editForm.validator.validate()) {
+   			var formData = jQuery("#edit_form");
+
+   			jQuery("#messages").empty();
+   			jQuery("#buttonTop").hide();
+   			jQuery("#form_intermediate_submit").hide();
+   			jQuery("#buttonTopImg").show();
+   			jQuery("#buttonBottomImg").show();
+
+   			jQuery.ajax({
+   				type: "POST",
+   				url: '<?php echo $formUrl; ?>',
+   				data: formData.serialize(),
+   				success: function (response) {
+   					if(IsJsonString(response)){
+   						var objJsonResponse = JSON.parse(response);
+   						jQuery("#messages").append(objJsonResponse.content);
+   						jQuery("#buttonTop").show();
+   						jQuery("#form_intermediate_submit").show();
+   						jQuery("#buttonTopImg").hide();
+   						jQuery("#buttonBottomImg").hide();
+   					}else{
+   						window.location.reload();
+   					}
+   				}
+   			});
+   		}
+   	}
+
+   	function IsJsonString(str) {
+   	    try {
+   		JSON.parse(str);
+   	    } catch (e) {
+   		return false;
+   	    }
+   	    return true;
+   	}
+
+       jQuery('#form_intermediate_submit').on('click', function(e){
+           e.preventDefault();
+
+   //        return false;
+           validateAndSubmitForm();
+           //if(editForm.submit()) disableElements('submit-button');
+       });
+       //editForm = new varienForm('edit_form', '');
+   </script>
+   <?php
+ /*} else {
+   $order = Mage::registry('order');
+   $shipTo = Mage::registry('shipTo');
+   $shipment = Mage::registry('shipment');
+   $type = Mage::registry('type');
+   $shipMethod = Mage::registry('shipMethod');
+   $shipMethod2 = Mage::registry('shipMethod2');
+   $carierServiceHtml = Mage::registry('carierServiceHtml');
+   $shipmentTotalWeight = Mage::registry('shipmentTotalWeight');
+   $currentCurrency = Mage::app()->getStore()->getBaseCurrencyCode();
+
+   $formUrlValidate = $this->getUrl('shipcloud/adminhtml_shipcloud/validate');
+
+   $formUrl = $this->getUrl('shipcloud/adminhtml_shipcloud/showlabel/order_id/' . $this->getRequest()->getParam('order_id') . '/shipment_id/' . $this->getRequest()->getParam('shipment_id') . '/type/' . $this->getRequest()->getParam('type'));
+   ?>
+
+   <?php
+   echo '<form id="edit_form" action="' . $formUrl . '" method="post">';
+   ?>
+   <div class="f-right" style="clear:both;margin-bottom: 15px;">
+   	<span id="buttonTopImg"><img src="/skin/frontend/rwd/default/images/opc-ajax-loader.gif"></span>
+       <button id="buttonTop" type="button" class="scalable save submit-button"
+               onclick="validateAndSubmitForm();" style="">
+           <span><?php echo Mage::helper('adminhtml')->__('Submit'); ?></span></button>
+   </div>
+   <div class="clear"></div>
+   <div class="box-left">
+       <div class="entry-edit">
+           <div class="entry-edit-head">
+               <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Configuration options'); ?></h4>
+           </div>
+           <div class="np fieldset">
+               <div>
+                   <div class="content">
+                       <div class="hor-scroll">
+                           <table cellspacing="0" class="form-list">
+                               <tbody>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Packaging Description'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value"><input
+                                           name="packagingdescription"
+                                           value="<?php echo Mage::getStoreConfig('shipcloud/profile/packagingdescription'); ?>"
+                                           class=" input-text required-entry" type="text">
+                                   </td>
+                               </tr>
+                               <?php if ($this->getRequest()->getParam('type') == 'shipment'): ?>
+                                   <tr>
+                                       <td class="label"><label
+                                               for="addtrack"><?php echo Mage::helper('adminhtml')->__('Add tracking number automatically ?'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isAddtrackSelected[0] = '';
+                                           $isAddtrackSelected[1] = '';
+                                           $isAddtrackSelected[Mage::getStoreConfig('shipcloud/profile/addtrack')] = ' SELECTED';
+                                           ?>
+                                           <select name="addtrack" id="addtrack">
+                                               <option
+                                                   value="1"<?php echo $isAddtrackSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                               <option
+                                                   value="0"<?php echo $isAddtrackSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+                               <?php endif; ?>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shipmentdescription"><?php echo Mage::helper('adminhtml')->__('Shipment Description'); ?></label>
+                                   </td>
+                                   <td class="value"><textarea id="shipmentdescription"
+                                                               name="shipmentdescription"
+                                                               rows="3"
+                                                               class=" input-text"><?php echo Mage::helper('adminhtml')->__('Customer') . ': ' . $shipTo->getFirstname() . ' ' . $shipTo->getLastname() . ' ' . Mage::helper('adminhtml')->__('Order Id') . ': ' . $order->getIncrementId(); ?></textarea>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Carrier'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <select id="carrier" name="carrier">
+                                           <?php foreach (Mage::getModel('shipcloud/config_defaultcarrier')->toOptionArray() AS $k => $v): ?>
+                                               <option
+                                                   value="<?php echo $v['value']; ?>"<?php echo $shipMethod == $v['value'] && $shipMethod!="0" ? ' SELECTED' : ($shipMethod=="0" && Mage::getStoreConfig('shipcloud/profile/defaultcarrier')==$v['value']?'SELECTED':''); ?>><?php echo $v['label']; ?></option>
+                                           <?php endforeach; ?>
+                                       </select>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Carrier Service'); ?>
+                                       </label>
+                                   </td>
+                                   <td class="value">
+                                       <?php echo $carierServiceHtml  ?>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Packagetype'); ?>
+                                           </label>
+                                   </td>
+                                   <td class="value">
+                                       <select id="packagetype" name="packagetype">
+                                           <?php foreach (Mage::getModel('shipcloud/config_defaultpackagetypes')->toOptionArray() AS $M2 => $MV): ?>
+                                               <option
+                                                   value="<?php echo $MV['value']; ?>"<?php echo $shipMethod2 == $MV['value']? ' SELECTED' : (Mage::getStoreConfig('shipcloud/profile/defaultpackagetypes')==$MV['value']?'SELECTED':''); ?>><?php echo $MV['label']; ?></option>
+                                           <?php endforeach; ?>
+                                       </select>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="customdutydescription"><?php echo Mage::helper('adminhtml')->__('Custom Duty Description'); ?></label>
+                                   </td>
+                                   <td class="value"><textarea id="customdutydescription"
+                                                               name="customdutydescription"
+                                                               rows="3"
+                                                               class=" input-text">Gift</textarea>
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="returnlabelcreating"><?php echo Mage::helper('adminhtml')->__('creating return label?'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <?php
+                                       $isReturnLabelSelected[0] = '';
+                                       $isReturnLabelSelected[1] = '';
+                                       $isReturnLabelSelected[Mage::getStoreConfig('shipcloud/profile/returnlabelcreating')] = ' SELECTED';
+                                       ?>
+                                       <select name="returnlabelcreating" id="returnlabelcreating">
+                                           <option
+                                               value="1"<?php echo $isReturnLabelSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           <option
+                                               value="0"<?php echo $isReturnLabelSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                       </select>
+                                   </td>
+                               </tr>
+                                   <tr>
+                                       <td class="label"><label
+                                               for="pickup_requests"><?php echo Mage::helper('adminhtml')->__('Pickup requests'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isPickupRequestsSelected[0] = '';
+                                           $isPickupRequestsSelected[1] = '';
+                                           $isPickupRequestsSelected[Mage::getStoreConfig('shipcloud/sp_pickup_requests/pickup_requests_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="pickup_requests" id="pickup_requests">
+                                               <option value="0"<?php echo $isPickupRequestsSelected[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+   				            <option value="1"<?php echo $isPickupRequestsSelected[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+   				<tr>
+                                       <td class="label"><label
+                                               for="dpd_saturday_delivery"><?php echo Mage::helper('adminhtml')->__('DPD - Saturday delivery'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isDPDSaturdayDelivery[0] = '';
+                                           $isDPDSaturdayDelivery[1] = '';
+                                           $isDPDSaturdayDelivery[Mage::getStoreConfig('shipcloud/profile/dpd_saturday_delivery_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="dpd_saturday_delivery" id="dpd_saturday_delivery">
+                                               <option value="0"<?php echo $isDPDSaturdayDelivery[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+   				            <option value="1"<?php echo $isDPDSaturdayDelivery[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+   				<tr>
+                                       <td class="label"><label
+                                               for="dhl_cash_on_delivery"><?php echo Mage::helper('adminhtml')->__('DHL - COD (Cash on delivery)'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isDHLCashOnDelivery[0] = '';
+                                           $isDHLCashOnDelivery[1] = '';
+                                           $isDHLCashOnDelivery[Mage::getStoreConfig('shipcloud/sp_dhl_cash_on_delivery/dhl_cash_on_delivery_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="dhl_cash_on_delivery" id="dhl_cash_on_delivery">
+                                               <option value="0"<?php echo $isDHLCashOnDelivery[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+   				            <option value="1"<?php echo $isDHLCashOnDelivery[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+
+   				<tr>
+                                       <td class="label"><label
+                                               for="dpd_service_predict"><?php echo Mage::helper('adminhtml')->__('DPD – Service predict'); ?></label>
+                                       </td>
+                                       <td class="value">
+                                           <?php
+                                           $isDPDServicePredict[0] = '';
+                                           $isDPDServicePredict[1] = '';
+                                           $isDPDServicePredict[Mage::getStoreConfig('shipcloud/sp_dpd_service_predict/dpd_service_predict_select')] = ' SELECTED';
+                                           ?>
+                                           <select name="dpd_service_predict" id="dpd_service_predict">
+                                               <option value="0"<?php echo $isDPDServicePredict[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+   				            <option value="1"<?php echo $isDPDServicePredict[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                           </select>
+                                       </td>
+                                   </tr>
+
+                               <tr>
+                                   <td class="label"><label
+                                           for="tracking_change_customer_notification"><?php echo Mage::helper('adminhtml')->__('tracking status change customer email info'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <?php
+                                       $isTrackingNotification[0] = '';
+                                       $isTrackingNotification[1] = '';
+                                       $isTrackingNotification[Mage::getStoreConfig('shipcloud/profile/tracking_change_customer_notification')] = ' SELECTED';
+                                       ?>
+                                       <select name="tracking_change_customer_notification" id="tracking_change_customer_notification">
+                                           <option value="0"<?php echo $isTrackingNotification[0]; ?>><?php echo Mage::helper('adminhtml')->__('No'); ?></option>
+                                           <option value="1"<?php echo $isTrackingNotification[1]; ?>><?php echo Mage::helper('adminhtml')->__('Yes'); ?></option>
+                                       </select>
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   <div class="box-right">
+       <div class="entry-edit">
+           <div class="entry-edit-head">
+               <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Configuration weight'); ?></h4>
+           </div>
+           <div class="np fieldset">
+               <div>
+                   <div class="content">
+                       <div class="hor-scroll">
+                           <table cellspacing="0" class="form-list">
+                               <tbody>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Weight'); ?> <span
+                                               class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text"
+                                              value="<?php echo round($shipmentTotalWeight, 1) > 0 ? round($shipmentTotalWeight, 1) : '0.1'; ?>"
+                                              name="weight" class="input-text  required-entry">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Length'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" value="<?php echo Mage::getStoreConfig('shipcloud/profile/length'); ?>" name="length" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Width'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" value="<?php echo Mage::getStoreConfig('shipcloud/profile/width'); ?>" name="width" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Height'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" value="<?php echo Mage::getStoreConfig('shipcloud/profile/height'); ?>" name="height" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label">
+                                       <label><?php echo Mage::helper('adminhtml')->__('Insurance value in'); ?> <?php echo $currentCurrency; ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input name="insurancevalue" value="<?php echo Mage::getStoreConfig('shipcloud/profile/insurrancevalue'); ?>" class=" input-text" type="text" >
+                                   </td>
+                                   <td>
+                                       <input type="hidden" name="insurancecurrency" value="<?php echo $currentCurrency; ?>">
+                                   </td>
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="entry-edit">
+           <div class="entry-edit-head">
+               <h4 class="icon-head fieldset-legend"><?php echo Mage::helper('adminhtml')->__('Customer Address'); ?></h4>
+           </div>
+           <div class="np fieldset">
+               <div>
+                   <div class="content">
+                       <div class="hor-scroll">
+                           <table cellspacing="0" class="form-list">
+                               <tbody>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptocompanyname"><?php echo Mage::helper('adminhtml')->__('Company name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptocompanyname" id="shiptocompanyname"
+                                              value="<?php echo strlen($shipTo->getCompany()) > 0 ? $shipTo->getCompany() : $shipTo->getFirstname() . ' ' . $shipTo->getLastname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptofirstname"><?php echo Mage::helper('adminhtml')->__('First name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptofirstname" id="shiptofirstname"
+                                              value="<?php echo $shipTo->getFirstname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptolastname"><?php echo Mage::helper('adminhtml')->__('Last name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptolastname" id="shiptolastname"
+                                              value="<?php echo $shipTo->getLastname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptoattentionname"><?php echo Mage::helper('adminhtml')->__('Attention name'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptoattentionname" id="shiptoattentionname"
+                                              value="<?php echo $shipTo->getFirstname() . ' ' . $shipTo->getLastname(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptophonenumber"><?php echo Mage::helper('adminhtml')->__('Phone number'); ?>
+                                           </label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptophonenumber" id="shiptophonenumber"
+                                              value="<?php echo $shipTo->getTelephone(); ?>"
+                                              class="input-text">
+                                   </td>
+                               </tr>
+   							<?php
+   							$addressStreet1 = trim($shipTo->getStreet(1));
+   							$addressStreet2 = trim($shipTo->getStreet(2));
+
+
+   							?>
+   							<tr>
+                                   <td class="label"><label
+                                           for="street"><?php echo Mage::helper('adminhtml')->__('Street'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="street" id="street"
+                                              value="<?php echo $addressStreet1; ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="streetno"><?php echo Mage::helper('adminhtml')->__('Street no'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="streetno" id="streetno"
+                                              value="<?php echo $addressStreet2; ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <!--<tr>
+                                   <td class="label"><label
+                                           for="street"><?php //echo Mage::helper('adminhtml')->__('Street'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <?php //$addressLine1 = $shipTo->getStreet(); ?>
+                                       <input type="text" name="street" id="street"
+                                              value="<?php //echo (is_array($addressLine1) && array_key_exists(0, $addressLine1)) ? preg_replace('/([0-9]*[^0-9]+)\s.*$/i', "$1", trim($addressLine1[0]." ".$addressLine1[1])) : preg_replace('/([0-9]*[^0-9]+)\s.*$/i', "$1", trim($addressLine1)); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="streetno"><?php //echo Mage::helper('adminhtml')->__('Street no'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="streetno" id="streetno"
+                                              value="<?php //echo (is_array($addressLine1) && array_key_exists(0, $addressLine1)) ? preg_replace('/^.*?\s+([0-9]+[\w]*)$/i', "$1", trim($addressLine1[0]." ".$addressLine1[1])) : preg_replace('/^.*?\s+([0-9]+[\w]*)$/i', "$1", trim($addressLine1)); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>-->
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptocity"><?php echo Mage::helper('adminhtml')->__('City'); ?> <span
+                                               class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptocity" id="shiptocity"
+                                              value="<?php echo $shipTo->getCity(); ?>" class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptostateprovincecode"><?php echo Mage::helper('adminhtml')->__('State (province)'); ?></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptostateprovincecode" id="shiptostateprovincecode"
+                                              value="<?php echo $shipTo->getRegion(); ?>" class="input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptopostalcode"><?php echo Mage::helper('adminhtml')->__('Postal code'); ?>
+                                           <span
+                                               class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptopostalcode" id="shiptopostalcode"
+                                              value="<?php echo $shipTo->getPostcode(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <td class="label"><label
+                                           for="shiptocountrycode"><?php echo Mage::helper('adminhtml')->__('Country code'); ?>
+                                           <span class="required">*</span></label>
+                                   </td>
+                                   <td class="value">
+                                       <input type="text" name="shiptocountrycode" id="shiptocountrycode"
+                                              value="<?php echo $shipTo->getCountryId(); ?>"
+                                              class="required-entry input-text">
+                                   </td>
+                               </tr>
+                               <tr>
+                                   <input type="hidden" name="service" value="" />
+                               </tr>
+                               </tbody>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+   </div>
+   <div class="f-right" style="clear:both;">
+   	<span id="buttonBottomImg"><img src="/skin/frontend/rwd/default/images/opc-ajax-loader.gif"></span>
+       <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>"/>
+       <button type="button" class="scalable save submit-button" id="form_intermediate_submit"
+               style="">
+           <span><?php echo Mage::helper('adminhtml')->__('Submit'); ?></span></button>
+   </div>
+   </form>
+
+   <script type="text/javascript">
+   	jQuery("#buttonTopImg").hide();
+   	jQuery("#buttonBottomImg").hide();
+   	editForm = new varienForm('edit_form', '');
+
+   	function validateAndSubmitForm(){
+   		if (editForm.validator.validate()) {
+   			var formData = jQuery("#edit_form");
+
+   			jQuery("#messages").empty();
+   			jQuery("#buttonTop").hide();
+   			jQuery("#form_intermediate_submit").hide();
+   			jQuery("#buttonTopImg").show();
+   			jQuery("#buttonBottomImg").show();
+
+   			jQuery.ajax({
+   				type: "POST",
+   				url: '<?php echo $formUrl; ?>',
+   				data: formData.serialize(),
+   				success: function (response) {
+   					if(IsJsonString(response)){
+   						var objJsonResponse = JSON.parse(response);
+   						jQuery("#messages").append(objJsonResponse.content);
+   						jQuery("#buttonTop").show();
+   						jQuery("#form_intermediate_submit").show();
+   						jQuery("#buttonTopImg").hide();
+   						jQuery("#buttonBottomImg").hide();
+   					}else{
+   						window.location.reload();
+   					}
+   				}
+   			});
+   		}
+   	}
+
+   	function IsJsonString(str) {
+   	    try {
+   		JSON.parse(str);
+   	    } catch (e) {
+   		return false;
+   	    }
+   	    return true;
+   	}
+
+       jQuery('#form_intermediate_submit').on('click', function(e){
+           e.preventDefault();
+
+   //        return false;
+           validateAndSubmitForm();
+           //if(editForm.submit()) disableElements('submit-button');
+       });
+       //editForm = new varienForm('edit_form', '');
+   </script>
+ <?php }*/ ?>
