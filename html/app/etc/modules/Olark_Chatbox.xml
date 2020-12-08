@@ -22,7 +22,7 @@
 <config>
     <modules>
         <Olark_Chatbox>
-            <active>true</active>
+            <active>false</active>
             <codePool>community</codePool>
             <depends>
                 <Mage_Core/>
