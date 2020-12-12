@@ -42,6 +42,9 @@ class Mage_Compiler_Model_Process
     protected $_processedClasses= array();
 
     protected $_controllerFolders = array();
+    /** $_collectLibs library list array */
+    protected $_collectLibs = array();
+
 
     public function __construct($options=array())
     {
@@ -128,6 +131,9 @@ class Mage_Compiler_Model_Process
                 || !in_array(substr($source, strlen($source)-4, 4), array('.php'))) {
                 return $this;
             }
+            if (!$firstIteration && stripos($source, Mage::getBaseDir('lib') . DS) !== false) {
+                                $this->_collectLibs[] = $target;
+                            }
             copy($source, $target);
         }
         return $this;
@@ -341,6 +347,10 @@ class Mage_Compiler_Model_Process
     {
         $sortedClasses = array();
         foreach ($classes as $className) {
+            /** Skip iteration if this class has already been moved to the includes folder from the lib */
+                        if (array_search($this->_includeDir . DS . $className . '.php', $this->_collectLibs)) {
+                               continue;
+            }
             $implements = array_reverse(class_implements($className));
             foreach ($implements as $class) {
                 if (!in_array($class, $sortedClasses) && !in_array($class, $this->_processedClasses) && strstr($class, '_')) {
