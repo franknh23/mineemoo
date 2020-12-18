@@ -49,7 +49,12 @@ class Mage_Adminhtml_Block_Newsletter_Queue_Preview extends Mage_Adminhtml_Block
             $template->setTemplateType($this->getRequest()->getParam('type'));
             $template->setTemplateText($this->getRequest()->getParam('text'));
             $template->setTemplateStyles($this->getRequest()->getParam('styles'));
-        }
+            $template->setTemplateStyles(
+                            $this->maliciousCodeFilter($template->getTemplateStyles())
+                        );
+                    $template->setTemplateText(
+                            $this->maliciousCodeFilter($template->getTemplateText())
+                        );
 
         $storeId = (int)$this->getRequest()->getParam('store_id');
         if(!$storeId) {
