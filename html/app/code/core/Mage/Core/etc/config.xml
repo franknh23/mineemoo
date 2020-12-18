@@ -28,7 +28,7 @@
 <config>
     <modules>
         <Mage_Core>
-            <version>1.6.0.8</version>
+            <version>1.6.0.10</version>
         </Mage_Core>
     </modules>
     <global>
@@ -178,6 +178,22 @@
                     </security_domain_policy>
                 </observers>
             </controller_action_predispatch>
+            <model_save_before>
+                <observers>
+                    <secure_var_processing>
+                        <class>core/observer</class>
+                        <method>secureVarProcessing</method>
+                    </secure_var_processing>
+                </observers>
+            </model_save_before>
+            <model_delete_before>
+                <observers>
+                    <secure_var_processing>
+                        <class>core/observer</class>
+                        <method>secureVarProcessing</method>
+                    </secure_var_processing>
+                </observers>
+            </model_delete_before>
         </events>
     </global>
     <frontend>
@@ -397,6 +413,7 @@
                 <use_http_x_forwarded_for>0</use_http_x_forwarded_for>
                 <use_http_user_agent>0</use_http_user_agent>
                 <use_frontend_sid>1</use_frontend_sid>
+                <use_admin_sid>0</use_admin_sid>
             </session>
             <browser_capabilities>
                 <cookies>1</cookies>
@@ -416,6 +433,7 @@
                 <domain_policy_backend>2</domain_policy_backend>
                 <domain_policy_frontend>2</domain_policy_frontend>
                 <extensions_compatibility_mode>1</extensions_compatibility_mode>
+                <secure_system_configuration_save_disabled>0</secure_system_configuration_save_disabled>
             </security>
         </admin>
         <general>
@@ -483,6 +501,13 @@
                 <admin_user_create></admin_user_create>
             </additional_notification_emails>
         </general>
+        <validators>
+            <custom_layout>
+                <disallowed_block>
+                    <Mage_Core_Block_Template_Zend/>
+                </disallowed_block>
+            </custom_layout>
+        </validators>
     </default>
     <stores>
         <default>
