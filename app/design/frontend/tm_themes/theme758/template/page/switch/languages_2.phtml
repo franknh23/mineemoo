@@ -31,19 +31,20 @@
  * @see Mage_Page_Block_Switch
  */
 ?>
-<?php //if(count($this->getStores())>1): ?>
+<?php $websites = Mage::app()->getWebsites(); ?>
+<?php if (count($websites) > 1): ?>
 
 <div class="header-button lang-list full_mode">
 
     <div class="header-button-title"><span class="label"><?php echo $this->__('Your Language:') ?></span> <span class="current"><?php $locale = Mage::app()->getStore()->getName(); echo $locale; ?></span></div>
     <ul>
-    <?php //foreach ($this->getStores() as $_lang): ?>
-        <?php //$_selected = ($_lang->getId() == $this->getCurrentStoreId()) ? ' class="selected"' : '' ?>
-        <li>
-            <a <?php //echo $_selected ;?> href="<?php echo 'http://127.0.0.1/mineemoo.com/html/'; //$_lang->getCurrentUrl() ?>" title="<?php echo $this->htmlEscape('mineemoo.com') ?>"><span><?php echo $this->htmlEscape('mineemoo.com') ?></span><span class="mobile-part"><?php //echo substr($this->htmlEscape($_lang->getLocaleCode()), 0, 2) ?></span></a>
-        </li>
-    <?php //endforeach; ?>
+    <?php foreach ($websites as $website): ?>
+        <?php if ($website->getCode() !== Mage::app()->getWebsite()->getCode()): ?>
+            <li>
+                <a  class="website-switch" href="<?php echo $website->getDefaultStore()->getBaseUrl() ?>" title="<?php echo $this->htmlEscape($website->getName()) ?>"><span><?php echo $this->htmlEscape($website->getName()) ?></span><span class="mobile-part"><?php //echo substr($this->htmlEscape($_lang->getLocaleCode()), 0, 2) ?></span></a>
+            </li>
+        <?php endif;?>
+    <?php endforeach; ?>
     </ul>
 </div>
-<?php //endif; ?>
-
+<?php endif; ?>

@@ -400,6 +400,9 @@ p.required{
     label {
         float: none;
     }
+    label.is_subscribed {
+        padding-left: 3% !important;
+    }
     .radio,
     .checkbox {
         margin-right: 6px;
