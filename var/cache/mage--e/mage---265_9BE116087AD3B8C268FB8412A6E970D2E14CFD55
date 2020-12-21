@@ -1,0 +1,111 @@
+<div class="block block-layered-nav block-layered-nav--no-filters">
+    <div class="block-title">
+        <strong><span>Durchsuchen nach</span></strong>
+    </div>
+    <div class="block-content toggle-content open">
+        <p class="block-subtitle block-subtitle--filter">Filter</p>
+        <dl id="narrow-by-list2">
+            <dt>Kategorie</dt>
+            <dd>
+                <ol>
+                                                        <li>
+                        <a href="https://www.mineemoo.de/baby-girl/fruehchen.html?___SID=U">
+                            Frühchen                            <span class="count">(7)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/new-arrivals-g.html?___SID=U">
+                            NEUHEITEN                            <span class="count">(39)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/onsale.html?___SID=U">
+                            ON SALE                             <span class="count">(47)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/sweaters-sweatshirts.html?___SID=U">
+                            HEMDEN &amp; BLUSEN                            <span class="count">(0)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/dresses.html?___SID=U">
+                            KLEIDER &amp; RÖCKE                            <span class="count">(0)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/pullover.html?___SID=U">
+                            PULLOVER &amp; CARDIGANS                            <span class="count">(6)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/tops.html?___SID=U">
+                            TOPS                            <span class="count">(59)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/body-suits.html?___SID=U">
+                            STRAMPLER &amp; BODY                            <span class="count">(50)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/hosen.html?___SID=U">
+                            HOSEN &amp; LEGGINGS                            <span class="count">(8)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/skirts-and-shorts.html?___SID=U">
+                            SHORTS                            <span class="count">(0)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/set.html?___SID=U">
+                            SETS &amp; EINTEILER                            <span class="count">(7)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/night-wear.html?___SID=U">
+                            NACHTWÄSCHE                            <span class="count">(23)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/outdoor.html?___SID=U">
+                            OUTDOOR- &amp; FLEECEBEKLEIDUNG                            <span class="count">(11)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/socks.html?___SID=U">
+                            STRÜMPFE &amp; STRUMPFHOSEN                            <span class="count">(0)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/baby-shoes-2.html?___SID=U">
+                            SCHUHE &amp; HAUSSCHUHE                            <span class="count">(0)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/swim.html?___SID=U">
+                            BADEMODE                            <span class="count">(10)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/accessories.html?___SID=U">
+                            ACCESSOIRES                            <span class="count">(40)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/hats.html?___SID=U">
+                            MüTZEN                            <span class="count">(0)</span>
+                        </a>
+                    </li>
+                                                                            <li>
+                        <a href="https://www.mineemoo.de/baby-girl/toys.html?___SID=U">
+                            Toys                            <span class="count">(27)</span>
+                        </a>
+                    </li>
+                                                    </ol>
+            </dd>
+        </dl>
+        <script type="text/javascript">decorateDataList('narrow-by-list2')</script>
+    </div>
+</div>
