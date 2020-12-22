@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <meetanshi translate="label">
+            <label><![CDATA[<img src="https://meetanshi.com/media/logo.png" alt="Meetanshi" height="20" style="vertical-align:middle;"/>]]></label>
+            <sort_order>10</sort_order>
+        </meetanshi>
+    </tabs>
+    <sections>
+        <cookienotice  translate="label" module="cookienotice">
+            <label>Cookie Notice</label>
+            <class>v-cookienotice-section</class>
+            <header_css>v-cookienotice-header</header_css>
+            <tab>meetanshi</tab>
+            <sort_order>9000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label" module="cookienotice">
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1000</sort_order>
+                    <expanded>1</expanded>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enable translate="label">
+                            <label>Cookie Notice</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                        </enable>
+                        <type translate="label">
+                            <label>Notice Display Type</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>cookienotice/config_type</source_model>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </type>
+                        <bar_position translate="label">
+                            <label>Bar position</label>
+                            <comment>[Top] does not cover the content, [Bottom] is fixed.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                                <type>v-bar</type>
+                            </depends>
+                            <source_model>cookienotice/config_bar_position</source_model>
+                        </bar_position>
+                        <box_position translate="label">
+                            <label>Box Position</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1040</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                                <type>v-box</type>
+                            </depends>
+                            <source_model>cookienotice/config_box_position</source_model>
+                        </box_position>
+                        <onScroll translate="label">
+                            <label>Accept Cookie OnScroll</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1050</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </onScroll>
+
+                        <behaviour translate="label">
+                            <label>When User closes The Notice</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1050</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>cookienotice/config_behaviour</source_model>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </behaviour>
+                        <autohide translate="label">
+                            <label>Autohide Cookie Notice After (in seconds)</label>
+                            <comment>If [0] then the notice won't close automatically.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1060</sort_order>
+                            <validate>required-entry validate-number</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </autohide>
+                        <autoaccept translate="label">
+                            <label>Accept cookies automatically after X seconds</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1070</sort_order>
+                            <validate>required-entry validate-number</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </autoaccept>
+                        <expire translate="label">
+                            <label>expire Cookie Agreement After (Days) *</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1080</sort_order>
+                            <validate>required-entry validate-number</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Days</comment>
+                            <depends>
+                                <enable>1</enable>
+                            </depends>
+                        </expire>
+                    </fields>
+                </general>
+            </groups>
+            <groups>
+                <content translate="label" module="cookienotice">
+                    <label>Content Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2000</sort_order>
+                    <expanded>1</expanded>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <show translate="label">
+                            <label>Notice Type</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>2010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>cookienotice/config_message</source_model>
+                        </show>
+                        <custom_message translate="label">
+                            <label>Notice text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <show>custom</show>
+
+                            </depends>
+
+                        </custom_message>
+                        <model_title translate="label">
+                            <label>Container Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <show>custom</show>
+                            </depends>
+                        </model_title>
+                        <custom_accept translate="label">
+                            <label>Accept Button text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2040</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <show>custom</show>
+                            </depends>
+                        </custom_accept>
+                        <custom_close translate="label">
+                            <label>Deny Button text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2050</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <show>custom</show>
+                            </depends>
+                        </custom_close>
+                        <custom_more_info translate="label">
+                            <label>Privacy Policy Button text</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2060</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <show>custom</show>
+                            </depends>
+                        </custom_more_info>
+                        <cms_page translate="label">
+                            <label>Privacy Policy Redirect Information Page</label>
+                            <comment>CMS page with information about cookies and how to manage them.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>2070</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_cms_page</source_model>
+                        </cms_page>
+                    </fields>
+                </content>
+            </groups>
+            <groups>
+                <popup_style translate="label" module="cookienotice">
+                    <label>Container Display Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3000</sort_order>
+                    <expanded>1</expanded>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <font_family translate="label">
+                            <label>Font Family</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>3010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>Meetanshi_CookieNotice_Model_Config_Fontfamily</source_model>
+                        </font_family>
+                        <model_text_align translate="label">
+                            <label>Container Text Align</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>3020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>Meetanshi_CookieNotice_Model_Config_Textalign</source_model>
+                        </model_text_align>
+                        <model_title_size translate="label">
+                            <label>Container Title Text Size</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>3030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>Meetanshi_CookieNotice_Model_Config_Fontsize</source_model>
+                        </model_title_size>
+                        <model_message_size translate="label">
+                            <label>Container Message Text Size</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>3040</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>Meetanshi_CookieNotice_Model_Config_Fontsize</source_model>
+                        </model_message_size>
+                        <model_border translate="label">
+                            <label>Container Border</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>3050</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                        </model_border>
+
+                        <model_border_color translate="label">
+                            <label>Container Border Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4090</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                            <depends>
+                                <model_border>1</model_border></depends>
+                        </model_border_color>
+                        <header_background_color translate="label">
+                            <label>Container Background Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </header_background_color>
+                        <header_font_color translate="label">
+                            <label>Container Message Font Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4010</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </header_font_color>
+
+                        <accept_button_background_color translate="label">
+                            <label>Accept Button Background Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4020</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </accept_button_background_color>
+                        <close_button_background_color translate="label">
+                            <label>Close Button Background Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4030</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </close_button_background_color>
+                        <policy_button_background_color translate="label">
+                            <label>Privacy Policy Background Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4040</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </policy_button_background_color>
+                        <close_button_color translate="label">
+                            <label>Close Button Text Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4050</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </close_button_color>
+                         <privace_policy_color translate="label">
+                            <label>Privacy Policy Text Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4060</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </privace_policy_color>
+                        <accept_button_color translate="label">
+                            <label>Accept Button Text Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4070</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </accept_button_color>
+                        <model_title_color translate="label">
+                            <label>Container Title Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4080</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>color</validate>
+                        </model_title_color>
+                    </fields>
+                </popup_style>
+            </groups>
+        </cookienotice>
+    </sections>
+</config>

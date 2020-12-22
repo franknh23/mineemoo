@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/cookienotice/cookienotice.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="before_body_end">
+            <block name="cookienotice.before_body_end" type="core/template" after="-"
+                   template="cookienotice/before_body_end.phtml">
+                <action method="setCacheLifetime">
+                    <lifetime>3600</lifetime>
+                </action>
+                <block name="cookienotice.before_body_end.widget" type="core/template" before="-" template="cookienotice/widget.phtml"/>
+            </block>
+        </reference>
+    </default>
+</layout>
