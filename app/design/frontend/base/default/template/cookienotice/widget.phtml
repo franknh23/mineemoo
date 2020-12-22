@@ -1,0 +1,161 @@
+<?php
+$helper = Mage::helper('cookienotice');
+if ($helper->getType() == 'v-bar') {
+    $width = '70%';
+} else {
+    $width = 'auto';
+}
+//Mage::log($helper->headerTextFontFamily());
+$fontFamily = $helper->headerTextFontFamily();
+$fontFamily = str_replace('+', ' ', $fontFamily);
+$fontFamily = "'" . $fontFamily . "'";
+?>
+<link href="https://fonts.googleapis.com/css?family=<?php echo $helper->headerTextFontFamily() ?>" rel="stylesheet">
+<div id="m-cookienotice"
+     class="<?php echo $helper->getType(); ?> <?php echo ($helper->getType() == 'v-bar') ? $helper->getBarPosition() : $helper->getBoxPosition(); ?>"
+     style="box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.47);display: none;text-align:<?php echo $helper->modelTextAlign(); ?>;
+             background-color:<?php echo "#" . $helper->headerBackgroundColor(); ?>;color:<?php echo "#" . $helper->headerFontColor(); ?>;
+     <?php if ($helper->modelBorder()): ?>
+             border: 1px solid <?php echo "#" . $helper->modelBorderColor() ?>;
+     <?php endif; ?>
+             ">
+    <div class="m-message title"
+         style="width:<?php echo $width ?>;font-weight:bold;font-size:<?php echo $helper->modelTitleFontSize() ?>px;color:<?php echo "#" . $helper->modelTitleColor(); ?>;"><span style="border-bottom: <?php echo "#" .$helper->acceptButtonBackgroundColor()?> solid 1px; padding-bottom: 3px"><?php echo ($helper->getShow() == 'default') ? $this->__('Cookie Notice.') : $helper->modelTitle(); ?></span></div>
+
+    <div id="message-custom-css" class="m-message custom-css"
+         style="width:<?php echo $width ?>;font-size:<?php echo $helper->modelMessageSize() ?>px;font-family:<?php echo $fontFamily; ?>">
+        <?php echo ($helper->getShow() == 'default') ? $this->__('testThis websites use cookies. By continuing to browse the site you are agreeing to our use of cookies.') : $helper->getCustomMessage(); ?>
+    </div>
+    <div id="action-custom-css" class="m-actions custom-css">
+        <a href="javascript:cookieNoticeAccept();" class="m-button m-accept"
+           style="background-color:<?php echo '#' . $helper->acceptButtonBackgroundColor() ?>;color:<?php echo '#' . $helper->acceptButtonColor() ?>">
+            <?php echo ($helper->getShow() == 'default') ? $this->__("Accept") : $helper->getCustomAccept(); ?>
+        </a>
+
+        <a href="javascript:cookieClose();" class="m-button m-decline"
+           style="background-color:<?php echo '#' . $helper->closeButtonBackgroundColor() ?>;color:<?php echo '#' . $helper->closeButtonColor() ?>">
+            <?php echo ($helper->getShow() == 'default') ? $this->__("Close") : $helper->getCustomDecline(); ?>
+        </a>
+        <a href="<?php echo $helper->getCmsPage(); ?>" target="_blank" class="m-button"
+           style="background-color:<?php echo '#' . $helper->privacyPolicyBackgroundColor() ?>;color:<?php echo '#' . $helper->privacyPolicyColor() ?>">
+            <?php echo ($helper->getShow() == 'default') ? $this->__("More information") : $helper->getCustomMoreInfo(); ?>
+        </a>
+    </div>
+</div>
+<?php
+if ($helper->getType() == 'v-bar'):
+    $type = 'badge-bar-'.$helper->getBarPosition();
+else:
+    $type = 'badge-popup-'.$helper->getBoxPosition();
+endif;
+?>
+<div id="v-badge" class="v-badge <?php echo $type;?>" onClick="showDiv()" style="display:none"><?php echo __('Cookie Settings')?></div>
+<script type="text/javascript">
+    var expire =<?php echo $helper->getAutoExpire()?>;
+    var onScroll ='<?php echo $helper->onscroll() ?>';
+    var behaviour =<?php echo $helper->getBehaviour(); ?>;
+
+    if (onScroll === '1' || onScroll === 1) {
+        window.onscroll = function () {
+            if (getCookieValue('cookienotice').toString() === '0' || getCookieValue('cookienotice').toString() === null) {
+                custom();
+            }
+        };
+    }
+
+    function custom() {
+        if (document.getElementById('m-cookienotice').style.display = 'block') {
+            var d = null;
+            if (behaviour) {
+                var d = new Date();
+                d.setTime(d.getTime() + (expire * 24 * 60 * 60 * 1000));
+                if (document.documentElement.scrollTop > 300) {
+                    d.setTime(d.getTime() + (<?php echo $helper->getBehaviour(); ?> +expire * 24 * 60 * 60 * 1000));
+                }
+                var expires = "expires=" + d.toUTCString();
+                document.cookie = "cookienotice" + "=" + "1" + ";" + expires + ";path=/";
+                document.getElementById('m-cookienotice').style.display = 'none';
+                document.getElementById('v-badge').style.display = 'none';
+            }
+        }
+    }
+
+    function cookieClose() {
+        var d = null;
+        if (<?php echo $helper->getBehaviour(); ?>) {
+            d = new Date();
+            d.setTime(d.getTime() + (<?php echo $helper->getBehaviour(); ?> + expire * 24 * 60 * 60 * 1000));
+        }
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = "cookienotice" + "=" + "0" + ";" + expires + ";path=/";
+        document.getElementById('v-badge').style.display = 'block';
+        document.getElementById('m-cookienotice').style.display = 'none';
+    }
+
+    function cookieNoticeAccept() {
+        var d = null;
+        if (<?php echo $helper->getBehaviour(); ?>) {
+            d = new Date();
+            d.setTime(d.getTime() + (<?php echo $helper->getBehaviour(); ?> +expire * 24 * 60 * 60 * 1000));
+        }
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = "cookienotice" + "=" + "1" + ";" + expires + ";path=/";
+        document.getElementById('m-cookienotice').style.display = 'none';
+        document.getElementById('v-badge').style.display = 'none';
+    }
+
+    function showDiv() {
+        document.getElementById('m-cookienotice').style.display = "block";
+        document.getElementById('v-badge').style.display = 'none';
+        <?php if ($helper->getAutohide()): ?>
+        setTimeout(function () {
+            document.getElementById('m-cookienotice').style.display = 'none';
+            if (getCookieValue('cookienotice').toString() === '1') {
+                document.getElementById('v-badge').style.display = 'none';
+            }else{
+                document.getElementById('v-badge').style.display = 'block';
+            }
+        }, <?php echo $helper->getAutohide() * 1000; ?>);
+        <?php endif; ?>
+    }
+
+    if (getCookieValue('cookienotice').toString() === '0'){
+        document.getElementById('v-badge').style.display = 'block';
+        document.getElementById('m-cookienotice').style.display = 'none';
+    }
+    if (getCookieValue('cookienotice').toString() === '1'){
+        document.getElementById('v-badge').style.display = 'none';
+        document.getElementById('m-cookienotice').style.display = 'none';
+    }
+
+    <?php if ($helper->getAutohide()): ?>
+    setTimeout(function () {
+        if (getCookieValue('cookienotice').toString() === '1'){
+            document.getElementById('v-badge').style.display = 'none';
+        }else{
+            document.getElementById('v-badge').style.display = 'block';
+        }
+        document.getElementById('m-cookienotice').style.display = 'none';
+    }, <?php echo $helper->getAutohide() * 1000; ?>);
+    <?php endif; ?>
+    <?php if ($helper->getAutoAccept()): ?>
+    setTimeout(function () {
+        cookieNoticeAccept();
+    }, <?php echo $helper->getAutoAccept() * 1000; ?>);
+    <?php endif; ?>
+
+    function getCookieValue(cookiename) {
+        var name = cookiename + "=";
+        var cookieSplit = document.cookie.split(';');
+        for (var i = 0; i < cookieSplit.length; i++) {
+            var a = cookieSplit[i];
+            while (a.charAt(0) === ' ') {
+                a = a.substring(1);
+            }
+            if (a.indexOf(name) === 0) {
+                return a.substring(name.length, a.length);
+            }
+        }
+        return "";
+    }
+</script>

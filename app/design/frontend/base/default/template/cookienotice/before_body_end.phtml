@@ -1,0 +1,6 @@
+<?php $helper = Mage::helper('cookienotice'); ?>
+<?php if ($helper->isActive()): ?>
+    <?php if ($helper->isEnable()): ?>
+        <?php echo $this->getChildHtml('cookienotice.before_body_end.widget'); ?>
+    <?php endif; ?>
+<?php endif; ?>
