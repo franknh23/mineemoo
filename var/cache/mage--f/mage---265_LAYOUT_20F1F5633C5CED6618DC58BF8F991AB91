@@ -495,6 +495,15 @@
       <block type="sociallogin/linkedinlogin" name="sociallogin_popup_linkedinlogin" template="sociallogin/popup/linkedinlogin.phtml"/>
    </block>
 </reference>
+<reference name="head">
+   <action method="addItem">
+      <type>skin_css</type>
+      <name>css/bpmedia/gdpr/cookiealert.css</name>
+   </action>
+</reference>
+<reference name="after_body_start">
+   <block type="bpmedia_gdpr/cookiealert" before="-" name="cookiealert" template="bpmedia/gdpr/cookiealert.phtml"/>
+</reference>
 <reference name="header">
    <reference name="top.menu">
       <reference name="catalog.topnav">
@@ -514,6 +523,19 @@
 </reference>
 <reference name="head">
    <block type="gene_braintree/assets" name="gene.braintree.head.assets" as="braintree.assets" template="gene/braintree/assets.phtml" after="-"/>
+</reference>
+<reference name="head">
+   <action method="addCss">
+      <stylesheet>css/cookienotice/cookienotice.css</stylesheet>
+   </action>
+</reference>
+<reference name="before_body_end">
+   <block name="cookienotice.before_body_end" type="core/template" after="-" template="cookienotice/before_body_end.phtml">
+      <action method="setCacheLifetime">
+         <lifetime>3600</lifetime>
+      </action>
+      <block name="cookienotice.before_body_end.widget" type="core/template" before="-" template="cookienotice/widget.phtml"/>
+   </block>
 </reference>
 <reference name="head">
    <action method="addItem">

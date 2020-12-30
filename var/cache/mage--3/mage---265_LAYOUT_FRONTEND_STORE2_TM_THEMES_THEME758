@@ -5431,6 +5431,33 @@
       </block>
    </reference>
 </default>
+<customer_account>
+   <reference name="customer_account_navigation">
+      <action method="addLink" ifconfig="bpmedia_gdpr/configuration/gdprenabled">
+         <name>delete</name>
+         <path>bpmedia_gdpr/customer/deleteconfirmation</path>
+         <label>Delete Account</label>
+      </action>
+   </reference>
+</customer_account>
+<bpmedia_gdpr_customer_deleteconfirmation>
+   <update handle="customer_account"/>
+   <reference name="content">
+      <block type="bpmedia_gdpr/deleteconfirmation" name="deleteconfirmation" template="bpmedia/gdpr/confirmation.phtml"/>
+      <block type="customer/account_dashboard" name="customer.account.link.back" template="customer/account/link/back.phtml"/>
+   </reference>
+</bpmedia_gdpr_customer_deleteconfirmation>
+<default>
+   <reference name="head">
+      <action method="addItem">
+         <type>skin_css</type>
+         <name>css/bpmedia/gdpr/cookiealert.css</name>
+      </action>
+   </reference>
+   <reference name="after_body_start">
+      <block type="bpmedia_gdpr/cookiealert" before="-" name="cookiealert" template="bpmedia/gdpr/cookiealert.phtml"/>
+   </reference>
+</default>
 <default>
    <reference name="header">
       <reference name="top.menu">
@@ -5901,6 +5928,21 @@
       <block type="iways_paypalplus/onepage_review_button" name="checkout.onepage.review.button" as="button" template="paypalplus/review/button.phtml"/>
    </reference>
 </checkout_onepage_review>
+<default>
+   <reference name="head">
+      <action method="addCss">
+         <stylesheet>css/cookienotice/cookienotice.css</stylesheet>
+      </action>
+   </reference>
+   <reference name="before_body_end">
+      <block name="cookienotice.before_body_end" type="core/template" after="-" template="cookienotice/before_body_end.phtml">
+         <action method="setCacheLifetime">
+            <lifetime>3600</lifetime>
+         </action>
+         <block name="cookienotice.before_body_end.widget" type="core/template" before="-" template="cookienotice/widget.phtml"/>
+      </block>
+   </reference>
+</default>
 <default>
    <reference name="head">
       <action method="addItem">

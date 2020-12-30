@@ -3338,6 +3338,13 @@
       <block type="gene_braintree/adminhtml_system_config_migration" name="gene.braintree.system.config.migration" template="gene/braintree/system/config/migration.phtml"/>
    </reference>
 </adminhtml_system_config_edit>
+<adminhtml_system_config_edit>
+   <reference name="head">
+      <action method="addJs">
+         <file>jscolor/jscolor.js</file>
+      </action>
+   </reference>
+</adminhtml_system_config_edit>
 <default>
    <reference name="head">
       <action method="addCss">

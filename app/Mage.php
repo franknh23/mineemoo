@@ -690,9 +690,11 @@ final class Mage
             header('Location: ' . self::getBaseUrl());
             die();
         } catch (Mage_Core_Model_Store_Exception $e) {
+echo "<pre>"; print_r("test1");exit;
             require_once(self::getBaseDir() . DS . 'errors' . DS . '404.php');
             die();
         } catch (Exception $e) {
+echo "<pre>"; print_r("test2");exit;
             if (self::isInstalled() || self::$_isDownloader) {
                 self::printException($e);
                 exit();

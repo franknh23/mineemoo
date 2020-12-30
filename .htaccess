@@ -114,8 +114,17 @@
 ## enable rewrites
 
     Options +FollowSymLinks
-    SetEnvIf Host .*base.* MAGE_RUN_CODE=base
-    SetEnvIf Host .*base.* MAGE_RUN_TYPE=website
+    #SetEnvIf Host .*mineemoo_english.* MAGE_RUN_CODE=mineemoo_english
+    #SetEnvIf Host .*.mineemoo_english* MAGE_RUN_TYPE=website
+    RewriteCond %{HTTP_HOST} www\.mineemoo\.com [NC]
+    RewriteRule .* - [E=MAGE_RUN_CODE:mineemoo_com]
+    RewriteCond %{HTTP_HOST} www\.mineemoo\.com [NC]
+    RewriteRule .* - [E=MAGE_RUN_TYPE:website]
+
+    RewriteCond %{HTTP_HOST} www\.mineemoo\.de [NC]
+    RewriteRule .* - [E=MAGE_RUN_CODE:base]
+    RewriteCond %{HTTP_HOST} www\.mineemoo\.de [NC]
+    RewriteRule .* - [E=MAGE_RUN_TYPE:website]
     RewriteEngine on
 
 ############################################
