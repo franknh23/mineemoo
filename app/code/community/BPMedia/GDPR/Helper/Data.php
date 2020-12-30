@@ -13,7 +13,7 @@ class BPMedia_GDPR_Helper_Data extends Mage_Core_Helper_Abstract
 
     public function isAnonEnabled()
     {
-        return (bool)Mage::getStoreConfig(self::XML_PATH_GDPR_ENABLED);
+        return (bool)Mage::getStoreConfig(self::XML_PATH_GDPR_ANONENABLED);
     }
 
     public function getSuccessMessage()
