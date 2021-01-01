@@ -693,7 +693,6 @@ final class Mage
             require_once(self::getBaseDir() . DS . 'errors' . DS . '404.php');
             die();
         } catch (Exception $e) {
-
             if (self::isInstalled() || self::$_isDownloader) {
                 self::printException($e);
                 exit();
