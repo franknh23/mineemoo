@@ -61,6 +61,7 @@
                     <div class="input-box">
                         <textarea name="comment" id="comment" title="<?php echo Mage::helper('contacts')->__('Comment') ?>" class="required-entry input-text" cols="5" rows="3"></textarea>
                     </div>
+                    <?php echo $this->getChildHtml('recaptcha'); ?>
                 </li>
             </ul>
         </div>
