@@ -180,6 +180,7 @@
                         <div class="input-box">
                             <input type="text" name="nickname" id="nickname_field" class="input-text required-entry" value="<?php echo $this->escapeHtml($data->getNickname()) ?>" />
                         </div>
+                        <?php echo $this->getChildHtml('recaptcha'); ?>
                     </li>
 
                 </ul>

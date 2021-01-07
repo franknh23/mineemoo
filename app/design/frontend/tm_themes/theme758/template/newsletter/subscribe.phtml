@@ -39,6 +39,7 @@
             <div class="actions">
                 <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="button"><span><span><?php echo $this->__('Go') ?></span></span></button>
             </div>
+            <?php echo $this->getChildHtml('recaptcha'); ?>
         </div>
     </form>
     <script type="text/javascript">
