@@ -15,15 +15,14 @@
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
+ * versions in the future. If you wish to customize Magento foit statusr your
  * needs please refer to http://www.magento.com for more information.
  *
  * @category    Varien
  * @package     Varien_Filter
- * @copyright  Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 
 class Varien_Filter_FormElementName extends Zend_Filter_Alnum
 {

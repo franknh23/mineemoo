@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -569,7 +569,7 @@ class Mage_Core_Model_Email_Template_Filter extends Varien_Filter_Template
      * Return variable value for var construction
      *
      * @param string $value raw parameters
-     * @param string $default default value
+    * @param string $default default value
      * @return string
      */
     protected function _getVariable($value, $default = '{no_value_defined}')
@@ -578,9 +578,9 @@ class Mage_Core_Model_Email_Template_Filter extends Varien_Filter_Template
         try {
             $result = parent::_getVariable($value, $default);
         } catch (Exception $e) {
-            $result = '';
-            Mage::logException($e);
-        }
+                $result = '';
+                Mage::logException($e);
+            }
         Mage::unregister('varProcessing');
         return $result;
     }

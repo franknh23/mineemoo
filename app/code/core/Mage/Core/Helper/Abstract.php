@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Core
- * @copyright  Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -464,11 +464,11 @@ abstract class Mage_Core_Helper_Abstract
                         return true;
                     }
                 } elseif (
-                    (bool)strcmp($item, $this->removeTags($item))
-                    || (bool)strcmp($key, $this->removeTags($key))
-                ) {
-                    if (!$skipTags && !in_array($key, $arrayKeys)) {
-                        continue;
+                        (bool)strcmp($item, $this->removeTags($item))
+                        || (bool)strcmp($key, $this->removeTags($key))
+                    ) {
+                        if (!$skipTags && !in_array($key, $arrayKeys)) {
+                                continue;
                     }
                     return true;
                 }

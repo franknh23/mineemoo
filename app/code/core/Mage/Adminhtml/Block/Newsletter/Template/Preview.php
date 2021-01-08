@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright  Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2019 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -45,13 +45,12 @@ class Mage_Adminhtml_Block_Newsletter_Template_Preview extends Mage_Adminhtml_Bl
             $template->setTemplateType($this->getRequest()->getParam('type'));
             $template->setTemplateText($this->getRequest()->getParam('text'));
             $template->setTemplateStyles($this->getRequest()->getParam('styles'));
-        }
-        $template->setTemplateStyles(
-            $this->maliciousCodeFilter($template->getTemplateStyles())
-        );
-        $template->setTemplateText(
-            $this->maliciousCodeFilter($template->getTemplateText())
-        );
+            $template->setTemplateStyles(
+                            $this->maliciousCodeFilter($template->getTemplateStyles())
+                        );
+                    $template->setTemplateText(
+                            $this->maliciousCodeFilter($template->getTemplateText())
+                        );
 
         $storeId = (int)$this->getRequest()->getParam('store_id');
         if(!$storeId) {
@@ -73,9 +72,6 @@ class Mage_Adminhtml_Block_Newsletter_Template_Preview extends Mage_Adminhtml_Bl
         if($template->isPlain()) {
             $templateProcessed = "<pre>" . htmlspecialchars($templateProcessed) . "</pre>";
         }
-
-        $templateProcessed = Mage::getSingleton('core/input_filter_maliciousCode')
-            ->linkFilter($templateProcessed);
 
         Varien_Profiler::stop("newsletter_template_proccessing");
 
