@@ -69,8 +69,9 @@ require_once $mageFilename;
 if (isset($_SERVER['MAGE_IS_DEVELOPER_MODE'])) {
     Mage::setIsDeveloperMode(true);
 }
-Mage::setIsDeveloperMode(true);
+
 ini_set('display_errors', 1);
+ini_set('memory_limit', '-1');
 
 umask(0);
 
@@ -79,5 +80,18 @@ $mageRunCode = isset($_SERVER['MAGE_RUN_CODE']) ? $_SERVER['MAGE_RUN_CODE'] : ''
 
 /* Run store or run website */
 $mageRunType = isset($_SERVER['MAGE_RUN_TYPE']) ? $_SERVER['MAGE_RUN_TYPE'] : 'store';
+
+switch($_SERVER['HTTP_HOST']) {
+    case 'mineemoo.com':
+    case 'www.mineemoo.com':
+        $mageRunCode = 'mineemoo_com';
+        $mageRunType = 'website';
+        break;
+    case 'mineemoo.de':
+    case 'www.mineemoo.de':
+        $mageRunCode = 'base';
+        $mageRunType = 'website';
+        break;
+}
 
 Mage::run($mageRunCode, $mageRunType);
