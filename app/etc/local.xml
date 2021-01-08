@@ -40,10 +40,10 @@
             </db>
             <default_setup>
                 <connection>
-                    <host><![CDATA[127.0.0.1]]></host>
-                    <username><![CDATA[db13605644-root]]></username>
-                    <password><![CDATA[Wataftserver2020]]></password>
-                    <dbname><![CDATA[db13605644-mineemoo]]></dbname>
+                    <host><![CDATA[localhost]]></host>
+                    <username><![CDATA[root]]></username>
+                    <password><![CDATA[root]]></password>
+                    <dbname><![CDATA[mineemoo_new]]></dbname>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>
                     <type><![CDATA[pdo_mysql]]></type>
@@ -64,4 +64,3 @@
         </routers>
     </admin>
 </config>
-

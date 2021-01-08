@@ -114,17 +114,6 @@
 ## enable rewrites
 
     Options +FollowSymLinks
-    #SetEnvIf Host .*mineemoo_english.* MAGE_RUN_CODE=mineemoo_english
-    #SetEnvIf Host .*.mineemoo_english* MAGE_RUN_TYPE=website
-    RewriteCond %{HTTP_HOST} www\.mineemoo\.com [NC]
-    RewriteRule .* - [E=MAGE_RUN_CODE:mineemoo_com]
-    RewriteCond %{HTTP_HOST} www\.mineemoo\.com [NC]
-    RewriteRule .* - [E=MAGE_RUN_TYPE:website]
-
-    RewriteCond %{HTTP_HOST} www\.mineemoo\.de [NC]
-    RewriteRule .* - [E=MAGE_RUN_CODE:base]
-    RewriteCond %{HTTP_HOST} www\.mineemoo\.de [NC]
-    RewriteRule .* - [E=MAGE_RUN_TYPE:website]
     RewriteEngine on
 
 ############################################
@@ -154,6 +143,21 @@
 
     RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
     RewriteRule .* - [L,R=405]
+
+<IfModule mod_setenvif.c>
+    <IfModule mod_headers.c>
+
+        ############################################
+        # X-Content-Type-Options: nosniff disable content-type sniffing on some browsers.
+        Header set X-Content-Type-Options: nosniff
+
+        ############################################
+        # This header forces to enables the Cross-site scripting (XSS) filter in browsers (if disabled)
+        BrowserMatch \bMSIE\s8 ie8
+        Header set X-XSS-Protection: "1; mode=block" env=!ie8
+
+    </IfModule>
+</IfModule>
 
 ############################################
 ## redirect for mobile user agents
