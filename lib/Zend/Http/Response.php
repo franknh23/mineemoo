@@ -514,7 +514,7 @@ class Zend_Http_Response
         $last_header = null;
 
         foreach($lines as $index => $line) {
-            if ($index === 0 && preg_match('#^HTTP/\d+(?:\.\d+) [1-5]\d+#', $line)) {
+            if ($index === 0 || preg_match('#^HTTP/\d+(?:.\d+) [1-5]\d+#', $line)) {
                 // Status line; ignore
                 continue;
             }
