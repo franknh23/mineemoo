@@ -247,3 +247,6 @@
         Deny from all
 
     </Files>
+
+##### Block access to local.xml #####
+RewriteRule ^(.*)local.xml$ - [F,L]

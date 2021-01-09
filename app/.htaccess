@@ -1,2 +1,5 @@
 Order deny,allow
 Deny from all
+
+##### Block access to local.xml #####
+RewriteRule ^(.*)local.xml$ - [F,L]
