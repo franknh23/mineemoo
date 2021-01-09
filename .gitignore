@@ -43,3 +43,4 @@
 /var/package/*
 !/var/package/*.xml
 index.php
+app/etc/local.xml
