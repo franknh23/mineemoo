@@ -379,7 +379,9 @@ body.customer-account .data-table td {
  width:100%
 }
 .customer-account-login p.required {
- margin-top:-45px
+ margin-top:-10px;
+ margin-bottom: 10px;
+ float: none;
 }
 .customer-account-login label {
  margin-bottom:8px
@@ -1259,3 +1261,6 @@ body.newsletter-manage-index .my-account .form-list {
  padding-top:10px
 }
 /*# sourceMappingURL=customer.css.map */
+.is_subscribed{
+padding-left: 3% !important;
+}
