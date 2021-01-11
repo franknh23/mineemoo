@@ -1,0 +1,1602 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <micropayment translate="label" module="mcpay">
+            <label>
+                <![CDATA[<img src="https://www.micropayment.de/static/img/layout/micropayment-logo.svg?v=20190129" style="width: 180px; margin-right:10px;" alt="Micropayment" \> Configuration - Konfiguration]]></label>
+            <tab>sales</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>405</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label">
+                    <label>General Settings Micropayment</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <project_id translate="label">
+                            <label>Project ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>350</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </project_id>
+                        <accesskey translate="label">
+                            <label>AccessKey</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>360</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </accesskey>
+                        <testmode translate="label">
+                            <label>Test Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_testmode</source_model>
+                            <sort_order>370</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </testmode>
+                        <suffix translate="label">
+                            <label>Micropayment Domain</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_domain</source_model>
+                            <sort_order>380</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </suffix>
+                        <theme translate="label">
+                            <label>Theme</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>390</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </theme>
+                        <gfx translate="label">
+                            <label>GFX</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </gfx>
+                        <bgcolor translate="label">
+                            <label>Background Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bgcolor>
+                        <bggfx translate="label">
+                            <label>Background GFX</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bggfx>
+                        <secretfield translate="label">
+                            <label>Secret Field</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </secretfield>
+                        <refundmode translate="label">
+                            <label>Refundmode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_refundmode</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </refundmode>
+                        <debugmode translate="label">
+                            <label>Debug Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_debugmode</source_model>
+                            <sort_order>450</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </debugmode>
+                        <debuglog>
+                            <label>Debug Log</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>455</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Empty is default logfile inside plugin folder.<br>If you wish own logfile, please enter with full path.]]></comment>
+                        </debuglog>
+                        <payformid translate="label">
+                            <label>Payment Formular ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>460</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payformid>
+                        <sepaformid translate="label">
+                            <label>Sepa Formular ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>470</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sepaformid>
+                        <ccardformid translate="label">
+                            <label>CCard Formular ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>480</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </ccardformid>
+
+                        <heading_show translate="label">
+                            <label>EMailSettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>490</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <email_booking translate="label">
+                            <label>EMail on booking</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_booking>
+                        <email_refund translate="label">
+                            <label>EMail on refund</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_refund>
+                        <email_reversal translate="label">
+                            <label>EMail on reversal</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_reversal>
+                        <email_storno translate="label">
+                            <label>EMail on storno</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_storno>
+                        <email_expire translate="label">
+                            <label>EMail on expire</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_expire>
+                        <email_payin translate="label">
+                            <label>EMail on payin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_payin>
+                        <email_create translate="label">
+                            <label>EMail on create</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_create>
+                        <email_closed translate="label">
+                            <label>EMail on closed</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_closed>
+                        <email_change translate="label">
+                            <label>EMail on change</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>495.9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_change>
+                        <email_backpay translate="label">
+                            <label>EMail on backpay</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>496.0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_backpay>
+                        <email_quit translate="label">
+                            <label>EMail on quit</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>496.1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Disabled if empty. Otherwise email will be sent to given email address in case of notification of type.]]></comment>
+                        </email_quit>
+
+
+                    </fields>
+                </settings>
+            </groups>
+        </micropayment>
+
+        <payment>
+            <groups>
+
+                <mcpay_ccard translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=cc&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment Credircard" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>510</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_ccard>
+
+                <mcpay_sepa translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=dbt&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment Sepa" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>520</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <emailtextde translate="label">
+                            <label>EMailtext DE</label>
+                            <comment><![CDATA[Die folgenden Platzhalter sind verfügbar:<br>
+                                {$amount} - Buchungsbetrag<br>
+                                {$currency} - Buchungswährung<br>
+                                {$mandateRef} - Mandat Nr.<br>
+                                {$creditorId} - Gläubiger-Identifikationsnummer<br>
+                                {$iban} - IBAN<br>
+                                {$bic} - BIC<br>
+                                {$bankName} - Bank Name<br>
+                                {$payDateDE} - Fälligkeitstag DE<br>
+                                {$payDateEN} - Fälligkeitstag EN<br>
+                                {$payRecurSt} - Wiederholungs Status]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>215</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </emailtextde>
+                        <emailtexten translate="label">
+                            <label>EMailtext EN</label>
+                            <comment><![CDATA[The following placeholder are available:<br>
+                                {$amount} - Amount to book<br>
+                                {$currency} - Currency to book<br>
+                                {$mandateRef} - Mandate ID.<br>
+                                {$creditorId} - Creditor ID<br>
+                                {$iban} - IBAN<br>
+                                {$bic} - BIC<br>
+                                {$bankname} - Bank Name<br>
+                                {$payDateDE} - Due Date DE<br>
+                                {$payDateEN} - Due Date EN<br>
+                                {$payRecurSt} - Recurring Status]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>216</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </emailtexten>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_sepa>
+
+                <mcpay_prepay translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=pp&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment Prepay" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>530</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <comment><![CDATA[English: https://www.micropayment.de/resources/?what=img&group=pp&show=type-o.1&lang=en]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <expiredays translate="label">
+                            <label>Expire Days</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>213</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </expiredays>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID<br>{$projectid} = Project ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>214</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <emailtextde translate="label">
+                            <label>EMailtext DE</label>
+                            <comment><![CDATA[Die folgenden Platzhalter sind verfügbar:<br>
+                                {$amount} - Buchungsbetrag<br>
+                                {$currency} - Buchungswährung<br>
+                                {$dueDate} - Datum Zahlungsziel<br>
+                                {$orderDate} - Bestell Datum<br>
+                                {$iban} - IBAN<br>
+                                {$bic} - BIC<br>
+                                {$acountHolder} - Kontoinhaber<br>
+                                {$bankName} - Bank Name<br>
+                                {$payText} - Verwendungszweck]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>215</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </emailtextde>
+                        <emailtexten translate="label">
+                            <label>EMailtext EN</label>
+                            <comment><![CDATA[The following placeholder are available:<br>
+                                {$amount} - Amount to book<br>
+                                {$currency} - Currency to book<br>
+                                {$dueDate} - Due Date<br>
+                                {$orderDate} - Order Date<br>
+                                {$iban} - IBAN<br>
+                                {$bic} - BIC<br>
+                                {$acountHolder} - Account Holder<br>
+                                {$bankname} - Bank Name<br>
+                                {$payText} - Usage]]></comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>216</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </emailtexten>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <pending_status translate="label">
+                            <label>PendingStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>415</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pending_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_prepay>
+
+                <mcpay_sofort translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=klarna-sofort&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment Sofort" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>540</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_sofort>
+
+                <mcpay_paypal translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=ppl&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment PayPal" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>550</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_paypal>
+
+                <mcpay_paysafecard translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=psc&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment paysafecard" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>560</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_paysafecard>
+
+                <mcpay_call2pay translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=c2p&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment Call2Pay" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>570</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_call2pay>
+
+                <mcpay_handypay translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=hp&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment HandyPay" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>580</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_handypay>
+
+                <mcpay_paydirekt translate="label comment">
+                    <label>
+                        <![CDATA[<img src="//www.micropayment.de/resources/?what=img&group=pdk&show=type-o.1" style="width: 104px; margin-right:10px;" alt="Micropayment paydirekt" \> <b style="vertical-align: top;line-height: 30px;">powered by micro<span style="color: #800">payment</span></b>]]>
+                    </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>590</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <logo translate="label">
+                            <label>Logo</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </logo>
+                        <paytext translate="label">
+                            <label>Paytext</label>
+                            <comment><![CDATA[{$orderid} = ORDER ID]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>210</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </paytext>
+                        <invoicemode translate="label">
+                            <label>Invoicemode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mcpay/system_config_source_invoicemode</source_model>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </invoicemode>
+
+                        <heading_status translate="label">
+                            <label>OrderStatusSetting</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>400</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_status>
+                        <order_status translate="label">
+                            <label>NewOrderStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>410</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+                        <payment_status translate="label">
+                            <label>PaymentStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>420</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </payment_status>
+                        <error_status translate="label">
+                            <label>ErrorStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>430</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </error_status>
+                        <cancel_status translate="label">
+                            <label>CancelStatus</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status</source_model>
+                            <sort_order>440</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cancel_status>
+
+                        <heading_show translate="label">
+                            <label>DisplaySettings</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                        </heading_show>
+                        <allowspecific translate="label">
+                            <label>Payment Applicable From</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label">
+                            <label>Countries Payment Applicable From</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <allowspecific>1</allowspecific>
+                            </depends>
+                        </specificcountry>
+
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </mcpay_paydirekt>
+
+            </groups>
+        </payment>
+    </sections>
+</config>

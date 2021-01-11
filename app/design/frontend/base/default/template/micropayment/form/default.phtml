@@ -1,0 +1,11 @@
+<fieldset class="form-list">
+    <?php $_code=$this->getMethodCode()?>
+    <ul id="payment_form_<?php echo $_code?>" style="display:none">
+        <li>
+            <div class="input-box">
+              <?php echo $this->getPoweredBy()?>
+              <?php echo $this->__('Desc'.$_code)?>
+            </div>
+        </li>
+    </ul>
+</fieldset>

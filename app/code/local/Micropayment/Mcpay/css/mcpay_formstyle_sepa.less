@@ -1,0 +1,222 @@
+@prefix: ~"mcpay_sepa_";
+@imp: ~"!important";
+
+.@{prefix}{
+  &field {
+    display: block @imp;
+    width: 100% @imp;
+    max-width: 300px @imp;
+    height: 60px @imp;
+
+    label {
+      display: block @imp;
+      margin: 0 @imp;
+      float: none @imp;
+    }
+    input, button{
+      width: 95% @imp;
+      height: 35px @imp;
+      border: 1px solid #ccc @imp;
+      border-radius: 5px @imp;
+      font-size: 15px @imp;
+      color: #333 @imp;
+      padding: 6px 6px 6px 45px @imp;
+      box-shadow: none @imp;
+      float: none @imp;
+      background-color: #fff @imp;
+      box-sizing: border-box @imp;
+      line-height: 20px @imp;
+    }
+    input:focus, button:focus, select:focus{
+      border: 2px solid #00A8EF @imp;
+    }
+    input.error{
+      background-color: #f88 @imp;
+    }
+  }
+  &fieldIcon{
+    position: absolute @imp;
+    padding: 6px 20px @imp;
+    line-height: 20px @imp;
+  }
+  &check{
+    font-size: 2em @imp;
+    color: #0a0 @imp;
+    font-weight: bolder @imp;
+    position: relative @imp;
+    top: -40px @imp;
+    left: 320px @imp;
+    display: block @imp;
+  }
+  &notcheck{
+    display: none @imp;
+  }
+  &reusecard{
+    border: 1px solid #aaa @imp;
+    border-radius: 10px @imp;
+    background-color: #fff @imp;
+    padding: 10px @imp;
+    max-width: 250px @imp;
+    height: 125px @imp;
+    line-height: 30px @imp;
+    text-align: left @imp;
+    background: -webkit-linear-gradient(27deg,white,lightgray,white) @imp;
+    background: linear-gradient(27deg,white,lightgray,white) @imp;
+    margin-bottom: 10px @imp;
+    margin-left: 28px @imp;
+    color: #000 @imp;
+    -webkit-box-sizing: initial @imp;
+    -moz-box-sizing: initial @imp;
+    box-sizing: initial @imp;
+    @media (max-width: 23em){
+      width: 180px @imp;
+      height: 90px @imp;
+      line-height: 32px @imp;
+      margin-left: 0px @imp;
+    }
+    img{
+      float: right @imp;
+      max-height: 25px @imp;
+      border: none @imp;
+      background: none @imp;
+      @media (max-width: 23em){
+        max-height: 20px @imp;
+      }
+    }
+  }
+  &cardlabel{
+    font-size: 10px @imp;
+    line-height: 10px @imp;
+    display: block @imp;
+    text-align: left @imp;
+  }
+  &reuseselect{
+    input{
+      padding: 10px 262px 137px 10px @imp;
+      position: absolute @imp;
+      background: transparent @imp;
+      border: 0px @imp;
+      opacity: 0.25 @imp;
+      margin: 0px @imp;
+      border-radius: 10px @imp;
+      -webkit-appearance: none @imp;
+      -moz-appearance: none @imp;
+      appearance: none @imp;
+      @media (max-width: 23em){
+        padding: 10px 191px 102px 10px @imp;
+      }
+    }
+    input:checked{
+      background-color: #ddd @imp;
+      border: 5px solid #00A8EF @imp;
+      padding: 10px 252px 127px 10px @imp;
+      @media (max-width: 23em){
+        padding: 10px 181px 91px 10px @imp;
+      }
+    }
+  }
+  &label{
+    margin-bottom: 0px @imp;
+    margin-left: 8px @imp;
+    margin-top: 0px @imp;
+  }
+}
+
+#@{prefix} {
+  &holder, &iban, &bic{
+    margin: 0 .327em @imp;
+  }
+  &load.show{
+    display: block @imp;
+    background-image: url(../images/load.gif) @imp;
+    width: 300px @imp;
+    height: 300px @imp;
+    background-size: contain @imp;
+    position: relative @imp;
+    margin-left: calc(50% - 150px) @imp;
+    margin-bottom: -300px @imp;
+  }
+  &modal.show{
+    background-color: #888 @imp;
+    opacity: 0.5 @imp;
+    width: 100% @imp;
+    height: 100% @imp;
+    position: fixed @imp;
+    top: 0px @imp;
+    left: 0px @imp;
+    z-index: 999 @imp;
+  }
+  &error.show{
+    background-color: #fff @imp;
+    border: 2px solid #f00 @imp;
+    padding: 10px @imp;
+    z-index: 1000 @imp;
+    position: relative @imp;
+  }
+  &error.hide{
+    display: none @imp;
+  }
+  &newform{
+    margin-left: 23px @imp;
+    max-width: 300px @imp;
+    @media (max-width: 23em){
+      margin-left: 0px @imp;
+    }
+  }
+  &newform.show{
+    display: block @imp;
+  }
+  &newform.hide{
+    display: none @imp;
+  }
+  &reuse_card.show{
+    display: block @imp;
+  }
+  &reuse_card.hide{
+    display: none @imp;
+  }
+  &remember.show{
+    display: block @imp;
+  }
+  &remember.hide{
+    display: none @imp;
+  }
+  &remember{
+    label{
+      display: inline-block @imp;
+      margin: 0 @imp;
+      padding-left: 5px @imp;
+    }
+  }
+  &form{
+    max-width: 325px @imp;
+    div.reuse {
+      display: block @imp;
+      height: auto @imp;
+      min-height: 30px @imp;
+      label{
+        display: inline-block @imp;
+        margin-left: 5px @imp;
+        margin-bottom: 0 @imp;
+        margin-top: 0 @imp;
+      }
+    }
+    div.prefill{
+      display: block @imp;
+      height: auto @imp;
+      min-height: 30px @imp;
+    }
+    input[type="radio"]{
+      margin-right: 0px @imp;
+    }
+  }
+}
+
+li.payment_method_mipa_sepa label {
+  @media (max-width: 40em) {
+    padding-top: 5px @imp;
+    margin-top: 0px @imp;
+  }
+}
+
+@import "font_cfg";

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <checkout_onepage_index>
+        <reference name="head">
+            <!--
+            In case you have "Configuration -> General -> Web -> Url Options -> Add Store Code to Urls" set to YES.
+            Please replace the placeholder <default_store_code> with your default store code i.e. DE or DEFAULT
+            -->
+            <!--
+            <action method="addJs"><file>../<default_store_code>/micropayment/payment/getscript/sn/mcpay_sepa_executer.js</file></action>
+            <action method="addJs"><file>../<default_store_code>/micropayment/payment/getscript/sn/mcpay_ccard_executer.js</file></action>
+            -->
+            <action method="addJs"><file>../micropayment/payment/getscript/sn/mcpay_sepa_executer.js</file></action>
+            <action method="addJs"><file>../micropayment/payment/getscript/sn/mcpay_ccard_executer.js</file></action>
+        </reference>
+    </checkout_onepage_index>
+</layout>
