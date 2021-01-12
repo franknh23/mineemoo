@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Meetanshi_InvisibleCaptcha>
+            <version>1.0.4</version>
+        </Meetanshi_InvisibleCaptcha>
+    </modules>
+    <frontend>
+        <routers>
+            <recaptcha>
+                <use>standard</use>
+                <args>
+                    <module>Meetanshi_InvisibleCaptcha</module>
+                    <frontName>recaptcha</frontName>
+                </args>
+            </recaptcha>
+        </routers>
+        <layout>
+            <updates>
+                <recaptcha>
+                    <file>recaptcha.xml</file>
+                </recaptcha>
+            </updates>
+        </layout>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <controller_action_before>
+                        <class>recaptcha/observer</class>
+                        <method>serverVerify</method>
+                    </controller_action_before>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </frontend>
+
+    <global>
+        <blocks>
+            <recaptcha>
+                <class>Meetanshi_InvisibleCaptcha_Block</class>
+            </recaptcha>
+        </blocks>
+        <helpers>
+            <recaptcha>
+                <class>Meetanshi_InvisibleCaptcha_Helper</class>
+            </recaptcha>
+        </helpers>
+        <models>
+            <recaptcha>
+                <class>Meetanshi_InvisibleCaptcha_Model</class>
+            </recaptcha>
+        </models>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <recaptcha translate="title" module="recaptcha">
+                                            <title>Recaptcha</title>
+                                        </recaptcha>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <recaptcha>
+            <general>
+                <enabled>1</enabled>
+                <theme>light</theme>
+                <badge>bottomright</badge>
+                <urls>
+<![CDATA[customer/account/createpost
+customer/account/loginPost
+review/product/post
+contacts/index/post]]>
+                </urls>
+                <selectors>
+<![CDATA[form[action*="customer/account/createpost"]
+form[action*="customer/account/loginPost"]
+form[action*="review/product/post"]
+form[action*="contacts/index/post"]]]>
+                </selectors>
+            </general>
+        </recaptcha>
+    </default>
+</config>

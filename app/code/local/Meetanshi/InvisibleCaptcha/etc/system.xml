@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <meetanshi translate="label">
+            <label>
+                <![CDATA[<img src="https://meetanshi.com/media/logo.png" alt="Meetanshi" height="20" style="vertical-align:middle;"/>]]>
+            </label>
+            <sort_order>100</sort_order>
+        </meetanshi>
+    </tabs>
+    <sections>
+        <recaptcha translate="label" module="adminhtml">
+            <label>Invisible Recaptcha</label>
+            <tab>meetanshi</tab>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label comment">
+                    <label>Configuration</label>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Google Invisible Recaptcha</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <sitekey translate="label comment">
+                            <label>Captcha Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Register to get your Site key from Google reCaptcha.]]></comment>
+                        </sitekey>
+                        <sitesecret translate="label comment">
+                            <label>Secret key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>
+                                <![CDATA[Register to get your Secret key from Google reCaptcha.]]></comment>
+                        </sitesecret>
+                        <urls translate="label comment">
+                            <label>Urls to enable</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                            <comment>
+                                <![CDATA[customer/account/createpost Each url must be on new line]]></comment>
+                        </urls>
+                        <selectors translate="label comment">
+                            <label>Selectors for forms</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><enabled>1</enabled></depends>
+                            <comment>
+                                <![CDATA[form[action*="customer/account/createpost"]
+                                For example: .customer-account-create .account-create form
+Each selector must be on new line]]></comment>
+                        </selectors>
+                    </fields>
+                </general>
+            </groups>
+        </recaptcha>
+    </sections>
+</config>
