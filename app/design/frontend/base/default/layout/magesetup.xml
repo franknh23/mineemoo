@@ -595,11 +595,11 @@
     </customer_logged_in>
 
     <!-- for updated contact form with checkbox to accept agreement -->
-    <contacts_index_index>
-        <reference name="contactForm">
-            <action method="setTemplate">
-                <template>magesetup/contacts/form.phtml</template>
-            </action>
-        </reference>
-    </contacts_index_index>
+<!--    <contacts_index_index>-->
+<!--        <reference name="contactForm">-->
+<!--            <action method="setTemplate">-->
+<!--                <template>magesetup/contacts/form.phtml</template>-->
+<!--            </action>-->
+<!--        </reference>-->
+<!--    </contacts_index_index>-->
 </layout>
