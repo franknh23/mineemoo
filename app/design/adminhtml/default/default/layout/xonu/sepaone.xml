@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+        /**
+        * @package Xonu_Directdebit
+        * @copyright 2014 Pawel Kazakow, xonu EEC, http://www.xonu.de
+        * @author Pawel Kazakow <support@xonu.de>
+        * @license xonu EEC EULA, http://xonu.de/license
+        *
+        */
+        -->
+<layout version="0.1.0">
+    <adminhtml_sepaone_api_gridexport>
+        <remove name="root" />
+        <block type="xonu_sepaone/adminhtml_export_edit_tab_export" name="xonu_sepaone.export.export.grid" output="toHtml" />
+    </adminhtml_sepaone_api_gridexport>
+
+    <adminhtml_sepaone_api_gridhistory>
+        <remove name="root" />
+        <block type="xonu_sepaone/adminhtml_export_edit_tab_history" name="xonu_sepaone.export.history.grid" output="toHtml" />
+    </adminhtml_sepaone_api_gridhistory>
+
+    <adminhtml_sepaone_api_gridlog>
+        <remove name="root" />
+        <block type="xonu_sepaone/adminhtml_export_edit_tab_log" name="xonu_sepaone.export.log.grid" output="toHtml" />
+    </adminhtml_sepaone_api_gridlog>
+
+    <adminhtml_sepaone_api_viewlog>
+        <reference name="content">
+            <block type="xonu_sepaone/adminhtml_export_log_view" name="log_view" template="xonu/sepaone/log/view.phtml"/>
+        </reference>
+    </adminhtml_sepaone_api_viewlog>
+</layout>

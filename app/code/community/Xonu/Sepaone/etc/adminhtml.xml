@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package Xonu_Directdebit
+ * @copyright 2016 Pawel Kazakow, xonu EEC, http://www.xonu.de
+ * @author Pawel Kazakow <support@xonu.de>
+ * @license xonu EEC EULA, http://xonu.de/license
+ *
+ */
+-->
+<config>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <api>
+                                <children>
+                                    <xonu_sepaone translate="title" module="xonu_sepaone">
+                                        <title>EBICS Payment Export</title>
+                                        <sort_order>1000</sort_order>
+                                    </xonu_sepaone>
+                                </children>
+                            </api>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
+
+    <menu>
+        <system>
+            <children>
+                <api>
+                    <children>
+                        <xonu_sepaone translate="title" module="xonu_sepaone">
+                            <title>EBICS Payment Export</title>
+                            <action>adminhtml/sepaone_api/</action>
+                            <sort_order>1000</sort_order>
+                        </xonu_sepaone>
+                    </children>
+                </api>
+            </children>
+        </system>
+    </menu>
+
+</config>

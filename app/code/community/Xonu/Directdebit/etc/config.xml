@@ -1,0 +1,336 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @package Xonu_Directdebit
+* @copyright 2016 Pawel Kazakow, xonu EEC, http://www.xonu.de
+* @author Pawel Kazakow <support@xonu.de>
+* @license xonu EEC EULA, http://xonu.de/license
+*
+*/
+-->
+<config>
+    <modules>
+        <Xonu_Directdebit>
+            <version>2.1.2</version>
+        </Xonu_Directdebit>
+    </modules>
+
+
+    <global>
+        <models>
+            <xonu_directdebit>
+                <class>Xonu_Directdebit_Model</class>
+                <resourceModel>xonu_directdebit_resource</resourceModel>
+            </xonu_directdebit>
+            <xonu_directdebit_resource>
+                <class>Xonu_Directdebit_Model_Resource</class>
+                <entities>
+                    <export>
+                        <table>xonu_directdebit_export</table>
+                    </export>
+                    <history>
+                        <table>xonu_directdebit_history</table>
+                    </history>
+                    <mandate>
+                        <table>xonu_directdebit_mandate</table>
+                    </mandate>
+                </entities>
+            </xonu_directdebit_resource>
+        </models>
+
+        <blocks>
+            <xonu_directdebit>
+                <class>Xonu_Directdebit_Block</class>
+            </xonu_directdebit>
+        </blocks>
+
+        <helpers>
+            <xonu_directdebit>
+                <class>Xonu_Directdebit_Helper</class>
+            </xonu_directdebit>
+        </helpers>
+
+        <resources>
+            <xonu_directdebit_setup>
+                <setup>
+                    <module>Xonu_Directdebit</module>
+					<class>Xonu_Directdebit_Model_Setup</class>
+                </setup>
+            </xonu_directdebit_setup>
+        </resources>
+
+        <events>
+
+            <payment_method_is_active>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/observer</class>
+                        <method>paymentMethodIsActive</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </payment_method_is_active>
+
+            <checkout_submit_all_after>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/observer</class>
+                        <method>checkoutSubmitAllAfter</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </checkout_submit_all_after>
+
+            <sales_convert_quote_to_order>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/observer</class>
+                        <method>salesConvertQuoteToOrder</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </sales_convert_quote_to_order>
+
+            <controller_action_predispatch_checkout>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/agreements</class>
+                        <method>controllerActionPredispatchCheckout</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </controller_action_predispatch_checkout>
+
+            <controller_action_predispatch_paypal_express_placeOrder>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/agreements</class>
+                        <method>controllerActionPredispatchCheckout</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </controller_action_predispatch_paypal_express_placeOrder>
+
+            <!--
+            <customer_delete_after>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/observer</class>
+                        <method>customerDeleteAfter</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </customer_delete_after>
+            -->
+
+        </events>
+
+        <fieldsets>
+            <sales_convert_quote_payment>
+                <sepa_holder>
+                    <to_order_payment>*</to_order_payment>
+                </sepa_holder>
+                <sepa_iban>
+                    <to_order_payment>*</to_order_payment>
+                </sepa_iban>
+                <sepa_bic>
+                    <to_order_payment>*</to_order_payment>
+                </sepa_bic>
+                <sepa_mandate_id>
+                    <to_order_payment>*</to_order_payment>
+                </sepa_mandate_id>
+            </sales_convert_quote_payment>
+        </fieldsets>
+
+        <template>
+            <email>
+
+                <xonu_directdebit_mandate_template translate="label" module="xonu_directdebit">
+                    <label>SEPA Direct Debit Mandate - Recurrent Payment</label>
+                    <file>xonu/directdebit/mandate_recurrent_payment.html</file>
+                    <type>html</type>
+                </xonu_directdebit_mandate_template>
+                <xonu_directdebit_mandate_template_guest translate="label" module="xonu_directdebit">
+                    <label>SEPA Direct Debit Mandate - One-Off Payment</label>
+                    <file>xonu/directdebit/mandate_one_off_payment.html</file>
+                    <type>html</type>
+                </xonu_directdebit_mandate_template_guest>
+
+                <xonu_directdebit_email_template translate="label" module="xonu_directdebit">
+                    <label>SEPA Direct Debit Mandate E-Mail</label>
+                    <file>xonu/directdebit/mandate_email.html</file>
+                    <type>html</type>
+                </xonu_directdebit_email_template>
+                <!--
+                <xonu_directdebit_email_template_guest translate="label" module="xonu_directdebit">
+                    <label>SEPA Direct Debit Mandate E-Mail</label>
+                    <file>xonu/directdebit/mandate_email.html</file>
+                    <type>html</type>
+                </xonu_directdebit_email_template_guest>
+                -->
+
+                <xonu_directdebit_prenotification_template translate="label" module="xonu_directdebit">
+                    <label>SEPA Direct Debit Pre-Notification</label>
+                    <file>xonu/directdebit/pre_notification.html</file>
+                    <type>html</type>
+                </xonu_directdebit_prenotification_template>
+
+
+            </email>
+        </template>
+
+        <payment>
+            <groups>
+                <xonu_sepa>SEPA</xonu_sepa>
+            </groups>
+        </payment>
+    </global>
+
+    <frontend>
+
+        <events>
+
+            <core_abstract_load_after>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/agreements</class>
+                        <method>coreAbstractLoadAfter</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </core_abstract_load_after>
+
+            <core_collection_abstract_load_after>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/agreements</class>
+                        <method>coreCollectionAbstractLoadAfter</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </core_collection_abstract_load_after>
+
+        </events>
+
+        <translate>
+            <modules>
+                <Xonu_Directdebit>
+                    <files>
+                        <default>Xonu_Directdebit.csv</default>
+                    </files>
+                </Xonu_Directdebit>
+            </modules>
+        </translate>
+
+        <!--
+        <layout>
+            <updates>
+                <xonu_directdebit>
+                    <file>xonu/directdebit.xml</file>
+                </xonu_directdebit>
+            </updates>
+        </layout>
+        -->
+
+    </frontend>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <xonu_directdebit>
+                    <file>xonu/directdebit.xml</file>
+                </xonu_directdebit>
+            </updates>
+        </layout>
+
+        <translate>
+            <modules>
+                <Xonu_Directdebit>
+                    <files>
+                        <default>Xonu_Directdebit.csv</default>
+                    </files>
+                </Xonu_Directdebit>
+            </modules>
+        </translate>
+
+        <events>
+            <adminhtml_block_system_config_init_tab_sections_before>
+                <observers>
+                    <xonu_directdebit_observer>
+                        <class>xonu_directdebit/observer</class>
+                        <method>adminhtmlBlockSystemConfigInitTabSectionsBefore</method>
+                    </xonu_directdebit_observer>
+                </observers>
+            </adminhtml_block_system_config_init_tab_sections_before>
+        </events>
+    </adminhtml>
+
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Xonu_Directdebit after="Mage_Adminhtml">Xonu_Directdebit</Xonu_Directdebit>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+
+    <default>
+        <payment>
+            <xonu_directdebit>
+                <group>xonu_sepa</group>
+                <model>xonu_directdebit/payment_method_config</model>
+                <title>SEPA Direct Debit</title>
+                <active>0</active>
+                <allowspecific>0</allowspecific>
+                <allowallgroups>1</allowallgroups>
+            </xonu_directdebit>
+        </payment>
+        <xonu_directdebit>
+            <info>
+                <name>Xonu_Directdebit (SEPA Direct Debit)</name>
+                <license>localhost</license>
+            </info>
+            <mandate>
+                <mandate_explanation><![CDATA[]]></mandate_explanation>
+                <mandate_terms_active>0</mandate_terms_active>
+                <recurrent_active>1</recurrent_active>
+                <recurrent_allowallgroups>1</recurrent_allowallgroups>
+                <identifier_format>17</identifier_format>
+                <template>xonu_directdebit_mandate_template</template>
+                <template_guest>xonu_directdebit_mandate_template_guest</template_guest>
+                <period_of_validity>36</period_of_validity><!-- not visible in the backend -->
+            </mandate>
+            <iban>
+                <validation_iban_active>1</validation_iban_active>
+                <validation_iban_country>0</validation_iban_country>
+                <validation_iban_checksum>1</validation_iban_checksum>
+                <display_iban_separated>0</display_iban_separated>
+            </iban>
+            <bic>
+                <validation_bic_active>1</validation_bic_active>
+                <validation_bic_country>1</validation_bic_country>
+                <validation_bic_format>1</validation_bic_format>
+            </bic>
+            <email>
+                <active>1</active>
+                <template>xonu_directdebit_email_template</template>
+                <!-- <template_guest>xonu_directdebit_email_template_guest</template_guest> -->
+                <sender>general</sender>
+                <copymethod>bcc</copymethod>
+            </email>
+            <prenotification>
+                <template>xonu_directdebit_prenotification_template</template>
+                <weekday_interval>2</weekday_interval>
+                <!--<weekday_endtime>12,00,00</weekday_endtime>-->
+            </prenotification>
+            <export>
+                <valid_status>pending,processing,complete</valid_status>
+                <format_csv>1</format_csv>
+                <format_xml>0</format_xml>
+                <format_dta>0</format_dta>
+                <sepa_compression>1</sepa_compression>
+                <sepa_holderequalscreditor>1</sepa_holderequalscreditor>
+                <sepa_format>pain.008.003.02</sepa_format>
+                <sepa_type>CORE</sepa_type>
+            </export>
+        </xonu_directdebit>
+    </default>
+
+</config>

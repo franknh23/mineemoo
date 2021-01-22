@@ -1,0 +1,891 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @package Xonu_Directdebit
+* @copyright 2016 Pawel Kazakow, xonu EEC, http://www.xonu.de
+* @author Pawel Kazakow <support@xonu.de>
+* @license xonu EEC EULA, http://xonu.de/license
+*
+*/
+-->
+<config>
+    <sections>
+        <xonu_directdebit translate="label" module="xonu_directdebit">
+            <label>SEPA Direct Debit</label>
+            <tab>sales</tab>
+            <sort_order>440</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+
+            <groups>
+
+                <info translate="label" module="xonu_directdebit">
+                    <label>Info</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <name translate="label comment" module="xonu_directdebit">
+                            <label>Name</label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>10</sort_order>
+                            <comment><![CDATA[Help: <a href="http://sepagento.com/docs" target="_blank">http://sepagento.com/docs</a>]]></comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </name>
+                        <version translate="label" module="xonu_directdebit">
+                            <label>Version</label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </version>
+                    </fields>
+                </info>
+
+                <mandate translate="label" module="xonu_directdebit">
+                    <label>Mandate Management</label>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <identifier_format translate="label comment" module="xonu_directdebit">
+                            <label>Mandate Identifier Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_mandate_format</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </identifier_format>
+
+                        <template_guest translate="label">
+                            <label>Mandate Template for One-Off Payment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <comment><![CDATA[Reference variable in the mandate condition:<br/>{{var mandate_content}}.]]></comment>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template_guest>
+
+                        <recurrent_active translate="label comment">
+                            <label>Enable Mandate for Recurrent Payment</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>300</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </recurrent_active>
+                        <template translate="label">
+                            <label>Mandate Template for Recurrent Payment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <!--<comment><![CDATA[Reference variable in the mandate condition:<br/>{{var mandate_content}}.]]></comment>-->
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <recurrent_active>1</recurrent_active>
+                            </depends>
+                        </template>
+                        <recurrent_allowallgroups translate="label comment">
+                            <label>Accept Mandate for Recurrent Payment from All Customer Groups</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>360</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <recurrent_active>1</recurrent_active>
+                            </depends>
+                        </recurrent_allowallgroups>
+                        <recurrent_specificgroup translate="label">
+                            <label>Accept Mandate for Recurrent Payment from Specific Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>361</sort_order>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_customer_registered</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <recurrent_allowallgroups>0</recurrent_allowallgroups>
+                                <recurrent_active>1</recurrent_active>
+                            </depends>
+                        </recurrent_specificgroup>
+                        <account_display_mode translate="label comment" module="xonu_directdebit">
+                            <label>Bank Account Display</label>
+                            <comment><![CDATA[]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_mandate_displaymode</source_model>
+                            <sort_order>362</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <recurrent_active>1</recurrent_active>
+                            </depends>
+                        </account_display_mode>
+
+                        <mandate_explanation translate="label" module="xonu_directdebit">
+                            <label>Payment Method Explanation</label>
+                            <comment>Leave empty to use the default text.</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mandate_explanation>
+
+                        <mandate_terms_active translate="label comment">
+                            <label>Setup an Agreement as SEPA Direct Debit Mandate</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mandate_terms_active>
+                        <checkbox_label translate="label" module="xonu_directdebit">
+                            <label>Checkbox Label</label>
+                            <comment><![CDATA[Reference variable: {{var mandate_checkbox}}.<br/>Leave empty to use the default text.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>530</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <mandate_terms_active>1</mandate_terms_active>
+                            </depends>
+                        </checkbox_label>
+
+                        <reference_notice translate="label" module="xonu_directdebit">
+                            <label>Reference Identifier Notice</label>
+                            <comment><![CDATA[Displayed in preview instead of the mandate identifier.<br/>Leave empty to use the default text.]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>540</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <mandate_terms_active>1</mandate_terms_active>
+                            </depends>
+                        </reference_notice>
+                        <mandate_terms translate="label" module="xonu_directdebit">
+                            <label>Mandate Condition</label>
+                            <comment><![CDATA[Setup the condition in <em>Sales > Terms and conditions</em>.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_checkout_agreements</source_model>
+                            <sort_order>550</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <mandate_terms_active>1</mandate_terms_active>
+                            </depends>
+                        </mandate_terms>
+                    </fields>
+                </mandate>
+
+                <iban translate="label" module="xonu_directdebit">
+                    <label>IBAN Validation and Display</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <validation_iban_active translate="label comment">
+                            <label>IBAN Validation</label>
+                            <comment>Checks at least the length of the IBAN.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>300</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </validation_iban_active>
+                        <validation_iban_country translate="label comment">
+                            <label>IBAN Country Validation</label>
+                            <comment>Restrict IBAN to the billing address country.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>310</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <validation_iban_active>1</validation_iban_active>
+                            </depends>
+                        </validation_iban_country>
+                        <validation_iban_checksum translate="label comment">
+                            <label>IBAN Checksum Validation</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>320</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <validation_iban_active>1</validation_iban_active>
+                            </depends>
+                        </validation_iban_checksum>
+
+                        <display_iban_separated translate="label comment">
+                            <label>IBAN Display Mode</label>
+                            <comment></comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>500</sort_order>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_sepa_ibandisplay</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </display_iban_separated>
+                    </fields>
+                </iban>
+
+                <bic translate="label" module="xonu_directdebit">
+                    <label>BIC Validation</label>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <validation_bic_active translate="label comment">
+                            <label>BIC Validation</label>
+                            <comment>Checks at least the length of the BIC.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>400</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </validation_bic_active>
+                        <validation_bic_country translate="label comment">
+                            <label>BIC Country Validation</label>
+                            <comment>Restrict BIC to the billing address country.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>410</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <validation_bic_active>1</validation_bic_active>
+                            </depends>
+                        </validation_bic_country>
+                        <validation_bic_format translate="label comment">
+                            <label>BIC Format Validation</label>
+                            <comment>Checks the format of the BIC.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>420</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <validation_bic_active>1</validation_bic_active>
+                            </depends>
+                        </validation_bic_format>
+
+
+                        <optional_bic_active translate="label comment">
+                            <label>Optional BIC</label>
+                            <comment>If enabled, BIC may be empty or valid.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>500</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </optional_bic_active>
+                        <optional_bic_restriction translate="label" module="xonu_directdebit">
+                            <label>Optional BIC Restriction</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>510</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <optional_bic_active>1</optional_bic_active>
+                            </depends>
+                        </optional_bic_restriction>
+                        <optional_bic_countries translate="label" module="xonu_directdebit">
+                            <label>Optional BIC for Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>520</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>0</can_be_empty>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <optional_bic_restriction>1</optional_bic_restriction>
+                                <optional_bic_active>1</optional_bic_active>
+                            </depends>
+                        </optional_bic_countries>
+                        <optional_bic_hide translate="label comment">
+                            <label>Hide Optional BIC</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>550</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <optional_bic_active>1</optional_bic_active>
+                            </depends>
+                        </optional_bic_hide>
+                    </fields>
+                </bic>
+
+                <email translate="label" module="xonu_directdebit">
+                    <label>Mandate Email</label>
+                    <sort_order>250</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Send Mandate Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+
+                        <template translate="label">
+                            <label>Mandate E-mail Template</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><active>1</active></depends>
+                        </template>
+                        <!--
+                        <template_guest translate="label">
+                            <label>Mandate E-mail Template for One-Off Payment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>321</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><active>1</active></depends>
+                        </template_guest>
+                        -->
+
+                        <sender translate="label">
+                            <label>Mandate Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>310</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><active>1</active></depends>
+                        </sender>
+
+                        <receiver translate="label comment">
+                            <label>Send Mandate Email Copy To</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Comma-separated list of receivers.</comment>
+                            <sort_order>330</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><active>1</active></depends>
+                        </receiver>
+                        <copymethod translate="label">
+                            <label>Send Mandate Copy Method</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_method</source_model>
+                            <sort_order>340</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><active>1</active></depends>
+                        </copymethod>
+
+                    </fields>
+                </email>
+
+                <!--
+                <pdf translate="label" module="xonu_directdebit">
+                    <label>Mandate PDF</label>
+                    <sort_order>260</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <active translate="label">
+                            <label>Create Mandate PDF</label>
+                            <frontend_type>select</frontend_type>
+                            <comment><![CDATA[Created PDF will be saved in <em>var/mandate</em>]]></comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+
+                        <attach translate="label">
+                            <label>Attach PDF to Mandate Email</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </attach>
+
+                    </fields>
+                </pdf>
+                -->
+
+                <prenotification translate="label" module="xonu_directdebit">
+                    <label>Pre-Notification</label>
+                    <sort_order>300</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <template translate="label comment" module="xonu_directdebit">
+                            <label>Pre-Notification Template</label>
+                            <comment><![CDATA[Use the following code to display the pre-notification in the <em>New Order Confirmation</em> or the <em>New Invoice</em> e-mail template: {{block type="xonu_directdebit/prenotification" order=$order}}]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </template>
+
+                        <weekday_interval translate="label comment" module="xonu_directdebit">
+                            <label>Weekdays Till Due Date</label>
+                            <frontend_type>text</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>300</sort_order>
+                            <validate>validate-greater-than-zero</validate>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weekday_interval>
+                        <!--
+                        <weekday_endtime translate="label comment" module="xonu_directdebit">
+                            <label>Weekday End Time</label>
+                            <comment><![CDATA[Orders placed after this time shift the due date one day further.]]></comment>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>330</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </weekday_endtime>
+                        -->
+
+                    </fields>
+                </prenotification>
+
+                <order translate="label" module="xonu_directdebit">
+                    <label>Order Processing</label>
+                    <sort_order>400</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <create_invoice translate="label comment" module="xonu_directdebit">
+                            <label>Create Invoice Automatically</label>
+                            <comment><![CDATA[The order state will change accordingly, if enabled.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>520</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </create_invoice>
+
+                    </fields>
+                </order>
+
+                <export translate="label" module="xonu_directdebit">
+                    <label>SEPA-XML Payment Export</label>
+                    <sort_order>500</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+
+                        <format_xml translate="label comment" module="xonu_directdebit">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </format_xml>
+
+                        <valid_status translate="label comment" module="xonu_directdebit">
+                            <label>Valid Order Status</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_export_status</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </valid_status>
+
+                        <order_limit translate="label comment" module="xonu_directdebit">
+                            <label>Order Limit per Request</label>
+                            <comment>Leave empty to export all remaining orders.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_limit>
+
+
+                        <sepa_compression translate="label comment" module="xonu_directdebit">
+                            <label>Compression</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_compression>
+                        <sepa_format translate="label comment" module="xonu_directdebit">
+                            <label>Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_sepa_format</source_model>
+                            <sort_order>330</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_format>
+                        <sepa_type translate="label comment" module="xonu_directdebit">
+                            <label>Direct Debit Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_sepa_type</source_model>
+                            <sort_order>331</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_type>
+                        <sepa_seqtp translate="label comment tooltip" module="xonu_directdebit">
+                            <label>Sequence Type</label>
+                            <tooltip>Enables Sequence Type (SeqTp) Within Transaction (DrctDbtTxInf)</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>333</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_seqtp>
+                        <sepa_holderequalscreditor translate="label comment" module="xonu_directdebit">
+                            <label>Same Account Holder</label>
+                            <tooltip>Account Holder Equals Creditor Info</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>340</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_holderequalscreditor>
+                        <sepa_holder translate="label comment" module="xonu_directdebit">
+                            <label>Account Holder</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>345</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <format_xml>1</format_xml>
+                                <sepa_holderequalscreditor>0</sepa_holderequalscreditor>
+                            </depends>
+                        </sepa_holder>
+                        <sepa_bic translate="label comment" module="xonu_directdebit">
+                            <label>SWIFT-BIC</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>360</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_bic>
+                        <sepa_iban translate="label comment" module="xonu_directdebit">
+                            <label>IBAN</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>380</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <format_xml>1</format_xml>
+                            </depends>
+                        </sepa_iban>
+
+                        <!--
+                        <format_dta translate="label comment" module="xonu_directdebit">
+                            <label>Enable DTAUS (DTA) Export</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </format_dta>
+                        <dta_holder translate="label comment" module="xonu_directdebit">
+                            <label>DTAUS: Account Holder</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>520</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <format_dta>1</format_dta>
+                            </depends>
+                        </dta_holder>
+                        <dta_bankcode translate="label comment" module="xonu_directdebit">
+                            <label>DTAUS: Bank Code</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>540</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <format_dta>1</format_dta>
+                            </depends>
+                        </dta_bankcode>
+                        <dta_number translate="label comment" module="xonu_directdebit">
+                            <label>DTAUS: Account Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>560</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <format_dta>1</format_dta>
+                            </depends>
+                        </dta_number>
+                        -->
+
+                        <format_csv translate="label comment" module="xonu_directdebit">
+                            <label>Enable CSV Export</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>900</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </format_csv>
+
+                    </fields>
+                </export>
+
+                <!--
+                <group_name translate="label" module="xonu_directdebit">
+                    <label>Group Title</label>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                    </fields>
+                </group_name>
+                -->
+
+            </groups>
+        </xonu_directdebit>
+
+
+
+
+
+        <payment>
+            <groups>
+                <xonu_directdebit translate="label" module="xonu_directdebit">
+                    <label>SEPA Direct Debit</label>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                        <active translate="label" module="xonu_directdebit">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+
+                        <creditor_identifier translate="label" module="xonu_directdebit">
+                            <label>Creditor Identifier (CI)</label>
+                            <comment>An identifier assigned to you by your bank.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </creditor_identifier>
+                        <creditor_info translate="label" module="xonu_directdebit">
+                            <label>Creditor Info</label>
+                            <comment>Your company name and city.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </creditor_info>
+
+                        <title translate="label" module="xonu_directdebit">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+
+                        <allowspecific translate="label" module="xonu_directdebit">
+                            <label>Payment from Applicable Countries</label>
+                            <frontend_type>allowspecific</frontend_type>
+                            <sort_order>50</sort_order>
+                            <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allowspecific>
+                        <specificcountry translate="label" module="xonu_directdebit">
+                            <label>Payment from Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>51</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+
+
+                        <allowallgroups translate="label comment">
+                            <label>Accept Payments from All Customer Groups</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </allowallgroups>
+                        <specificgroup translate="label">
+                            <label>Accept Payments from Specific Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>61</sort_order>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_customer_group</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>required-entry</validate>
+                            <depends>
+                                <allowallgroups>0</allowallgroups>
+                            </depends>
+                        </specificgroup>
+
+                        <min_order_total translate="label comment" module="xonu_directdebit">
+                            <label>Minimum Order Total</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-number</validate>
+                        </min_order_total>
+                        <max_order_total translate="label comment" module="xonu_directdebit">
+                            <label>Maximum Order Total</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-number</validate>
+                        </max_order_total>
+
+                        <order_status translate="label comment" module="xonu_directdebit">
+                            <label>Status of the newly created order</label>
+                            <comment><![CDATA[Choose a status assigned to the state <em>new</em>.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_order_status</source_model>
+                            <sort_order>500</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </order_status>
+
+                        <sort_order translate="label" module="xonu_directdebit">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </xonu_directdebit>
+            </groups>
+        </payment>
+    </sections>
+</config>
