@@ -1,0 +1,57 @@
+<!--@subject {{var store.getFrontendName()}}: SEPA Direct Debit Mandate {{var mandate.getMandateIdentifier()}} @-->
+<!--@vars
+@-->
+<!--@styles
+#mandate, .mt { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+#mandate .bq { padding-left:20px; }
+@-->
+
+<div id="mandate" style="color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <h2>SEPA Direct Debit Mandate</h2>
+
+    <p>&nbsp;</p>
+
+    <p class="s"><strong>Mandate Identifier</strong></p>
+
+    <div class="bq id" style="padding-left:20px;">
+        {{var mandate.getMandateIdentifier()}}
+    </div>
+
+    <p>&nbsp;</p>
+
+    <p class="s"><strong>Creditor</strong></p>
+
+    <div class="bq c" style="padding-left:20px;">
+        {{var creditor_html}}
+    </div>
+
+    <p>&nbsp;</p>
+
+    <p>By granting this mandate form, I authorize the creditor to send instructions to my bank to debit my account and my bank to debit my account in accordance with the instructions from the creditor for this one-off payment.</p>
+
+    <p>Note: As part of my rights, I am entitled to a refund from my bank under the terms and conditions of my agreement with my bank. A refund must be claimed within eight weeks starting from the date on which my account was debited.</p>
+
+    <p>&nbsp;</p>
+
+    <p class="s"><strong>Debitor</strong></p>
+
+    <div class="bq d" style="padding-left:20px;">
+        {{var debitor_html}}
+    </div>
+
+    <p>&nbsp;</p>
+
+    <p>{{var debitor.getCity()}}, {{var grant_date}}, {{var debitor.getAccountHolder()}}</p>
+
+    <p><i>This document has been produced electronically and is valid without signature.</i></p>
+
+    <p>&nbsp;</p>
+
+    <p id="dhn"><strong>{{var mandate.getDifferingHolderNotice()}}</strong></p>
+
+    {{depend mandate.getIsPreview()}}
+    <hr noshade size="1"/><br/>
+    Please note: the pre-notification period of the SEPA Direct Debit will be reduced to one day.
+    {{/depend}}
+
+</div>

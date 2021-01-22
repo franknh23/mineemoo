@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @package Xonu_Directdebit
+* @copyright 2016 Pawel Kazakow, xonu EEC, http://www.xonu.de
+* @author Pawel Kazakow <support@xonu.de>
+* @license xonu EEC EULA, http://xonu.de/license
+*
+*/
+-->
+<config>
+    <sections>
+        <xonu_directdebit translate="label" module="xonu_sepaone">
+            <label>SEPA Direct Debit</label>
+            <tab>sales</tab>
+            <sort_order>440</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+
+            <groups>
+
+                <order translate="label" module="xonu_sepaone">
+                    <fields>
+                        <create_invoice translate="label comment" module="xonu_sepaone">
+                            <tooltip><![CDATA[This setting will be ignored, if EBICS Export is enabled.]]></tooltip>
+                        </create_invoice>
+                    </fields>
+                </order>
+
+                <sepaone translate="label" module="xonu_sepaone">
+                    <label>EBICS Payment Export</label>
+                    <sort_order>1000</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <name translate="label comment" module="xonu_sepaone">
+                            <label>Name</label>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>0</sort_order>
+                            <comment><![CDATA[Help: <a href="http://sepagento.com/docs/ebics" target="_blank">http://sepagento.com/docs/ebics</a>]]></comment>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </name>
+                        <version translate="label comment" module="xonu_sepaone">
+                            <label>Version</label>
+                            <comment><![CDATA[]]></comment>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </version>
+
+                        <active translate="label comment" module="xonu_sepaone">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+
+
+                        <testmode_active translate="label comment" module="xonu_sepaone">
+                            <label>Test Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>11</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </testmode_active>
+                        <token_test translate="label comment" module="xonu_sepaone">
+                            <label>API Token Private (Test)</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <!--<testmode_active>1</testmode_active>-->
+                                <active>1</active>
+                            </depends>
+                        </token_test>
+                        <token_live translate="label comment" module="xonu_sepaone">
+                            <label>API Token Private (Live)</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <!--<testmode_active>0</testmode_active>-->
+                                <active>1</active>
+                            </depends>
+                        </token_live>
+
+                        <!--
+                        <custom_reference_active translate="label comment" module="xonu_sepaone">
+                            <label>Custom Reference</label>
+                            <tooltip>Reference is the text visible for the customer on the statement of account.</tooltip>
+                            <comment>The default reference is the order number.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>32</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </custom_reference_active>
+                        <custom_reference_template translate="label comment" module="xonu_sepaone">
+                            <label>Custom Reference Template</label>
+                            <comment>Use %s as placeholder for the order number.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>33</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <active>1</active>
+                                <custom_reference_active>1</custom_reference_active>
+                            </depends>
+                        </custom_reference_template>
+                        -->
+
+                        <transaction_status_active translate="label comment" module="xonu_sepaone">
+                            <label>Real-Time Transaction Status</label>
+                            <comment>Display real-time transaction data in order details.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>40</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </transaction_status_active>
+
+                        <mandate_status_active translate="label comment" module="xonu_sepaone">
+                            <label>Real-Time Mandate Status</label>
+                            <comment>Display real-time mandate data in mandate details.</comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>50</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </mandate_status_active>
+
+                        <refund_export translate="label comment" module="xonu_sepaone">
+                            <label>Enable Refund Export</label>
+                            <comment>Refund exported immediately after submit in backend.</comment>
+                            <tooltip>Note that the label of the button label will remain "Refund Offline" even if refund export is enabled.</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>60</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </refund_export>
+
+                        <valid_status translate="label comment" module="xonu_sepaone">
+                            <label>Valid Order Status for Export</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>xonu_directdebit/adminhtml_system_config_source_export_status</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </valid_status>
+
+                        <order_limit translate="label comment" module="xonu_sepaone">
+                            <label>Order Limit per Request</label>
+                            <comment>Leave empty to export all remaining orders.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </order_limit>
+
+
+                        <export_schedule translate="label comment" module="xonu_sepaone">
+                            <label>Transaction Export Schedule</label>
+                            <comment><![CDATA[Cron syntax: minute hour day month weekday.]]></comment>
+                            <tooltip><![CDATA[
+                             min (0 - 59)<br/>
+                             hour (0 - 23)<br/>
+                             day of month (1 - 31)<br/>
+                             month (1 - 12)<br/>
+                             day of week (0 - 6) (Sunday to Saturday)<br/><br/>
+                             E. g. run every five minutes: */5 * * * *]]></tooltip>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>550</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </export_schedule>
+
+
+
+                        <webhook_active translate="label comment" module="xonu_sepaone">
+                            <label>Enable Webhook</label>
+                            <comment><![CDATA[Enables instant payment notifications. Requires webhook configuration in SEPAone settings.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>600</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </webhook_active>
+
+
+                        <create_invoice translate="label comment" module="xonu_sepaone">
+                            <label>Create Invoice Automatically</label>
+                            <comment><![CDATA[Creates invoice automatically when funds received.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>620</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                                <webhook_active>1</webhook_active>
+                            </depends>
+                        </create_invoice>
+
+                        <hold_on_chargeback translate="label comment" module="xonu_sepaone">
+                            <label>Hold On Chargeback</label>
+                            <comment><![CDATA[Set order on hold on chargeback.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>630</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                                <webhook_active>1</webhook_active>
+                            </depends>
+                        </hold_on_chargeback>
+
+                        <mandate_revocation translate="label comment" module="xonu_sepaone">
+                            <label>Enable Mandate Revocation</label>
+                            <comment><![CDATA[Revoke local mandate depending on remote status.]]></comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>650</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                                <webhook_active>1</webhook_active>
+                            </depends>
+                        </mandate_revocation>
+
+                        <webhook_secret translate="label comment" module="xonu_sepaone">
+                            <label>Webhook Secret</label>
+                            <comment>Protection for the webhook URL.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>700</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                                <webhook_active>1</webhook_active>
+                            </depends>
+                        </webhook_secret>
+
+                        <webhook_url translate="label comment" module="xonu_sepaone">
+                            <label>Webhook URL</label>
+                            <comment><![CDATA[This URL has to be publicly accessible.]]></comment>
+                            <frontend_type>label</frontend_type>
+                            <sort_order>1000</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends>
+                                <active>1</active>
+                            </depends>
+                        </webhook_url>
+
+                    </fields>
+                </sepaone>
+
+                <!--
+                <group_name translate="label" module="xonu_sepaone">
+                    <label>Group Title</label>
+                    <sort_order>0</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+
+                    </fields>
+                </group_name>
+                -->
+
+            </groups>
+        </xonu_directdebit>
+
+    </sections>
+</config>

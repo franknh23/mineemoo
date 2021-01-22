@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package Xonu_Directdebit
+ * @copyright 2016 Pawel Kazakow, xonu EEC, http://www.xonu.de
+ * @author Pawel Kazakow <support@xonu.de>
+ * @license xonu EEC EULA, http://xonu.de/license
+ *
+ */
+-->
+<config>
+
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <sales>
+                        <children>
+                            <xonu_directdebit translate="title" module="xonu_directdebit">
+                                <title>SEPA Direct Debit Mandates</title>
+                                <sort_order>21</sort_order>
+                                <children>
+                                    <view translate="title" module="xonu_directdebit">
+                                        <title>View</title>
+                                        <sort_order>10</sort_order>
+                                        <children>
+                                            <revoke translate="title" module="xonu_directdebit">
+                                                <title>Revoke</title>
+                                                <sort_order>20</sort_order>
+                                            </revoke>
+                                        </children>
+                                    </view>
+                                </children>
+                            </xonu_directdebit>
+                        </children>
+                    </sales>
+                    <system>
+                        <children>
+                            <convert>
+                                <children>
+                                    <xonu_directdebit translate="title" module="xonu_directdebit">
+                                        <title>SEPA Direct Debit Payments</title>
+                                        <sort_order>100</sort_order>
+                                        <children>
+                                            <export translate="title" module="xonu_directdebit">
+                                                <title>Export</title>
+                                                <sort_order>20</sort_order>
+                                            </export>
+                                        </children>
+                                    </xonu_directdebit>
+                                </children>
+                            </convert>
+                            <config>
+                                <children>
+                                    <xonu_directdebit translate="title" module="payment">
+                                        <title>SEPA Direct Debit</title>
+                                    </xonu_directdebit>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+
+
+    <menu>
+        <sales>
+            <children>
+                <xonu_directdebit translate="title" module="xonu_directdebit">
+                    <title>SEPA Direct Debit Mandates</title>
+                    <action>adminhtml/directdebit_mandate/</action>
+                    <sort_order>21</sort_order>
+                </xonu_directdebit>
+            </children>
+        </sales>
+        <system>
+            <children>
+                <convert>
+                    <children>
+                        <xonu_directdebit translate="title" module="xonu_directdebit">
+                            <title>SEPA Direct Debit Payments</title>
+                            <action>adminhtml/directdebit_export/</action>
+                            <sort_order>100</sort_order>
+                        </xonu_directdebit>
+                    </children>
+                </convert>
+            </children>
+        </system>
+    </menu>
+
+</config>

@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Xonu_Sepaone>
+            <version>1.0.2</version>
+        </Xonu_Sepaone>
+    </modules>
+    <global>
+
+        <models>
+            <xonu_sepaone>
+                <class>Xonu_Sepaone_Model</class>
+                <resourceModel>xonu_sepaone_resource</resourceModel>
+            </xonu_sepaone>
+
+            <xonu_sepaone_resource>
+                <class>Xonu_Sepaone_Model_Resource</class>
+                <entities>
+                    <export>
+                        <table>xonu_sepaone_export</table>
+                    </export>
+                    <history>
+                        <table>xonu_sepaone_history</table>
+                    </history>
+                    <log>
+                        <table>xonu_sepaone_log</table>
+                    </log>
+                </entities>
+            </xonu_sepaone_resource>
+        </models>
+
+        <blocks>
+            <xonu_sepaone>
+                <class>Xonu_Sepaone_Block</class>
+            </xonu_sepaone>
+            <xonu_directdebit>
+                <rewrite>
+                    <info>Xonu_Sepaone_Block_Info</info>
+                </rewrite>
+            </xonu_directdebit>
+        </blocks>
+        <helpers>
+            <xonu_sepaone>
+                <class>Xonu_Sepaone_Helper</class>
+            </xonu_sepaone>
+            <xonu_directdebit>
+                <rewrite>
+                    <invoice>Xonu_Sepaone_Helper_Invoice</invoice>
+                </rewrite>
+            </xonu_directdebit>
+        </helpers>
+        <resources>
+            <xonu_sepaone_setup>
+                <setup>
+                    <module>Xonu_Sepaone</module>
+                </setup>
+            </xonu_sepaone_setup>
+        </resources>
+
+        <events>
+
+            <checkout_submit_all_after>
+                <observers>
+                    <xonu_sepaone_observer>
+                        <class>xonu_sepaone/observer</class>
+                        <method>checkoutSubmitAllAfter</method>
+                    </xonu_sepaone_observer>
+                </observers>
+            </checkout_submit_all_after>
+
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <xonu_sepaone_observer>
+                        <class>xonu_sepaone/observer</class>
+                        <method>salesOrderCreditmemoSaveAfter</method>
+                    </xonu_sepaone_observer>
+                </observers>
+            </sales_order_creditmemo_save_after>
+
+        </events>
+    </global>
+
+    <adminhtml>
+
+        <layout>
+            <updates>
+                <xonu_sepaone>
+                    <file>xonu/sepaone.xml</file>
+                </xonu_sepaone>
+            </updates>
+        </layout>
+
+        <events>
+            <adminhtml_block_system_config_init_tab_sections_before>
+                <observers>
+                    <xonu_sepaone_observer>
+                        <class>xonu_sepaone/observer</class>
+                        <method>adminhtmlBlockSystemConfigInitTabSectionsBefore</method>
+                    </xonu_sepaone_observer>
+                </observers>
+            </adminhtml_block_system_config_init_tab_sections_before>
+
+            <xonu_directdebit_mandate_revoke_after>
+                <observers>
+                    <xonu_sepaone_observer>
+                        <class>xonu_sepaone/observer</class>
+                        <method>xonuDirectdebitMandateRevokeAfter</method>
+                    </xonu_sepaone_observer>
+                </observers>
+            </xonu_directdebit_mandate_revoke_after>
+        </events>
+
+        <translate>
+            <modules>
+                <Xonu_Sepaone>
+                    <files>
+                        <default>Xonu_Sepaone.csv</default>
+                    </files>
+                </Xonu_Sepaone>
+            </modules>
+        </translate>
+
+    </adminhtml>
+
+    <frontend>
+        <routers>
+            <xonu_sepaone>
+                <use>standard</use>
+                <args>
+                    <module>Xonu_Sepaone</module>
+                    <frontName>sepaone</frontName>
+                </args>
+            </xonu_sepaone>
+        </routers>
+    </frontend>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Xonu_Sepaone after="Mage_Adminhtml">Xonu_Sepaone</Xonu_Sepaone>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+
+    <crontab>
+        <jobs>
+            <xonu_sepaone_export>
+                <schedule>
+                    <!--<cron_expr>*/5 * * * *</cron_expr>-->
+                    <config_path>xonu_directdebit/sepaone/export_schedule</config_path>
+                </schedule>
+                <run>
+                    <model>xonu_sepaone/observer::exportCron</model>
+                </run>
+            </xonu_sepaone_export>
+        </jobs>
+    </crontab>
+
+    <default>
+        <xonu_directdebit>
+            <sepaone>
+                <valid_status>pending,processing,complete</valid_status>
+                <testmode_active>1</testmode_active>
+                <custom_reference_template>%s</custom_reference_template>
+                <transaction_status_active>1</transaction_status_active>
+                <mandate_status_active>1</mandate_status_active>
+                <refund_export>1</refund_export>
+                <export_schedule>*/5 * * * *</export_schedule>
+                <webhook_active>1</webhook_active>
+                <create_invoice>1</create_invoice>
+                <hold_on_chargeback>1</hold_on_chargeback>
+                <mandate_revocation>1</mandate_revocation>
+            </sepaone>
+        </xonu_directdebit>
+    </default>
+
+
+</config>
