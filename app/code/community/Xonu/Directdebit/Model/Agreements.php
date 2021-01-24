@@ -76,9 +76,9 @@ class Xonu_Directdebit_Model_Agreements {
                 $quote = Mage::getSingleton('checkout/session')->getQuote();
                 $payment = $quote->getPayment();
 
-                try{ $selectedPaymentCode = $payment->getMethodInstance()->getCode(); } catch(Exception $e) {}
+                try{ $selectedPaymentCode = $payment->getMethodInstance()->getCode(); } catch(Exception $e) {return $this;}
 
-                if(($code != $selectedPaymentCode && $selectedPaymentCode != '') || $payment->getSepaMandateId() != ''){
+                if($selectedPaymentCode && (($code != $selectedPaymentCode && $selectedPaymentCode != '') || $payment->getSepaMandateId() != '')){
                     $agreementCollection->removeItemByKey($agreementItemKey);
                 } else {
                     $agreement = $agreementCollection->getItemById($agreementItemKey);
