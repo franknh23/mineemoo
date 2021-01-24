@@ -1260,10 +1260,17 @@ class TM_FireCheckout_IndexController extends Mage_Checkout_OnepageController
                 }
             }
 
+            $paymentData = $this->getRequest()->getPost('payment', array());
             $checkoutHelper = Mage::helper('checkout');
             $checkoutHelper->getCheckout()->unsFirecheckoutApprovedAgreementIds();
             $requiredAgreements = $checkoutHelper->getRequiredAgreementIds();
             if ($requiredAgreements) {
+                if ($paymentData['method'] !== 'xonu_directdebit') {
+                    $sepaAgreementId = (int)Mage::getStoreConfig('xonu_directdebit/mandate/mandate_terms');
+                    $pos = array_search($sepaAgreementId, $requiredAgreements);
+                    unset($requiredAgreements[$pos]);
+                }
+
                 $postedAgreements = array_keys($this->getRequest()->getPost('agreement', array()));
                 $diff = array_diff($requiredAgreements, $postedAgreements);
                 if ($diff) {
