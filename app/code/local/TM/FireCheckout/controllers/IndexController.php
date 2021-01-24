@@ -1265,7 +1265,7 @@ class TM_FireCheckout_IndexController extends Mage_Checkout_OnepageController
             $checkoutHelper->getCheckout()->unsFirecheckoutApprovedAgreementIds();
             $requiredAgreements = $checkoutHelper->getRequiredAgreementIds();
             if ($requiredAgreements) {
-                if ($paymentData['method'] !== 'xonu_directdebit') {
+                if ($paymentData['method'] !== 'xonu_directdebit' && Mage::getStoreConfigFlag('xonu_directdebit/mandate/mandate_terms_active')) {
                     $sepaAgreementId = (int)Mage::getStoreConfig('xonu_directdebit/mandate/mandate_terms');
                     $pos = array_search($sepaAgreementId, $requiredAgreements);
                     unset($requiredAgreements[$pos]);
