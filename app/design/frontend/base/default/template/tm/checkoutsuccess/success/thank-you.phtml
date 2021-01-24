@@ -9,10 +9,10 @@
     <polyline class="path check" fill="none" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "></polyline>
 </svg>
 
-<h2 class="sub-title"><?php echo $this->__('Vielen Dank für Ihre Bestellung und das Vertrauen!') ?></h2>
+<h2 class="sub-title"><?php echo $this->__('Thank you for your purchase!') ?></h2>
 
 <?php if ($successBlock->getOrderId()):?>
-    <p><?php echo $this->__('Ein Mineemoo-Mitarbeiter wird ihre Bestellung bearbeiten und eine Auftragsbestätigung per E-mail schicken.') ?></p>
+    <p><?php echo $this->__('You will receive an order confirmation email with details of your order.') ?></p>
 
     <?php if ($successBlock->getCanViewOrder()) :?>
         <p><?php echo $this->__('Your order # is: %s.', sprintf('<a href="%s">%s</a>', $this->escapeHtml($successBlock->getViewOrderUrl()), $this->escapeHtml($successBlock->getOrderId()))) ?></p>

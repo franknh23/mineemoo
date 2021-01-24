@@ -1,3 +1,17 @@
+document.observe('dom:loaded', function() {
+    if (typeof OnecolumnCheckout !== 'undefined') {
+        OnecolumnCheckout.saveStep = OnecolumnCheckout.saveStep.wrap(function(o, url, button, callback, params) {
+            if (url !== checkout.urls.shipping_method ||
+                ['iways_paypalplus_payment', 'banktransfer'].indexOf(payment.getCurrentMethod()) === -1) {
+
+                return o(url, button, callback, params);
+            } else {
+                callback();
+            }
+        });
+    }
+});
+
 document.observe('dom:loaded', function(e) {
     if ($('ppplus')) {
         // ppp iframe is already shown

@@ -19,6 +19,10 @@ FC.Loader = {
 
     toggle: function(flag, parentEl) {
         if (!parentEl) {
+            if (!this.el) {
+                return;
+            }
+
             if (flag) {
                 this.counter++;
             } else if (this.counter > 0) {

@@ -2,7 +2,7 @@
 <config>
     <modules>
         <TM_FireCheckout>
-            <version>4.4.3</version>
+            <version>4.4.4</version>
         </TM_FireCheckout>
     </modules>
 
