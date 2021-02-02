@@ -1,0 +1,83 @@
+<?php
+/**
+ * @package Xonu_Directdebit
+ * @copyright 2014 Pawel Kazakow, xonu EEC, http://www.xonu.de
+ * @author Pawel Kazakow <support@xonu.de>
+ * @license xonu EEC EULA, http://xonu.de/license
+ *
+ */
+?>
+<?php
+$_helper = Mage::helper('xonu_directdebit');
+$_code = $this->getMethodCode();
+
+$_bicRequired = !$_helper->isBicOptional();
+$_bicVisible = !(!$_bicRequired && Mage::getStoreConfig('xonu_directdebit/bic/optional_bic_hide'));
+
+$_mandate = Mage::getModel('xonu_directdebit/mandate')->loadCustomerMandate();
+?>
+
+<div id="payment_form_<?php echo $_code ?>_wrapper">
+    <div>
+        <?php echo $this->getMethod()->getConfigData('message');?>
+    </div>
+    <ul class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+
+        <?php if ($_mandate): ?>
+            <li>
+                <?php if($_mandate->getBic() != ''): ?>
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <?php if($_mandate->getAccountHolder() != ''): ?>
+                            <tr>
+                                <td class="checkout-mandate label" nowrap><?php echo $this->__('Account Holder') ?></td>
+                                <td width="10"></td>
+                                <td class="checkout-mandate value"><?php echo $_mandate->getAccountHolder(); ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <?php if($_mandate->getIban() != ''): ?>
+                            <tr>
+                                <td class="checkout-mandate label" nowrap><?php echo $this->__('IBAN') ?></td>
+                                <td width="10"></td>
+                                <td class="checkout-mandate value"><?php echo $_mandate->getIban(); ?></td>
+                            </tr>
+                        <?php endif; ?>
+                        <tr>
+                            <td class="checkout-mandate label" nowrap><?php echo $this->__('SWIFT-BIC') ?></td>
+                            <td width="10"></td>
+                            <td class="checkout-mandate value"><?php echo $_mandate->getBic(); ?></td>
+                        </tr>
+                    </table>
+                <?php endif; ?>
+                <span class="checkout-mandate info"><?php echo sprintf($this->__('SEPA Direct Debit Mandate with the Identifier <em>%s</em> granted on <em>%s</em>.'), $_mandate->getMandateIdentifier(), $_mandate->getLocalCreatedAt()) ?></span>
+                <input type="hidden" name="payment[mandate_id]" value="1" />
+            </li>
+
+        <?php else: ?>
+
+            <li>
+                <label for="sepa_holder" class="required"><em>*</em><?php echo $this->__('Account Holder') ?></label>
+            <span class="input-box">
+                <input type="text" title="<?php echo $this->__('Account Holder') ?>" class="input-text required-entry" id="sepa_holder" name="payment[holder]" value="<?php echo $this->getInfoData('sepa_holder') == '' ? $this->getHolder() : $this->htmlEscape($this->getInfoData('sepa_holder')) ?>" />
+            </span>
+            </li>
+            <li>
+                <label for="sepa_iban" class="required"><em>*</em><?php echo $this->__('IBAN') ?></label>
+            <span class="input-box">
+                <input type="text" title="<?php echo $this->__('IBAN') ?>" class="input-text required-entry" id="sepa_iban" name="payment[iban]" value="<?php echo $this->htmlEscape($this->getInfoData('sepa_iban')) ?>" />
+            </span>
+            </li>
+            <?php if ($_bicVisible): ?>
+                <li>
+                    <label for="sepa_bic"<?php if ($_bicRequired): ?> class="required"<?php endif; ?>><?php if ($_bicRequired): ?><em>*</em><?php endif; ?><?php echo $this->__('SWIFT-BIC') ?></label>
+            <span class="input-box">
+                <input type="text" title="<?php echo $this->__('SWIFT-BIC') ?>" class="input-text<?php if ($_bicRequired): ?> required-entry<?php endif; ?>" id="sepa_bic" name="payment[bic]" value="<?php echo $this->htmlEscape($this->getInfoData('sepa_bic')) ?>" />
+            </span>
+                </li>
+            <?php endif; ?>
+            <li>
+                <div class="sepa_explanation"><?php echo $_helper->getExplanation(); ?></div>
+            </li>
+
+        <?php endif; ?>
+    </ul>
+</div>

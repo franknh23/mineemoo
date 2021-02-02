@@ -1,0 +1,70 @@
+<?php
+?>
+<?php
+/**
+ * Template for block Xonu_Directdebit_Block_Adminhtml_Customer_Edit_Tab_View_Mandate
+ */
+?>
+<?php
+    $mandate = $this->getMandate();
+    $validMandateFound = ($mandate !== false);
+
+    if($validMandateFound) {
+        $debitor = $mandate->getDebitor();
+        $creditor = $mandate->getCreditor();
+        $helper = $this->_helper();
+
+        if (Mage::getSingleton('admin/session')->isAllowed('sales/xonu_directdebit/view')) {
+            $mandateUrl = Mage::helper('adminhtml')->getUrl('adminhtml/directdebit_mandate/edit', array('id' => $mandate->getId()));
+            $mandateLink = '<a href="'.$mandateUrl.'" target="_blank">'.$mandate->getMandateIdentifier().'</a>';
+        } else {
+            $mandateLink = $mandate->getMandateIdentifier();
+        }
+
+        $lastOrder = Mage::getModel('sales/order')->load($mandate->getLastOrderId());
+        if(Mage::getSingleton('admin/session')->isAllowed('sales/order/actions/view')) {
+            $lastOrderUrl = Mage::helper('adminhtml')->getUrl('adminhtml/sales_order/view', array('order_id' => $mandate->getLastOrderId()));
+            $lastOrderLink = '<a href="'.$lastOrderUrl.'" target="_blank">'.$lastOrder->getIncrementId().'</a>';
+        } else {
+            $lastOrderLink = $lastOrder->getIncrementId();
+        }
+    }
+
+?>
+<?php if ($validMandateFound): ?>
+<div class="entry-edit">
+    <div class="entry-edit-head"><h4 class="icon-head head-customer-view"><?php echo $this->__('SEPA Direct Debit Mandate') ?></h4></div>
+    <fieldset>
+        <table cellspacing="2" class="box-left">
+            <tr>
+                <td><strong><?php echo $this->__('Mandate Identifier') ?></strong></td>
+                <td><strong><?php echo $mandateLink ?></strong></td>
+            </tr>
+                <td><strong><?php echo $this->__('Type of Payment') ?></strong></td>
+                <td><?php echo $mandate->getRecurrent() ? $helper->__('Recurrent Payment') : $helper->__('One-Off Payment'); ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Created In') ?></strong></td>
+                <td><?php echo $this->_helper()->getStoreInfo($mandate->getStoreId()) ?></td>
+            </tr>
+        </table>
+        <table cellspacing="2" class="box-right">
+            <tr>
+                <td><strong><?php echo $this->__('Date of Granting') ?></strong></td>
+                <td><?php echo $helper->formatDateTime($mandate->getCreatedAt()) ?></td>
+            <tr>
+                <td><strong><?php echo $this->__('Last Update') ?></strong></td>
+                <td><?php echo $helper->formatDateTime($mandate->getUpdatedAt()); ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Last Order Id') ?></strong></td>
+                <td><?php echo $lastOrderLink; ?></td>
+            </tr>
+            <tr>
+                <td><strong><?php echo $this->__('Last Order Date') ?></strong></td>
+                <td><?php echo $helper->formatDateTime($mandate->getLastOrderCreatedAt()); ?></td>
+            </tr>
+        </table>
+    </fieldset>
+</div>
+<?php endif; ?>

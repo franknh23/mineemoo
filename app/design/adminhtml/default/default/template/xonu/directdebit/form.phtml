@@ -1,0 +1,38 @@
+<?php
+/**
+ * @package Xonu_Directdebit
+ * @copyright 2014 Pawel Kazakow, xonu EEC, http://www.xonu.de
+ * @author Pawel Kazakow <support@xonu.de>
+ * @license xonu EEC EULA, http://xonu.de/license
+ *
+ */
+?>
+<?php
+$_helper = Mage::helper('xonu_directdebit');
+$_code = $this->getMethodCode();
+
+$_bicRequired = !$_helper->isBicOptional();
+$_bicVisible = !(!$_bicRequired && Mage::getStoreConfig('xonu_directdebit/bic/optional_bic_hide'));
+
+$_mandate = Mage::getModel('xonu_directdebit/mandate')->loadCustomerMandate();
+?>
+
+<div id="payment_form_<?php echo $_code ?>_wrapper">
+    <div>
+        <?php echo $this->getMethod()->getConfigData('message');?>
+    </div>
+    <ul class="form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+
+        <?php if ($_mandate): ?>
+            <li>
+                <span class="checkout-mandate info"><?php echo sprintf($this->__('SEPA Direct Debit Mandate with the Identifier <em>%s</em> granted on <em>%s</em>.'), $_mandate->getMandateIdentifier(), $_mandate->getLocalCreatedAt()) ?></span>
+                <input type="hidden" name="payment[mandate_id]" value="1" />
+            </li>
+
+        <?php else: ?>
+
+            <?php echo $this->__('This payment method requires valid SEPA Direct Debit Mandate for Recurrent Payment.'); ?>
+
+        <?php endif; ?>
+    </ul>
+</div>

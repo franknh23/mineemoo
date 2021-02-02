@@ -1,0 +1,57 @@
+<!--@subject {{var store.getFrontendName()}}: SEPA-Lastschriftmandat {{var mandate.getMandateIdentifier()}} @-->
+<!--@vars
+@-->
+<!--@styles
+#mandate, .mt { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+#mandate .bq { padding-left:20px; }
+@-->
+
+<div id="mandate" style="color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <h2>SEPA-Lastschriftmandat</h2>
+
+    <p>&nbsp;</p>
+
+    <p class="s"><strong>Mandat-Referenznummer</strong></p>
+
+    <div class="bq id" style="padding-left:20px;">
+        {{var mandate.getMandateIdentifier()}}
+    </div>
+
+    <p>&nbsp;</p>
+
+    <p class="s"><strong>Zahlungsempfänger</strong></p>
+
+    <div class="bq c" style="padding-left:20px;">
+        {{var creditor_html}}
+    </div>
+
+    <p>&nbsp;</p>
+
+    <p>Hiermit ermächtige ich den Zahlungsempfänger, Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von dem Zahlungsempfänger auf mein Konto gezogenen Lastschriften einzulösen.</p>
+
+    <p>Hinweis: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</p>
+
+    <p>&nbsp;</p>
+
+    <p class="s"><strong>Zahlungspflichtiger</strong></p>
+
+    <div class="bq d" style="padding-left:20px;">
+        {{var debitor_html}}
+    </div>
+
+    <p>&nbsp;</p>
+
+    <p>{{var debitor.getCity()}}, {{var grant_date}}, {{var debitor.getAccountHolder()}}</p>
+
+    <p><i>Dieses Schreiben wurde maschinell erstellt und ist ohne Unterschrift gültig.</i></p>
+
+    <p>&nbsp;</p>
+
+    <p id="dhn"><strong>{{var mandate.getDifferingHolderNotice()}}</strong></p>
+
+    {{depend mandate.getIsPreview()}}
+    <hr noshade size="1"/><br/>
+    Bitte beachten Sie: Die Frist für die Vorabinformation der SEPA-Lastschrift wird auf einen Tag verkürzt.
+    {{/depend}}
+
+</div>

@@ -123,7 +123,8 @@ class Iways_PayPalPlus_Block_Adminhtml_System_Config_Thirdpartyinfo
         $e = $this->_getDummyElement();
 
         $field = $fieldset->addField(
-            $paymentModel->getCode(),
+            //$paymentModel->getCode(),
+			‘payment_third_party_modul_info_text_’. $paymentModel->getCode(),
             'text',
             array(
                 'name' => 'groups[third_party_modul_info][fields][text_' . $paymentModel->getCode() . '][value]',
