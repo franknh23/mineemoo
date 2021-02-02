@@ -44,11 +44,10 @@ class Tm_NewsletterPopup_SubscriberController extends Mage_Newsletter_Subscriber
                 }
                 else {
                     $session->addSuccess($this->__('Thank you for your subscription.'));
-
-                    /*Tm_NewsletterPopup_override_START*/
-                    $session->setSignedUpForNewsletter(true);
-                    /*Tm_NewsletterPopup_override_END*/
                 }
+                /*Tm_NewsletterPopup_override_START*/
+                $session->setSignedUpForNewsletter(true);
+                /*Tm_NewsletterPopup_override_END*/
             }
             catch (Mage_Core_Exception $e) {
                 $session->addException($e, $this->__('There was a problem with the subscription: %s', $e->getMessage()));
