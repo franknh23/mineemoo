@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* @package Xonu_Directdebit
+* @copyright 2014 Pawel Kazakow, xonu EEC, http://www.xonu.de
+* @author Pawel Kazakow <support@xonu.de>
+* @license xonu EEC EULA, http://xonu.de/license
+*
+*/
+-->
+<layout version="0.1.0">
+    <adminhtml_directdebit_export_index>
+        <!-- All blocks for this handle are added dynamically in Xonu_Directdebit_ExportController::indexAction(). -->
+    </adminhtml_directdebit_export_index>
+
+    <adminhtml_directdebit_export_exportgrid>
+        <remove name="root" />
+        <block type="xonu_directdebit/adminhtml_export_edit_tab_export" name="xonu_directdebit.export.export.grid" output="toHtml" />
+    </adminhtml_directdebit_export_exportgrid>
+
+    <adminhtml_directdebit_export_historygrid>
+        <remove name="root" />
+        <block type="xonu_directdebit/adminhtml_export_edit_tab_history" name="xonu_directdebit.export.history.grid" output="toHtml" />
+    </adminhtml_directdebit_export_historygrid>
+
+    <adminhtml_directdebit_mandate_index>
+        <reference name="content">
+            <block type="xonu_directdebit/adminhtml_mandate" name="xonu_directdebit.mandate" />
+        </reference>
+    </adminhtml_directdebit_mandate_index>
+
+    <adminhtml_directdebit_mandate_grid>
+        <remove name="root" />
+        <block type="xonu_directdebit/adminhtml_mandate_grid" name="xonu_directdebit.mandate.grid" output="toHtml" />
+    </adminhtml_directdebit_mandate_grid>
+
+    <adminhtml_directdebit_mandate_ordergrid>
+        <remove name="root" />
+        <block type="xonu_directdebit/adminhtml_mandate_edit_tab_orders" name="xonu_directdebit.mandate.ordergrid" output="toHtml" />
+    </adminhtml_directdebit_mandate_ordergrid>
+
+    <adminhtml_directdebit_mandate_edit>
+        <!-- All blocks for this handle are added dynamically in Xonu_Directdebit_MandateController::editAction(). -->
+    </adminhtml_directdebit_mandate_edit>
+
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tab_view">
+            <block type="xonu_directdebit/adminhtml_customer_edit_tab_view_mandate"
+                   template="xonu/directdebit/mandate.phtml"
+                   name="mandate"
+                   before="sales">
+            </block>
+        </reference>
+    </adminhtml_customer_edit>
+
+</layout>

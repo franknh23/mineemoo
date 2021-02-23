@@ -67,6 +67,7 @@ class TM_FireCheckout_Model_Observer_Integration
             'Hps_Securesubmit'           => 'tm/firecheckout/hps_securesubmit.xml',
             'Inchoo_SocialConnect'       => 'tm/firecheckout/inchoo_socialconnect.xml',
             'Infolution_ILStrongCaptcha' => 'tm/firecheckout/infolution_ilstrongcaptcha.xml',
+            'Inovarti_Iugu'              => 'tm/firecheckout/inovarti_iugu.xml',
             'IntellectLabs_Stripe'       => 'tm/firecheckout/intellectlabs_stripe.xml',
             'IrvineSystems_Deliverydate' => 'tm/firecheckout/irvinesystems_deliverydate.xml',
             'IrvineSystems_JapanPost'    => 'tm/firecheckout/irvinesystems_japanpost.xml',

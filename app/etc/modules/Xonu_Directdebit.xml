@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Xonu_Directdebit>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Xonu_Directdebit>
+    </modules>
+</config>

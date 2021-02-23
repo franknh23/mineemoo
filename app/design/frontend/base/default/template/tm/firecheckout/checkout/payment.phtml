@@ -65,7 +65,7 @@
     <?php
     $stripeTop = false;
     $stripeBottom = false;
-    if (Mage::helper('core')->isModuleOutputEnabled('Cryozonic_Stripe')):
+    if (Mage::helper('core')->isModuleOutputEnabled('Cryozonic_Stripe') && class_exists('Cryozonic_Stripe_Block_ApplePay_Top')):
         $stripeTop = $this->getLayout()->createBlock('cryozonic_stripe/applePay_top');
         $stripeBottom = $this->getLayout()->createBlock('cryozonic_stripe/applePay_bottom');
     endif;

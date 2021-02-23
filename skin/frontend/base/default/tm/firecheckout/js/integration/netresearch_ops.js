@@ -28,7 +28,7 @@ document.observe('firecheckout:setResponseAfter', function(e) {
         if (payment.registerAliasEventListeners) {
             payment.registerAliasEventListeners();
         }
-        if (payment.handleBrandChange) {
+        if (payment.handleBrandChange && payment.currentMethodObject) {
             payment.handleBrandChange();
         }
     }
