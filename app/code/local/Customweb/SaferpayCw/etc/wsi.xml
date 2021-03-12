@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+            <xsd:complexType name="saferpaycwTransactionEntity">
+                <xsd:sequence>
+                    <xsd:element name="transaction_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="transaction_external_id" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="order_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="order_payment_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="alias_for_display" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="alias_active" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="payment_method" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="authorization_type" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="customer_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="updated_on" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="created_on" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="payment_id" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="authorization_amount" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="authorization_status" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="paid" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="currency" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="data" type="typens:associativeArray" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="saferpaycwTransactionEntityArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:saferpaycwTransactionEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="saferpaycwTransactionListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="saferpaycwTransactionListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:saferpaycwTransactionEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="saferpaycwTransactionInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="transactionId" type="xsd:int" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="attributes" type="typens:ArrayOfString" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="saferpaycwTransactionInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:saferpaycwTransactionEntity" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="saferpaycwTransactionInfoByPaymentIdRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="paymentId" type="xsd:int" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="attributes" type="typens:ArrayOfString" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="saferpaycwTransactionInfoByPaymentIdResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:saferpaycwTransactionEntity" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="saferpaycwTransactionListRequest">
+        <wsdl:part name="parameters" element="typens:saferpaycwTransactionListRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="saferpaycwTransactionListResponse">
+        <wsdl:part name="parameters" element="typens:saferpaycwTransactionListResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="saferpaycwTransactionInfoRequest">
+        <wsdl:part name="parameters" element="typens:saferpaycwTransactionInfoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="saferpaycwTransactionInfoResponse">
+        <wsdl:part name="parameters" element="typens:saferpaycwTransactionInfoResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="saferpaycwTransactionInfoByPaymentIdRequest">
+        <wsdl:part name="parameters" element="typens:saferpaycwTransactionInfoByPaymentIdRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="saferpaycwTransactionInfoByPaymentIdResponse">
+        <wsdl:part name="parameters" element="typens:saferpaycwTransactionInfoByPaymentIdResponseParam" />
+    </wsdl:message>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+        <wsdl:operation name="saferpaycwTransactionList">
+            <wsdl:documentation>Retrieve SaferpayCw Transactions</wsdl:documentation>
+            <wsdl:input message="typens:saferpaycwTransactionListRequest" />
+            <wsdl:output message="typens:saferpaycwTransactionListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="saferpaycwTransactionInfo">
+            <wsdl:documentation>Retrieve SaferpayCw Transaction Data By Transaction Id</wsdl:documentation>
+            <wsdl:input message="typens:saferpaycwTransactionInfoRequest" />
+            <wsdl:output message="typens:saferpaycwTransactionInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="saferpaycwTransactionInfoByPaymentId">
+            <wsdl:documentation>Retrieve SaferpayCw Transaction Data By Payment Id</wsdl:documentation>
+            <wsdl:input message="typens:saferpaycwTransactionInfoByPaymentIdRequest" />
+            <wsdl:output message="typens:saferpaycwTransactionInfoByPaymentIdResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="saferpaycwTransactionList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="saferpaycwTransactionInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+         <wsdl:operation name="saferpaycwTransactionInfoByPaymentId">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
