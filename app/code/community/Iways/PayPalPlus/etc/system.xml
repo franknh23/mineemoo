@@ -175,6 +175,7 @@
                                 <frontend_type>text</frontend_type>
                                 <frontend_model>iways_paypalplus/adminhtml_system_config_thirdpartyinfo</frontend_model>
                                 <expanded>0</expanded>
+                                <dynamic_group>1</dynamic_group>
                                 <sort_order>25</sort_order>
                                 <show_in_default>1</show_in_default>
                                 <show_in_website>1</show_in_website>

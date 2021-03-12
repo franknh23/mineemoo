@@ -140,6 +140,24 @@ if ($paymentExperience) :
             }
         }
         window.setInterval(checkStep, 1000);
-
+        // var paymentElement = document.querySelector('#ppplus iframe');
+        // console.log(paymentElement);
+        //
+        // document.getElementsByTagName('iframe').onload = function() {
+        //     console.log('test1');
+        // }
+        jQuery(document).ready(function() {
+            jQuery('#ppplus iframe').on('load', function () {
+                console.log('test1');
+            })
+        });
+        // document.querySelector('#ppplus iframe').addEventListener( "load", function(e) {
+        //
+        //     this.style.backgroundColor = "red";
+        //     alert(this.nodeName);
+        //
+        //     console.log(e.target);
+        //
+        // } );
     </script>
 <?php endif; ?>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<api>
+		<resources>
+			<saferpaycw_transaction translate="title" module="SaferpayCw">
+				<model>saferpaycw/transaction_api</model>
+				<title>SaferpayCw Transaction API</title>
+				<acl>saferpaycw_transaction</acl>
+				<methods>
+					<list translate="title" module="SaferpayCw">
+						<title>Retrieve transaction</title>
+						<method>items</method>
+						<acl>saferpaycw_transaction/list</acl>
+					</list>
+					<info translate="title" module="SaferpayCw">
+						<title>Retrieve transaction data by transaction id</title>
+						<method>info</method>
+						<acl>saferpaycw_transaction/info</acl>
+					</info>
+					<infoByPaymentId translate="title" module="SaferpayCw">
+						<title>Retrieve transaction data by payment id</title>
+						<method>infoByPaymentId</method>
+						<acl>saferpaycw_transaction/infoByPaymentId</acl>
+					</infoByPaymentId>
+				</methods>
+				<faults module="SaferpayCw">
+					<filters_invalid>
+						<code>101</code >
+						<message>Invalid filters specified. Details in error message.</message>
+					</filters_invalid>
+					<not_exists>
+						<code>102</code >
+						<message>Transaction doesn't exist.</message>
+					</not_exists>
+				</faults>
+			</saferpaycw_transaction>
+		</resources>
+		<v2>
+            <resources_function_prefix>
+                <saferpaycw_transaction>saferpaycwTransaction</saferpaycw_transaction>
+            </resources_function_prefix>
+        </v2>
+		<acl>
+			<resources>
+				<saferpaycw_transaction translate="title" module="SaferpayCw">
+					<title>SaferpayCw Transactions</title>
+					<list translate="title" module="SaferpayCw">
+						<title>View All</title>
+					</list>
+					<info translate="title" module="SaferpayCw">
+						<title>Get Info By Transaction Id</title>
+					</info>
+					<infoByPaymentId translate="title" module="SaferpayCw">
+						<title>Get Info By Payment Id</title>
+					</infoByPaymentId>
+				 </saferpaycw_transaction>
+			</resources>
+		</acl>
+	</api>
+</config>

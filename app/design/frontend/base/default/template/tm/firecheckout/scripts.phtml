@@ -77,5 +77,10 @@
     });
 
     FC.Sticky.prototype.config.offset_top = <?php echo (int) Mage::getStoreConfig('firecheckout/design/sticky_offset') ?>;
+
+    setTimeout(function(){
+        jQuery("div[data-pm=Bank]").remove();
+    }, 4000);
+
 //]]>
 </script>

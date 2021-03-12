@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+         <system>
+            <children>
+                <saferpaycw translate="title" module="SaferpayCw">
+                    <title><![CDATA[Saferpay]]></title>
+                    <action>adminhtml/configsaferpaycw</action>
+                    <sort_order>109</sort_order>
+                </saferpaycw>
+            </children>
+         </system>
+    </menu>
+    <acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<saferpaycw>
+                                <title><![CDATA[Saferpay]]></title>
+                                <sort_order>16</sort_order>
+                            </saferpaycw>
+							<config>
+								<children>
+									<saferpaycw translate="title" module="SaferpayCw">
+										<title><![CDATA[Saferpay]]></title>
+									</saferpaycw>
+								</children>
+							</config>
+						</children>
+					</system>
+					<sales>
+						<children>
+							<saferpaycw>
+                                <title><![CDATA[Saferpay]]></title>
+                                <sort_order>16</sort_order>
+                                <children>
+                               		
+									<saferpaycw_alias_manager translate="title" module="SaferpayCw">
+										<title><![CDATA[Saferpay: Alias Management]]></title>
+									</saferpaycw_alias_manager>
+									
+									
+									<saferpaycw_moto translate="title" module="SaferpayCw">
+										<title><![CDATA[Saferpay: Alias Management]]></title>
+									</saferpaycw_moto>
+									
+								</children>
+                            </saferpaycw>
+						</children>
+					</sales>
+				</children>
+			</admin>
+		</resources>
+	</acl>
+</config>
