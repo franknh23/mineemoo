@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Treestone_Paypal>
+            <version>0.1.0</version>
+        </Treestone_Paypal>
+    </modules>
+    <global>
+        <models>
+            <paypal>		
+                <rewrite> 
+                    <config>Treestone_Paypal_Model_Config</config>
+                </rewrite>
+            </paypal>	
+		</models>
+    </global>
+</config> 
