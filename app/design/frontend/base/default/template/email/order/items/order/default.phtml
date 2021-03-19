@@ -26,6 +26,19 @@
 ?>
 <?php $_item = $this->getItem() ?>
 <?php $_order = $this->getItem()->getOrder() ?>
+<?php
+    if ($_item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE) {
+        $parentId = Mage::getModel('catalog/product_type_configurable')
+            ->getParentIdsByChild($_item->getProductId());
+        $_product = Mage::getModel('catalog/product')
+            ->setStoreId($_item->getOrder()->getStoreId())
+            ->load($parentId);
+    } else {
+        $_product = Mage::getModel('catalog/product')
+            ->setStoreId($_item->getOrder()->getStoreId())
+            ->load($_item->getProductId());
+    }
+?>
 <tr>
     <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
         <strong style="font-size:11px;"><?php echo $this->escapeHtml($_item->getName()) ?></strong>
@@ -46,6 +59,7 @@
         <?php echo $this->escapeHtml($_item->getDescription()) ?>
     </td>
     <td align="left" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;"><?php echo $this->escapeHtml($this->getSku($_item)) ?></td>
+    <img src="<?php echo $_product->getThumbnailUrl() ?>"  width="135" height="135" alt="<?php echo $_item->getName() ?>" />
     <td align="center" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;"><?php echo $_item->getQtyOrdered()*1 ?></td>
     <td align="right" valign="top" style="font-size:11px; padding:3px 9px; border-bottom:1px dotted #CCCCCC;">
         <?php if ($this->helper('tax')->displaySalesPriceExclTax($_order->getStore()) || $this->helper('tax')->displaySalesBothPrices($_order->getStore())): ?>
