@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f22c659e-ab52-4a5e-a0be-8d9f7cb61a79" name="Default Changelist" comment="Update code with latest magento 1.9.4.4" />
+    <list id="ea81b599-099a-4761-b44b-1c95eec2a1fa" name="Revert &quot;MN-000: remove Link title in footer links&quot;" comment="MN-000: remove Links title from magesetup footer template" />
+    <list id="a00ed2a5-0694-4ca8-afb1-ce9882c83420" name="Revert &quot;Update code with latest magento 1.9.4.4&quot;" comment="Revert &quot;Update code with latest magento 1.9.4.4&quot;&#10;&#10;This reverts commit 1de78dc7" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIEW_PUSH_PROTECTED_ONLY" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="development" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/franknh23/mineemoo" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1mmi8l4vndJ5XblMffWfNbYVQo2" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/app/code/community/Olark/Chatbox/Block" />
+      <recent name="$PROJECT_DIR$/app/design/frontend/base/default/template/xonu" />
+      <recent name="$PROJECT_DIR$/app/design/frontend" />
+      <recent name="$PROJECT_DIR$/app/code" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/skin/frontend/base/default/css/bpmedia/gdpr" />
+      <recent name="$PROJECT_DIR$/skin/frontend/base/default/css/bpmedia" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f22c659e-ab52-4a5e-a0be-8d9f7cb61a79" name="Default Changelist" comment="" />
+      <created>1610105009777</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610105009777</updated>
+      <workItem from="1610105011223" duration="4295000" />
+      <workItem from="1610117456374" duration="4822000" />
+      <workItem from="1610132893034" duration="5930000" />
+      <workItem from="1610210713338" duration="9600000" />
+      <workItem from="1610287442115" duration="3523000" />
+      <workItem from="1610311321827" duration="1732000" />
+      <workItem from="1610390041525" duration="3189000" />
+      <workItem from="1610445954040" duration="1227000" />
+      <workItem from="1610458710607" duration="4884000" />
+      <workItem from="1610715553847" duration="4018000" />
+      <workItem from="1610803007909" duration="739000" />
+      <workItem from="1610825917581" duration="1688000" />
+      <workItem from="1611176358692" duration="1658000" />
+      <workItem from="1611341973317" duration="1955000" />
+      <workItem from="1611413747067" duration="3790000" />
+      <workItem from="1611497273787" duration="3334000" />
+      <workItem from="1611516688429" duration="4800000" />
+      <workItem from="1611778665957" duration="8120000" />
+      <workItem from="1612297551179" duration="6283000" />
+      <workItem from="1615554187574" duration="742000" />
+      <workItem from="1616156100803" duration="378000" />
+      <workItem from="1616156664273" duration="1664000" />
+    </task>
+    <task id="LOCAL-00001" summary="Update code with latest magento 1.9.4.4">
+      <created>1610143378593</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610143378593</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Revert &quot;Update code with latest magento 1.9.4.4&quot;&#10;&#10;This reverts commit 1de78dc7">
+      <created>1610144115084</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1610144115084</updated>
+    </task>
+    <task id="LOCAL-00003" summary="MN-000: upgrade all files with magento 1.9.4.4">
+      <created>1610217535842</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610217535842</updated>
+    </task>
+    <task id="LOCAL-00004" summary="MN-000: chart request http condition change">
+      <created>1610221699679</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1610221699679</updated>
+    </task>
+    <task id="LOCAL-00005" summary="MN-000: chart  change">
+      <created>1610221986650</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1610221986650</updated>
+    </task>
+    <task id="LOCAL-00006" summary="MN-000: gitignore add index.php">
+      <created>1610224185260</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1610224185260</updated>
+    </task>
+    <task id="LOCAL-00007" summary="MN-000: gitignore add local.xml">
+      <created>1610224264457</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1610224264457</updated>
+    </task>
+    <task id="LOCAL-00008" summary="MN-000: remove recaptcha module">
+      <created>1610287919286</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1610287919286</updated>
+    </task>
+    <task id="LOCAL-00009" summary="MN-000: gdpr cookiealert.css position changed">
+      <created>1610288389522</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1610288389522</updated>
+    </task>
+    <task id="LOCAL-00010" summary="MN-000: gdpr cookiealert.css position changed">
+      <created>1610288475029</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1610288475029</updated>
+    </task>
+    <task id="LOCAL-00011" summary="MN-000: remove Micropaymet module">
+      <created>1610446235680</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1610446235680</updated>
+    </task>
+    <task id="LOCAL-00012" summary="MN-000: add meetanshi invisible captcha">
+      <created>1610463313662</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1610463313662</updated>
+    </task>
+    <task id="LOCAL-00013" summary="MN-000: add german tax related module">
+      <created>1610482404078</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1610482404078</updated>
+    </task>
+    <task id="LOCAL-00014" summary="MN:000 Meetanshi_InvisibleCaptcha module added to live">
+      <created>1610715665588</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1610715665589</updated>
+    </task>
+    <task id="LOCAL-00015" summary="MN:000 Remove Braintre module">
+      <created>1610716361782</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1610716361782</updated>
+    </task>
+    <task id="LOCAL-00016" summary="MN:113: security patch 11295">
+      <created>1610747619927</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1610747619927</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Revert &quot;MN-000: remove Link title in footer links&quot;&#10;&#10;This reverts commit 41a2c006">
+      <created>1611176575045</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1611176575045</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Revert &quot;MN-000: remove Link title in footer links&quot;&#10;&#10;This reverts commit 96427d32">
+      <created>1611176641293</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1611176641293</updated>
+    </task>
+    <task id="LOCAL-00019" summary="MN-000: remove Links title from magesetup footer template">
+      <created>1611177232537</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1611177232537</updated>
+    </task>
+    <task id="LOCAL-00020" summary="MN-114: install Sepa bank direct debit payment">
+      <created>1611342929271</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1611342929271</updated>
+    </task>
+    <task id="LOCAL-00021" summary="MN-114: install Sepa bank direct debit payment - css change">
+      <created>1611346139209</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1611346139209</updated>
+    </task>
+    <task id="LOCAL-00022" summary="MN-000: update firecheckout module">
+      <created>1611497449536</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1611497449536</updated>
+    </task>
+    <task id="LOCAL-00023" summary="MN-000: agreement issue">
+      <created>1611517042039</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1611517042039</updated>
+    </task>
+    <task id="LOCAL-00024" summary="MN-000: agreement issue on firecheckout">
+      <created>1611522419415</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1611522419415</updated>
+    </task>
+    <task id="LOCAL-00025" summary="MN-000: agreement issue on firecheckout">
+      <created>1611522876512</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1611522876512</updated>
+    </task>
+    <task id="LOCAL-00026" summary="MN-000: newsletter popup confirmation">
+      <created>1612303337684</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1612303337684</updated>
+    </task>
+    <task id="LOCAL-00027" summary="MN-000: newsletter popup confirmation">
+      <created>1612303403220</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1612303403220</updated>
+    </task>
+    <task id="LOCAL-00028" summary="MN-000: install saferpay payment">
+      <created>1615554339765</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1615554339765</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="Update code with latest magento 1.9.4.4" />
+    <MESSAGE value="Revert &quot;Update code with latest magento 1.9.4.4&quot;&#10;&#10;This reverts commit 1de78dc7" />
+    <MESSAGE value="MN-000: upgrade all files with magento 1.9.4.4" />
+    <MESSAGE value="MN-000: chart request http condition change" />
+    <MESSAGE value="MN-000: chart  change" />
+    <MESSAGE value="MN-000: gitignore add index.php" />
+    <MESSAGE value="MN-000: gitignore add local.xml" />
+    <MESSAGE value="MN-000: remove recaptcha module" />
+    <MESSAGE value="MN-000: gdpr cookiealert.css position changed" />
+    <MESSAGE value="MN-000: remove Micropaymet module" />
+    <MESSAGE value="MN-000: add meetanshi invisible captcha" />
+    <MESSAGE value="MN-000: add german tax related module" />
+    <MESSAGE value="MN:000 Meetanshi_InvisibleCaptcha module added to live" />
+    <MESSAGE value="MN:000 Remove Braintre module" />
+    <MESSAGE value="MN:113: security patch 11295" />
+    <MESSAGE value="Revert &quot;MN-000: remove Link title in footer links&quot;&#10;&#10;This reverts commit 41a2c006" />
+    <MESSAGE value="Revert &quot;MN-000: remove Link title in footer links&quot;&#10;&#10;This reverts commit 96427d32" />
+    <MESSAGE value="MN-000: remove Links title from magesetup footer template" />
+    <MESSAGE value="MN-114: install Sepa bank direct debit payment" />
+    <MESSAGE value="MN-114: install Sepa bank direct debit payment - css change" />
+    <MESSAGE value="MN-000: update firecheckout module" />
+    <MESSAGE value="MN-000: agreement issue" />
+    <MESSAGE value="MN-000: agreement issue on firecheckout" />
+    <MESSAGE value="MN-000: newsletter popup confirmation" />
+    <MESSAGE value="MN-000: install saferpay payment" />
+    <option name="LAST_COMMIT_MESSAGE" value="MN-000: install saferpay payment" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
