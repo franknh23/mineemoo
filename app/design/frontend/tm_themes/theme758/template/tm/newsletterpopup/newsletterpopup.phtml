@@ -90,29 +90,15 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 	    <script type="text/javascript">
 	        window.formToProtectOnPage = [];
 	        var currentFormId = id = '';
-	        formsToProtect = "[form[action*=\"newsletter\/subscribe\/new\"]";
-	     
-            formsToProtect.forEach(function(item) {
-                formToProtect = jQuery(item)[0];
-                if (formToProtect) {
-                    window.formToProtectOnPage.push(formToProtect);
-                }
-            });
-	        
-
-	        window.mtInvisibleCaptchaOnloadCallback = function () {
-                var form = window.formToProtectOnPage[0];
-                currentFormId = form.id;
-                currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-                grecaptcha.ready(function() {
-                    grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
-                        .then(function(token) {
-                            jQuery(".invisible_token").val(token);
-                        });
-                });
-            };
-
-	        
+            var form = form[action*="newsletter/subscribe/new"];
+            currentFormId = form.id;
+            currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
+            grecaptcha.ready(function() {
+                grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                    .then(function(token) {
+                        jQuery(".invisible_token").val(token);
+                    });
+            });      
 	    </script>
 	<?php endif; ?>
 
