@@ -90,13 +90,12 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 	    <script type="text/javascript">
 	        window.formToProtectOnPage = [];
 	        var currentFormId = id = '';
-            currentFormId = "newsletter-validate-detail2";
-
             var recaptchaScript = document.createElement('script');
             recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
             recaptchaScript.attributes = 'async defer';
             document.body.appendChild(recaptchaScript);
-
+			
+			currentFormId = "newsletter-validate-detail2";
             currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
             window.mtInvisibleCaptchaOnloadCallback = function () {
 				if(window.grecaptcha){
