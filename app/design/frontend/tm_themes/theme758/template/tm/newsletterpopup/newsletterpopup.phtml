@@ -91,13 +91,20 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 	        window.formToProtectOnPage = [];
 	        var currentFormId = id = '';
             currentFormId = "newsletter-validate-detail2";
+
+            var recaptchaScript = document.createElement('script');
+            recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
+            recaptchaScript.attributes = 'async defer';
+            document.body.appendChild(recaptchaScript);
+
             currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-            grecaptcha.ready(function() {
-                grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+            
+	       	grecaptcha.ready(function() {
+            	grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
                     .then(function(token) {
                         jQuery(".invisible_token").val(token);
-                    });
-            });      
+                });
+        	});                
 	    </script>
 	<?php endif; ?>
 
