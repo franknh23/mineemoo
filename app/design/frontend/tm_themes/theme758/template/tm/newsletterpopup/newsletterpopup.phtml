@@ -101,10 +101,7 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 	        
 
 	        window.mtInvisibleCaptchaOnloadCallback = function () {
-                var form = window.formToProtectOnPage;
-                if (form.tagName.toLowerCase() != 'form') {
-                    continue;
-                }
+                var form = window.formToProtectOnPage[0];
                 currentFormId = form.id;
                 currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
                 grecaptcha.ready(function() {
