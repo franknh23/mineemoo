@@ -90,7 +90,7 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 	    <script type="text/javascript">
 	        window.formToProtectOnPage = [];
 	        var currentFormId = id = '';
-            var form = form['action="newsletter/subscribe/new"];
+            var form = form['action="newsletter/subscribe/new"'];
             currentFormId = form.id;
             currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
             grecaptcha.ready(function() {
