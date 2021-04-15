@@ -30,6 +30,7 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 									    <button type="submit" title="<?php echo $this->__('Subscribe') ?>" class="button" name="newsletter_submit"><span><span><?php echo $this->__($but_name) ?></span></span></button>
                                     <?php endif; ?>
 								</div>
+								<input class="invisible_token" type="hidden" name="invisible_token" value=""/>
 							</div>
 						</form>
 					</div>
@@ -83,4 +84,39 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 			</script>
 		<?php } ?>
 	<?php endif; ?>
+
+<?php $captcha = Mage::helper('recaptcha'); ?>
+	<?php if ($captcha->isEnabled()) : ?>
+	    <script type="text/javascript">
+	        window.formToProtectOnPage = [];
+	        var currentFormId = id = '';
+	        formsToProtect = "[form[action*=\"newsletter\/subscribe\/new\"]";
+	     
+            formsToProtect.forEach(function(item) {
+                formToProtect = jQuery(item)[0];
+                if (formToProtect) {
+                    window.formToProtectOnPage.push(formToProtect);
+                }
+            });
+	        
+
+	        window.mtInvisibleCaptchaOnloadCallback = function () {
+                var form = window.formToProtectOnPage;
+                if (form.tagName.toLowerCase() != 'form') {
+                    continue;
+                }
+                currentFormId = form.id;
+                currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                        .then(function(token) {
+                            jQuery(".invisible_token").val(token);
+                        });
+                });
+            };
+
+	        
+	    </script>
+	<?php endif; ?>
+
 <?php endif; ?>
