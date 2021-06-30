@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2021 Amasty (https://www.amasty.com)
+ * @package Amasty_SeoToolKit
+ */
+-->
+<layout version="0.1.0">
+    <!-- Search Results page -->
+    <catalogsearch_result_index>
+        <reference name="head">
+            <action method="setRobots"><value>NOINDEX,FOLLOW</value></action>
+        </reference>
+    </catalogsearch_result_index>
+
+    <!-- Advanced Search page -->
+    <catalogsearch_advanced_result>
+        <reference name="head">
+            <action method="setRobots"><value>NOINDEX,FOLLOW</value></action>
+        </reference>
+    </catalogsearch_advanced_result>
+</layout>
