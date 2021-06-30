@@ -4,12 +4,15 @@
         window.formToProtectOnPage = [];
         var currentFormId = id = '';
         formsToProtect = <?= $captcha->getSelectorsJson() ?>;
-        formsToProtect.forEach(function(item) {
-            formToProtect = jQuery(item)[0];
-            if (formToProtect) {
-                window.formToProtectOnPage.push(formToProtect);
-            }
-        });
+        setTimeout(function(){ 
+            formsToProtect.forEach(function(item) {
+                formToProtect = jQuery(item)[0];
+                if (formToProtect) {
+                    window.formToProtectOnPage.push(formToProtect);
+                }
+            });
+        }, 3000);
+        
         if (window.formToProtectOnPage.length) {
             var recaptchaScript = document.createElement('script');
             recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
@@ -39,5 +42,6 @@
             }
         };
 
+        
     </script>
 <?php endif; ?>
