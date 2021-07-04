@@ -89,7 +89,7 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 	<?php if ($captcha->isEnabled()) : ?>
 	    <script type="text/javascript">
 	        window.formToProtectOnPage = [];
-	        var currentFormId = id = '';
+	        var currentFormId = id = 'newsletter-validate-detail2';
             var recaptchaScript = document.createElement('script');
             recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
             recaptchaScript.attributes = 'async defer';
