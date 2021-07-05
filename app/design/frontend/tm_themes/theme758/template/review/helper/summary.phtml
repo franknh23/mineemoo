@@ -24,8 +24,14 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<span itemprop=”aggregateRating” itemscope itemtype=”http://schema.org/AggregateRating”>
+    <meta itemprop=”ratingValue” content=”<?php echo $this->getRatingSummary(); ?>”/>
+    <meta itemprop=”reviewCount” content=”<?php echo $this->getReviewsCount(); ?>” />
+    <meta itemprop=”bestRating” content=”100″/>
+    <meta itemprop=”worstRating” content=”0″/>
+</span>
 <?php if ($this->getReviewsCount()): ?>
-<?php $_productUrl = $this->getProduct()->getProductUrl(); ?>
+    <?php $_productUrl = $this->getProduct()->getProductUrl(); ?>
     <div class="ratings">
         <?php if ($this->getRatingSummary()):?>
             <div class="rating-box stars">

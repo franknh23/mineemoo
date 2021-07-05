@@ -59,10 +59,12 @@
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
-<div class="product-view <?php echo $indicate_class; ?>" itemscope itemtype="http://schema.org/Offer">
+<div class="product-view <?php echo $indicate_class; ?>" itemscope itemtype="http://schema.org/Product" itemid=”#product_base">
     <div class="product-essential row">
         <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
             <?php echo $this->getBlockHtml('formkey') ?>
+            <meta itemprop="url" content="<?php echo $_product->getUrlModel()->getUrl($_product, array('_ignore_category'=>true)); ?>" />
+            <meta itemprop="sku" content=”<?php echo $_product->getSku() ?>” />
             <div class="no-display">
                 <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
                 <input type="hidden" name="related_product" id="related-products-field" value="" />
@@ -70,7 +72,7 @@
 
             <div class="product-img-box col-xs-12  <?php echo $grid_cols_1 ?>">
                 <div class="product-name">
-                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                    <h1 itemprop=”name”><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
                 </div>
                 <?php echo $this->getChildHtml('media') ?>
             </div>
