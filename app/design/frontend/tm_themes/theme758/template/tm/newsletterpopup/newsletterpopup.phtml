@@ -74,18 +74,16 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 
                     <?php $captcha = Mage::helper('recaptcha'); ?>
                     <?php if ($captcha->isEnabled()) : ?>
-
                             window.formToProtectOnPage = [];
                             var currentFormId = id = '';
                             formsToProtect = <?= $captcha->getSelectorsJson() ?>;
-                            setTimeout(function(){
-                                formsToProtect.forEach(function(item) {
-                                    formToProtect = jQuery(item)[0];
-                                    if (formToProtect) {
-                                        window.formToProtectOnPage.push(formToProtect);
-                                    }
-                                });
-                            }, 3000);
+                            formsToProtect.forEach(function(item) {
+                                console.log(item);
+                                formToProtect = jQuery(item)[0];
+                                if (formToProtect) {
+                                    window.formToProtectOnPage.push(formToProtect);
+                                }
+                            });
 
                             if (window.formToProtectOnPage.length) {
                                 var recaptchaScript = document.createElement('script');
@@ -108,6 +106,8 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
                                     currentFormId = form.id;
                                     currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
                                     grecaptcha.ready(function() {
+                                        console.log("test1")
+                                    }
                                         grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
                                             .then(function(token) {
                                                 jQuery(".invisible_token").val(token);
