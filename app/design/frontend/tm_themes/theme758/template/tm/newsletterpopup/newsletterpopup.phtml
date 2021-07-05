@@ -74,20 +74,16 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 
                     <?php $captcha = Mage::helper('recaptcha'); ?>
                     <?php if ($captcha->isEnabled()) : ?>
-                    window.formToProtectOnPage = [];
                     var currentFormId = id = 'newsletter-validate-detail2';
                     currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-                    if(window.grecaptcha){
+                    grecaptcha.ready(function() {
                         console.log("testing 1");
-                        grecaptcha.ready(function() {
-                            console.log("testing 2");
-                            grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
-                                .then(function(token) {
-                                    console.log("testing 3" + token);
-                                    jQuery(".invisible_token").val(token);
-                                });
-                        });
-                    }
+                        grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                            .then(function(token) {
+                                console.log("testing 2" + token);
+                                jQuery(".invisible_token").val(token);
+                            });
+                    });
                     <?php endif; ?>
 				});
 
