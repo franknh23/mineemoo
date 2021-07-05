@@ -83,7 +83,7 @@
 
                         <!-- center mode -->
                         <?php if($_product_type_center_image){ ?>
-                        <div class="price-info" itemprop="price">
+                        <div class="price-info">
                             <?php echo $this->getPriceHtml($_product); ?>
                             <?php echo $this->getChildHtml('bundle_prices') ?>
                             <?php echo $this->getTierPriceHtml() ?>
@@ -107,7 +107,7 @@
                         </div>
 
                         <?php if(!$_product_type_center_image){ ?>
-                        <div class="price-info" itemprop="price">
+                        <div class="price-info">
                             <?php echo $this->getPriceHtml($_product); ?>
                             <?php echo $this->getChildHtml('bundle_prices') ?>
                             <?php echo $this->getTierPriceHtml() ?>
