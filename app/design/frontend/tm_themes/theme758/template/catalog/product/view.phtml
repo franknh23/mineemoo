@@ -94,7 +94,9 @@
 	            	<div class="additional-info">
 	            		<div class="product-sku"><?php echo $this->__('Product Code: ') . '<span class="sku-number">' . nl2br($_product->getSku()) . '</span>'; ?></div>
                         <?php echo $this->getChildHtml('product_type_data') ?>
-	            		<?php echo $this->getChildHtml('product_type_availability'); ?>
+                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        </div>
                         <div class="clear"></div>
 	            	</div>
 	                <div class="product-name secondary" itemprop="name">
