@@ -53,7 +53,6 @@ $_convertedFinalPrice = $_store->roundPrice($_store->convertPrice($_product->get
 $_specialPriceStoreLabel = '';
 if ($this->getProductAttribute('special_price')) $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStoreLabel();
 ?>
-<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 <?php if (!$_product->isGrouped()): ?>
     <?php $_weeeTaxAmount = $_weeeHelper->getAmountForDisplay($_product); ?>
     <?php $_weeeTaxAttributes = $_weeeHelper->getProductWeeeAttributesForRenderer($_product, null, null, null, true); ?>
@@ -462,4 +461,3 @@ if ($this->getProductAttribute('special_price')) $_specialPriceStoreLabel = $thi
         </div>
     <?php endif; /* if ($this->getDisplayMinimalPrice() && $_minimalPrice): */ ?>
 <?php endif; /* if (!$_product->isGrouped()): */ ?>
-</div>
