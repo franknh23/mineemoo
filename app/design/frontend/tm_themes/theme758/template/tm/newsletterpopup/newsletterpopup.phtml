@@ -47,23 +47,6 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 		<script type="text/javascript">
 			//<![CDATA[
 				var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail2');
-                <?php $captcha = Mage::helper('recaptcha'); ?>
-                <?php if ($captcha->isEnabled()) : ?>
-                    setTimeout(function(){this.loadInvisibleCaptcha()}, 3000);
-                    window.formToProtectOnPage = [];
-                    var currentFormId = id = 'newsletter-validate-detail2';
-                        currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-                        document.loadInvisibleCaptcha = function () {
-                            if(window.grecaptcha){
-                                grecaptcha.ready(function() {
-                                    grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
-                                        .then(function(token) {
-                                            jQuery(".invisible_token").val(token);
-                                        });
-                                });
-                            }
-                        };
-                <?php endif; ?>
 			//]]>
 		</script>
 
@@ -89,6 +72,23 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 						enable_scroll();
 					});
 
+                    <?php $captcha = Mage::helper('recaptcha'); ?>
+                    <?php if ($captcha->isEnabled()) : ?>
+                    setTimeout(function(){this.loadInvisibleCaptcha()}, 3000);
+                    window.formToProtectOnPage = [];
+                    var currentFormId = id = 'newsletter-validate-detail2';
+                    currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
+                    window.loadInvisibleCaptcha = function () {
+                        if(window.grecaptcha){
+                            grecaptcha.ready(function() {
+                                grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                                    .then(function(token) {
+                                        jQuery(".invisible_token").val(token);
+                                    });
+                            });
+                        }
+                    };
+                    <?php endif; ?>
 				});
 
 				function disable_scroll() {
