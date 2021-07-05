@@ -74,16 +74,24 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 
                     <?php $captcha = Mage::helper('recaptcha'); ?>
                     <?php if ($captcha->isEnabled()) : ?>
+                    var recaptchaScript = document.createElement('script');
                     var currentFormId = id = 'newsletter-validate-detail2';
+                    recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
+                    recaptchaScript.attributes = 'async defer';
+
+                    document.body.appendChild(recaptchaScript);
                     currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-                    grecaptcha.ready(function() {
-                        console.log("testing 1");
-                        grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
-                            .then(function(token) {
-                                console.log("testing 2" + token);
-                                jQuery(".invisible_token").val(token);
-                            });
-                    });
+                    window.mtInvisibleCaptchaOnloadCallback = function () {
+                        console.log("testing");
+                        grecaptcha.ready(function () {
+                            console.log("testing 1");
+                            grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                                .then(function (token) {
+                                    console.log("testing 2" + token);
+                                    jQuery(".invisible_token").val(token);
+                                });
+                        });
+                    };
                     <?php endif; ?>
 				});
 
