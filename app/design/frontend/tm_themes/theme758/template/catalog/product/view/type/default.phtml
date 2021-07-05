@@ -26,5 +26,6 @@
 ?>
 <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
 <?php $_product = $this->getProduct() ?>
-
-<?php echo $this->getChildHtml('product_type_data_extra') ?>
+<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <?php echo $this->getChildHtml('product_type_data_extra') ?>
+</div>
