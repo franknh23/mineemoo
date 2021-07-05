@@ -141,7 +141,7 @@
                                         <label for="<?php echo $_methodName; ?>_only_stated_address">
                                             <?php echo $this->__('do not deliver to neighbours'); ?>
                                             <?php if ($this->hasOptionFee('only_stated_address')):?>
-                                                <span class="price">+ <?php echo $this->getOptionFee('only_stated_address', true, true); ?></span>
+                                                <span class="price" itemprop="price">+ <?php echo $this->getOptionFee('only_stated_address', true, true); ?></span>
                                             <?php endif; ?>
                                         </label>
                                     </div>

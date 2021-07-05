@@ -45,7 +45,7 @@ Mage::getSingleton('checkout/session')->setCurrentGiftCard(null);
                         </td>
                         <td>
                             <strong>
-                                <span class="price">
+                                <span class="price" itemprop="price">
                                     <?php echo Mage::helper('core')->currency($giftcard->getBalance());?>
                                 </span>
                             </strong>
