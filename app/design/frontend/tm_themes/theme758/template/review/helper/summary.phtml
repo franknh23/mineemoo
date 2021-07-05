@@ -25,16 +25,9 @@
  */
 ?>
 <?php if ($this->getReviewsCount()): ?>
-    <?php $_productUrl = $this->getProduct()->getProductUrl(); ?>
-    <div class="ratings" itemprop="aggregateRating" itemscope
-         itemtype="http://schema.org/AggregateRating">
-        <span class="no-display" itemprop="reviewCount"><?php echo
-            $this->getReviewsCount() ?> reviews</span>
+<?php $_productUrl = $this->getProduct()->getProductUrl(); ?>
+    <div class="ratings">
         <?php if ($this->getRatingSummary()):?>
-            <span class="no-display" itemprop="worstRating">0</span>
-            <span class="no-display" itemprop="bestRating">100</span>
-            <span class="no-display" itemprop="ratingValue"><?php echo
-                $this->getRatingSummary() ?></span>
             <div class="rating-box stars">
                 <i class="review-icon"></i>
                 <i class="review-icon"></i>
