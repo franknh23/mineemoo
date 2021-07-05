@@ -79,51 +79,50 @@
 			
 			<div class="col-xs-12 <?php echo $grid_cols_2 ?>">
 	            <div class="product-shop">
+                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-                    <!-- center mode -->
-                    <?php if($_product_type_center_image){ ?>
-                    <div class="price-info" itemprop="price">
-                        <?php echo $this->getPriceHtml($_product); ?>
-                        <?php echo $this->getChildHtml('bundle_prices') ?>
-                        <?php echo $this->getTierPriceHtml() ?>
-                    </div>
-
-                    <?php }?>
-                    <!-- /center mode -->
-
-	            	<div class="additional-info">
-	            		<div class="product-sku"><?php echo $this->__('Product Code: ') . '<span class="sku-number">' . nl2br($_product->getSku()) . '</span>'; ?></div>
-                        <?php echo $this->getChildHtml('product_type_data') ?>
-                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                            <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        <!-- center mode -->
+                        <?php if($_product_type_center_image){ ?>
+                        <div class="price-info" itemprop="price">
+                            <?php echo $this->getPriceHtml($_product); ?>
+                            <?php echo $this->getChildHtml('bundle_prices') ?>
+                            <?php echo $this->getTierPriceHtml() ?>
                         </div>
+
+                        <?php }?>
+                        <!-- /center mode -->
+
+                        <div class="additional-info">
+                            <div class="product-sku"><?php echo $this->__('Product Code: ') . '<span class="sku-number">' . nl2br($_product->getSku()) . '</span>'; ?></div>
+                            <?php echo $this->getChildHtml('product_type_data') ?>
+                            <?php echo $this->getChildHtml('product_type_availability'); ?>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="product-name secondary" itemprop="name">
+                            <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span>
+                        </div>
+
+                        <div class="extra-info">
+                            <?php echo $this->getReviewsSummaryHtml($_product, 'default', false)?>
+                        </div>
+
+                        <?php if(!$_product_type_center_image){ ?>
+                        <div class="price-info" itemprop="price">
+                            <?php echo $this->getPriceHtml($_product); ?>
+                            <?php echo $this->getChildHtml('bundle_prices') ?>
+                            <?php echo $this->getTierPriceHtml() ?>
+                        </div>
+
+                        <?php }?>
+
                         <div class="clear"></div>
-	            	</div>
-	                <div class="product-name secondary" itemprop="name">
-	                    <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span>
-	                </div>
 
-                    <div class="extra-info">
-                        <?php echo $this->getReviewsSummaryHtml($_product, 'default', false)?>
+                        <?php echo $this->getChildHtml('other');?>
+
+                        <?php if ($_product->isSaleable() && $this->hasOptions()):?>
+                            <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                        <?php endif;?>
                     </div>
-
-                    <?php if(!$_product_type_center_image){ ?>
-	                <div class="price-info" itemprop="price">
-	                    <?php echo $this->getPriceHtml($_product); ?>
-	                    <?php echo $this->getChildHtml('bundle_prices') ?>
-	                    <?php echo $this->getTierPriceHtml() ?>
-	                </div>
-
-                    <?php }?>
-
-                    <div class="clear"></div>
-
-	                <?php echo $this->getChildHtml('other');?>
-
-	                <?php if ($_product->isSaleable() && $this->hasOptions()):?>
-	                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
-	                <?php endif;?>
-
 	            </div>
 
 	            <div class="add-to-cart-wrapper">
