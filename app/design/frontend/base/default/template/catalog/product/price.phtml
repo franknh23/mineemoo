@@ -75,7 +75,7 @@ $_specialPriceStoreLabel = $this->getProductAttribute('special_price')->getStore
             <?php if ($_weeeTaxAmount && $_weeeHelper->typeOfDisplay($_product, 0)): // including ?>
                 <span class="price-excluding-tax">
                     <span class="label"><?php echo $this->helper('tax')->__('Excl. Tax:') ?></span>
-                    <span class="price" itemprop="price" itemprop="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
+                    <span class="price" itemprop="price" id="price-excluding-tax-<?php echo $_id ?><?php echo $this->getIdSuffix() ?>">
                         <?php echo $_coreHelper->formatPrice($_price + $_weeeTaxAmount, false) ?>
                     </span>
                 </span>
