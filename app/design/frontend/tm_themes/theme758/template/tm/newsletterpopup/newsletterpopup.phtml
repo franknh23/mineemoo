@@ -47,6 +47,23 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 		<script type="text/javascript">
 			//<![CDATA[
 				var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail2');
+                <?php $captcha = Mage::helper('recaptcha'); ?>
+                <?php if ($captcha->isEnabled()) : ?>
+                    setTimeout(function(){this.loadInvisibleCaptcha()}, 3000);
+                    window.formToProtectOnPage = [];
+                    var currentFormId = id = 'newsletter-validate-detail2';
+                        currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
+                        document.loadInvisibleCaptcha = function () {
+                            if(window.grecaptcha){
+                                grecaptcha.ready(function() {
+                                    grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                                        .then(function(token) {
+                                            jQuery(".invisible_token").val(token);
+                                        });
+                                });
+                            }
+                        };
+                <?php endif; ?>
 			//]]>
 		</script>
 
@@ -83,31 +100,5 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 			    }
 			</script>
 		<?php } ?>
-	<?php endif; ?>
-
-<?php $captcha = Mage::helper('recaptcha'); ?>
-	<?php if ($captcha->isEnabled()) : ?>
-	    <script type="text/javascript">
-	        window.formToProtectOnPage = [];
-	        var currentFormId = id = 'newsletter-validate-detail2';
-            var recaptchaScript = document.createElement('script');
-            setTimeout(function(){
-                recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=invisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
-                recaptchaScript.attributes = 'async defer';
-                document.body.appendChild(recaptchaScript);
-                currentFormId = "newsletter-validate-detail2";
-                currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-                window.invisibleCaptchaOnloadCallback = function () {
-                    if(window.grecaptcha){
-                        grecaptcha.ready(function() {
-                            grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
-                                .then(function(token) {
-                                    jQuery(".invisible_token").val(token);
-                                });
-                        });
-                    }
-                };
-            }, 3000);
-	    </script>
 	<?php endif; ?>
 <?php endif; ?>
