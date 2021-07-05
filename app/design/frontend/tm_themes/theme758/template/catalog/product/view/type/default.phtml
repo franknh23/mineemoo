@@ -26,7 +26,7 @@
 ?>
 <?php /* @var $this Mage_Catalog_Block_Product_View_Abstract */?>
 <?php $_product = $this->getProduct() ?>
-<div itemprop=”offers” itemscope itemtype=”http://schema.org/Offer”>
+<div itemprop="offers" itemscope itemtype=”http://schema.org/Offer”>
     <meta itemprop=”priceCurrency” content=”<?php echo Mage::app()->getStore()->getCurrentCurrencyCode();?>” />
     <?php echo $this->getChildHtml('product_type_data_extra') ?>
 </div>
