@@ -77,13 +77,14 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
                             window.formToProtectOnPage = [];
                             var currentFormId = id = '';
                             formsToProtect = <?= $captcha->getSelectorsJson() ?>;
-                            formsToProtect.forEach(function(item) {
-                                console.log(item);
-                                formToProtect = jQuery(item)[0];
-                                if (formToProtect) {
-                                    window.formToProtectOnPage.push(formToProtect);
-                                }
-                            });
+                            setTimeout(function(){
+                                formsToProtect.forEach(function(item) {
+                                    formToProtect = jQuery(item)[0];
+                                    if (formToProtect) {
+                                        window.formToProtectOnPage.push(formToProtect);
+                                    }
+                                });
+                            }, 3000);
 
                             if (window.formToProtectOnPage.length) {
                                 var recaptchaScript = document.createElement('script');
