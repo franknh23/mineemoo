@@ -27,13 +27,11 @@ $_product = $this->getProduct(); ?>
 <?php if ($this->displayProductStockStatus()): ?>
     <?php if ($_product->isAvailable()): ?>
         <p class="availability in-stock" itemprop="availability">
-            <link itemprop="availability" href=”http://schema.org/InStock”>
             <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
             <span class="value"><?php echo $this->helper('catalog')->__('In stock') ?></span>
         </p>
     <?php else: ?>
         <p class="availability out-of-stock">
-            <link itemprop="availability" href=”http://schema.org/OutOfStock”>
             <span class="label"><?php echo $this->helper('catalog')->__('Availability:') ?></span>
             <span class="value"><?php echo $this->helper('catalog')->__('Out of stock') ?></span>
         </p>
