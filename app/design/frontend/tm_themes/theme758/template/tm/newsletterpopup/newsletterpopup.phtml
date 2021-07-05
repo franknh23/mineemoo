@@ -53,7 +53,7 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 		<?php
 		// Popup init conditions
 		if (Mage::getSingleton('core/session')->getSignedUpForNewsletter() == false) { ?>
-			<<script type="text/javascript">
+			<< type="text/javascript">
 				jQuery(document).ready(function() {
 
 					var newsPopup 		= jQuery('#newsletterpopup');
@@ -114,9 +114,6 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
                                     });
                                 }
                             };
-
-
-                        </script>
                     <?php endif; ?>
 				});
 
