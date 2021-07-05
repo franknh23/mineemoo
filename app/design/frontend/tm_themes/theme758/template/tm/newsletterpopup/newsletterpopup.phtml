@@ -53,7 +53,7 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 		<?php
 		// Popup init conditions
 		if (Mage::getSingleton('core/session')->getSignedUpForNewsletter() == false) { ?>
-			<script>
+			<<script type="text/javascript">>
 				jQuery(document).ready(function() {
 
 					var newsPopup 		= jQuery('#newsletterpopup');
@@ -74,24 +74,50 @@ if (Mage::getStoreConfig('newsletterpopup/general/active', Mage::app()->getStore
 
                     <?php $captcha = Mage::helper('recaptcha'); ?>
                     <?php if ($captcha->isEnabled()) : ?>
-                    var recaptchaScript = document.createElement('script');
-                    var currentFormId = id = 'newsletter-validate-detail2';
-                    recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
-                    recaptchaScript.attributes = 'async defer';
 
-                    document.body.appendChild(recaptchaScript);
-                    currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
-                    window.mtInvisibleCaptchaOnloadCallback = function () {
-                        console.log("testing");
-                        grecaptcha.ready(function () {
-                            console.log("testing 1");
-                            grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
-                                .then(function (token) {
-                                    console.log("testing 2" + token);
-                                    jQuery(".invisible_token").val(token);
+                            window.formToProtectOnPage = [];
+                            var currentFormId = id = '';
+                            formsToProtect = <?= $captcha->getSelectorsJson() ?>;
+                            setTimeout(function(){
+                                formsToProtect.forEach(function(item) {
+                                    formToProtect = jQuery(item)[0];
+                                    if (formToProtect) {
+                                        window.formToProtectOnPage.push(formToProtect);
+                                    }
                                 });
-                        });
-                    };
+                            }, 3000);
+
+                            if (window.formToProtectOnPage.length) {
+                                var recaptchaScript = document.createElement('script');
+                                recaptchaScript.src = 'https://www.google.com/recaptcha/api.js?onload=mtInvisibleCaptchaOnloadCallback&render=<?php echo $captcha->getSiteKey(); ?>';
+                                recaptchaScript.attributes = 'async defer';
+                                document.body.appendChild(recaptchaScript);
+                            }
+
+                            window.mtInvisibleCaptchaOnloadCallback = function () {
+                                for (var i = 0; i < window.formToProtectOnPage.length; i++) {
+                                    window.formToProtectOnPage[i].innerHTML +=
+                                        '<input class="invisible_token" type="hidden" name="invisible_token" value=""/>';
+                                }
+
+                                for (var i = 0; i < window.formToProtectOnPage.length; i++) {
+                                    var form = window.formToProtectOnPage[i];
+                                    if (form.tagName.toLowerCase() != 'form') {
+                                        continue;
+                                    }
+                                    currentFormId = form.id;
+                                    currentFormId = currentFormId.replace(/\W+(?!$)/g, '');
+                                    grecaptcha.ready(function() {
+                                        grecaptcha.execute('<?php echo $captcha->getSiteKey(); ?>', {action: currentFormId})
+                                            .then(function(token) {
+                                                jQuery(".invisible_token").val(token);
+                                            });
+                                    });
+                                }
+                            };
+
+
+                        </script>
                     <?php endif; ?>
 				});
 
