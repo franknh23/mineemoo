@@ -40,7 +40,6 @@ class TM_FireCheckout_Model_Observer_Integration
             'CraftyClicks'               => 'tm/firecheckout/craftyclicks.xml',
             'Craig_Tco'                  => 'tm/firecheckout/craig_tco.xml',
             'Cryozonic_Stripe'           => 'tm/firecheckout/cryozonic_stripe.xml',
-            'Customweb_PayUnityCw'       => 'tm/firecheckout/customweb_payunitycw.xml',
             'Chandan_Storepickup'        => 'tm/firecheckout/chandan_storepickup.xml',
             'Dhl_Account'                => 'tm/firecheckout/dhl_account.xml',
             'Dhl_LocationFinder'         => 'tm/firecheckout/dhl_locationfinder.xml',
