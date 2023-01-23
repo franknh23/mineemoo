@@ -44,3 +44,7 @@
 !/var/package/*.xml
 index.php
 app/etc/local.xml
+
+!/.idea/*
+!/.idea/workspace.xml
+!.idea/*
