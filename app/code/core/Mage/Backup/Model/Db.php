@@ -1,60 +1,53 @@
 <?php
 /**
- * Magento
+ * OpenMage
  *
  * NOTICE OF LICENSE
  *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
- * http://opensource.org/licenses/osl-3.0.php
+ * https://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to license@magento.com so we can send you a copy immediately.
  *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magento.com for more information.
- *
- * @category    Mage
- * @package     Mage_Backup
- * @copyright  Copyright (c) 2006-2020 Magento, Inc. (http://www.magento.com)
- * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @category   Mage
+ * @package    Mage_Backup
+ * @copyright  Copyright (c) 2006-2020 Magento, Inc. (https://www.magento.com)
+ * @copyright  Copyright (c) 2017-2022 The OpenMage Contributors (https://www.openmage.org)
+ * @license    https://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-
 
 /**
  * Database backup model
  *
- * @category    Mage
- * @package     Mage_Backup
- * @author      Magento Core Team <core@magentocommerce.com>
+ * @category   Mage
+ * @package    Mage_Backup
+ * @author     Magento Core Team <core@magentocommerce.com>
  */
 class Mage_Backup_Model_Db
 {
-
     /**
      * Buffer length for multi rows
      * default 100 Kb
      *
      */
-    const BUFFER_LENGTH = 102400;
+    public const BUFFER_LENGTH = 102400;
 
     /**
      * List of tables which data should not be backed up
      *
      * @var array
      */
-    protected $_ignoreDataTablesList = array(
+    protected $_ignoreDataTablesList = [
         'importexport/importdata'
-    );
+    ];
 
     /**
      * Retrieve resource model
      *
-     * @return Mage_Backup_Model_Mysql4_Db
+     * @return Mage_Backup_Model_Resource_Db
      */
     public function getResource()
     {
@@ -66,7 +59,7 @@ class Mage_Backup_Model_Db
         return $this->getResource()->getTables();
     }
 
-    public function getTableCreateScript($tableName, $addDropIfExists=false)
+    public function getTableCreateScript($tableName, $addDropIfExists = false)
     {
         return $this->getResource()->getTableCreateScript($tableName, $addDropIfExists);
     }
@@ -93,11 +86,11 @@ class Mage_Backup_Model_Db
 
         $tables = $this->getTables();
         foreach ($tables as $tableName) {
-            $sql.= $this->getTableCreateScript($tableName, true);
-            $sql.= $this->getTableDataDump($tableName);
+            $sql .= $this->getTableCreateScript($tableName, true);
+            $sql .= $this->getTableDataDump($tableName);
         }
 
-        $sql.= $this->getFooter();
+        $sql .= $this->getFooter();
         return $sql;
     }
 
@@ -105,59 +98,61 @@ class Mage_Backup_Model_Db
      * Create backup and stream write to adapter
      *
      * @param Mage_Backup_Model_Backup $backup
-     * @return Mage_Backup_Model_Db
+     * @return $this
      */
     public function createBackup(Mage_Backup_Model_Backup $backup)
     {
         $backup->open(true);
 
         $this->getResource()->beginTransaction();
+        try {
+            $tables = $this->getResource()->getTables();
 
-        $tables = $this->getResource()->getTables();
+            $backup->write($this->getResource()->getHeader());
 
-        $backup->write($this->getResource()->getHeader());
+            $ignoreDataTablesList = $this->getIgnoreDataTablesList();
 
-        $ignoreDataTablesList = $this->getIgnoreDataTablesList();
+            foreach ($tables as $table) {
+                $backup->write($this->getResource()->getTableHeader($table)
+                    . $this->getResource()->getTableDropSql($table) . "\n");
+                $backup->write($this->getResource()->getTableCreateSql($table, false) . "\n");
 
-        foreach ($tables as $table) {
-            $backup->write($this->getResource()->getTableHeader($table)
-                . $this->getResource()->getTableDropSql($table) . "\n");
-            $backup->write($this->getResource()->getTableCreateSql($table, false) . "\n");
+                $tableStatus = $this->getResource()->getTableStatus($table);
 
-            $tableStatus = $this->getResource()->getTableStatus($table);
+                if ($tableStatus->getRows() && !in_array($table, $ignoreDataTablesList)) {
+                    $backup->write($this->getResource()->getTableDataBeforeSql($table));
 
-            if ($tableStatus->getRows() && !in_array($table, $ignoreDataTablesList)) {
-                $backup->write($this->getResource()->getTableDataBeforeSql($table));
-
-                if ($tableStatus->getDataLength() > self::BUFFER_LENGTH) {
-                    if ($tableStatus->getAvgRowLength() > 0 && $tableStatus->getAvgRowLength() < self::BUFFER_LENGTH) {
-                        // Process rows in batches
-                        $limit = floor(self::BUFFER_LENGTH / $tableStatus->getAvgRowLength());
-                        $multiRowsLength = ceil($tableStatus->getRows() / $limit);
+                    if ($tableStatus->getDataLength() > self::BUFFER_LENGTH) {
+                        if ($tableStatus->getAvgRowLength() > 0 && $tableStatus->getAvgRowLength() < self::BUFFER_LENGTH) {
+                            // Process rows in batches
+                            $limit = floor(self::BUFFER_LENGTH / $tableStatus->getAvgRowLength());
+                            $multiRowsLength = ceil($tableStatus->getRows() / $limit);
+                        } else {
+                            // Process rows one by one
+                            $limit = 1;
+                            $multiRowsLength = $tableStatus->getRows();
+                        }
+                    } else {
+                        // Process all rows at once
+                        $limit = $tableStatus->getRows();
+                        $multiRowsLength = 1;
                     }
-                    else {
-                        // Process rows one by one
-                        $limit = 1;
-                        $multiRowsLength = $tableStatus->getRows();
+
+                    for ($i = 0; $i < $multiRowsLength; $i++) {
+                        $backup->write($this->getResource()->getTableDataSql($table, $limit, $i * $limit));
                     }
-                }
-                else {
-                    // Process all rows at once
-                    $limit = $tableStatus->getRows();
-                    $multiRowsLength = 1;
-                }
 
-                for ($i = 0; $i < $multiRowsLength; $i ++) {
-                    $backup->write($this->getResource()->getTableDataSql($table, $limit, $i*$limit));
+                    $backup->write($this->getResource()->getTableDataAfterSql($table));
                 }
-
-                $backup->write($this->getResource()->getTableDataAfterSql($table));
             }
-        }
-        $backup->write($this->getResource()->getTableForeignKeysSql());
-        $backup->write($this->getResource()->getFooter());
+            $backup->write($this->getResource()->getTableForeignKeysSql());
+            $backup->write($this->getResource()->getFooter());
 
-        $this->getResource()->commitTransaction();
+            $this->getResource()->commitTransaction();
+        } catch (Exception $e) {
+            $this->getResource()->rollBackTransaction();
+            throw $e;
+        }
 
         $backup->close();
 
@@ -171,7 +166,7 @@ class Mage_Backup_Model_Db
      */
     public function getIgnoreDataTablesList()
     {
-        $result = array();
+        $result = [];
         $resource = Mage::getSingleton('core/resource');
 
         foreach ($this->_ignoreDataTablesList as $table) {
