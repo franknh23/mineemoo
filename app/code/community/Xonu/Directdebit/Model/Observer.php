@@ -185,11 +185,13 @@ class Xonu_Directdebit_Model_Observer
             $config->getNode('modules/Xonu_Directdebit/version'));
 
             $config = $section->xpath(base64_decode('Z3JvdXBzL2luZm8vZmllbGRzL25hbWUvY29tbWVudA=='));
-            list(,$n) = each($config); // $n = $this->_helper()->__($n);
-            $section->setNode(base64_decode('Z3JvdXBzL2luZm8vZmllbGRzL25hbWUvY29tbWVudA=='), $n .
-                              base64_decode('PGltZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBzcmM9Imh0' .
-                                            'dHBzOi8vc2VwYWdlbnRvLmRlL21lZGlhL3VwZGF0ZS5w' .
-                                            'bmc/dj0=') . $v . base64_decode('Jm09') . $m . base64_decode('Ii8+'));
+//            list(,$n) = each($config); // $n = $this->_helper()->__($n);
+            foreach ($config as $n) {
+                $section->setNode(base64_decode('Z3JvdXBzL2luZm8vZmllbGRzL25hbWUvY29tbWVudA=='), $n .
+                    base64_decode('PGltZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBzcmM9Imh0' .
+                        'dHBzOi8vc2VwYWdlbnRvLmRlL21lZGlhL3VwZGF0ZS5w' .
+                        'bmc/dj0=') . $v . base64_decode('Jm09') . $m . base64_decode('Ii8+'));
+            }
         }
     }
 }
