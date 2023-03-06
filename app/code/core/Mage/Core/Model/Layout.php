@@ -320,7 +320,9 @@ class Mage_Core_Model_Layout extends Varien_Simplexml_Config
                         $helperName = implode('/', $helperName);
                         $arg = $arg->asArray();
                         unset($arg['@']);
-                        $args[$key] = call_user_func_array([Mage::helper($helperName), $helperMethod], $arg);
+                        if ($helperName) {
+                            $args[$key] = call_user_func_array([Mage::helper($helperName), $helperMethod], $arg);
+                        }
                     } else {
                         /**
                          * if there is no helper we hope that this is assoc array
