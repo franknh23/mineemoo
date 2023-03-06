@@ -39,7 +39,7 @@
         <?php
           $valueImplode = isset($_value) && is_array($_value) ? $this->getValueAsArray($_value, true) : [];
         ?>
-        <td><?php echo nl2br(implode("\n", $valueImplode));?></td>
+        <td><?php echo nl2br(implode("\n", $this->getValueAsArray($_value, true)));?></td>
     </tr>
 <?php endforeach; ?>
 </table>
